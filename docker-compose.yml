@@ -1,0 +1,11 @@
+﻿services:
+  gateway:
+    image: gateway
+    build:
+      context: .
+      dockerfile: Gateway/Dockerfile
+    networks:
+      - global_network
+networks:
+  global_network:
+    external: true

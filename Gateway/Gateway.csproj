@@ -11,21 +11,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.64.0"/>
-        <PackageReference Include="Grpc.Net.Client" Version="2.64.0"/>
-        <PackageReference Include="Grpc.Tools" Version="2.65.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <Protobuf Include="Protos/UserService/shared.proto" GrpcServices="Server, Client" Link="Protos\shared.proto" />
+        <Protobuf Include="Protos/UserService/student.proto" GrpcServices="Server, Client" Link="Protos\student.proto" />
+        <Protobuf Include="Protos/UserService/group.proto" GrpcServices="Server, Client" Link="Protos\group.proto" />
+        <Protobuf Include="Protos/UserService/teacher.proto" GrpcServices="Server, Client" Link="Protos\teacher.proto" />
+        <Protobuf Include="Protos/UserService/speciality.proto" GrpcServices="Server, Client" Link="Protos\speciality.proto" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Controllers\"/>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.66.0-pre5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Controllers\" />
         <Folder Include="Extensions\" />
-        <Folder Include="Protos\"/>
-        <Folder Include="Services\"/>
+        <Folder Include="Protos\" />
+        <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>

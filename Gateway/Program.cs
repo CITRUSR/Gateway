@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Gateway.Endpoints.UserService.Speciality;
 
 var builder = WebApplication.CreateBuilder(args);
 

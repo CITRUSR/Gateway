@@ -4,8 +4,12 @@
     build:
       context: .
       dockerfile: Gateway/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     networks:
       - global_network
+    ports:
+      - 8080:8080
 networks:
   global_network:
     external: true

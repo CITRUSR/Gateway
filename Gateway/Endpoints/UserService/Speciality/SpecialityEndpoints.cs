@@ -9,6 +9,8 @@ public static class SpecialityEndpoints
 {
     public static IEndpointRouteBuilder Map(IEndpointRouteBuilder builder)
     {
+        string specialityTag = "Speciality";
+
         builder
             .MapGet(
                 "api/specialties",
@@ -21,7 +23,7 @@ public static class SpecialityEndpoints
                 ) => { }
             )
             .Produces<GetSpecialitiesResponse>(StatusCodes.Status200OK)
-            .WithTags("Specialitiy")
+            .WithTags(specialityTag)
             .WithOpenApi(operation =>
             {
                 var sortStateParameter = operation.Parameters[3];
@@ -36,6 +38,20 @@ public static class SpecialityEndpoints
                 operation.Description =
                     "Get specialities with pagination, filtering, sorting, and deleted status."
                     + "\n\n**Request example:** `/api/specialties?page=5&pageSize=10&sortState=nameAsc&deletedStatus=onlyActive`";
+
+                return operation;
+            });
+
+        builder
+            .MapGet("api/speciality", ([FromQuery] int id) => { })
+            .Produces<SpecialityDetailInfo>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(specialityTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Get speciality by id";
+                operation.Description =
+                    "Get speciality by id" + "\n\n**Request example:** `/api/speciality?id=10`";
 
                 return operation;
             });

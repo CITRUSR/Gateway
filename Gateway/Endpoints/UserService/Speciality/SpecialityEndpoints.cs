@@ -73,13 +73,29 @@ public static class SpecialityEndpoints
 
         builder
             .MapDelete("api/specialities", ([FromBody] DeleteSpecialitiesRequest request) => { })
-            .Produces<SpecialityShortInfo>(StatusCodes.Status200OK)
-            .Produces<string>(StatusCodes.Status404NotFound)
+            .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
+            .Produces<List<string>>(StatusCodes.Status404NotFound)
             .WithTags(specialityTag)
             .WithOpenApi(operation =>
             {
-                operation.Summary = "Delete speciality";
-                operation.Description = "Delete speciality";
+                operation.Summary = "Delete specialities";
+                operation.Description = "Delete specialities";
+
+                return operation;
+            });
+
+        builder
+            .MapDelete(
+                "api/specialities/soft",
+                ([FromBody] DeleteSpecialitiesRequest request) => { }
+            )
+            .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
+            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .WithTags(specialityTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Soft delete specialities";
+                operation.Description = "Soft delete specialities";
 
                 return operation;
             });

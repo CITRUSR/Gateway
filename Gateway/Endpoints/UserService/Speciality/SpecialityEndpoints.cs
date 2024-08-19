@@ -71,6 +71,19 @@ public static class SpecialityEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete("api/specialities", ([FromBody] DeleteSpecialitiesRequest request) => { })
+            .Produces<SpecialityShortInfo>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(specialityTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Delete speciality";
+                operation.Description = "Delete speciality";
+
+                return operation;
+            });
+
         return builder;
     }
 }

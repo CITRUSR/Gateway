@@ -75,6 +75,19 @@ public static class GroupEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete("api/groups", ([FromBody] DeleteGroupsRequest request) => { })
+            .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
+            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Delete groups";
+                operation.Description = "Delete groups";
+
+                return operation;
+            });
+
         return builder;
     }
 }

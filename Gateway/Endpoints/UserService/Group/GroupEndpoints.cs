@@ -1,5 +1,6 @@
 using Gateway.Data.Enums;
 using Gateway.Endpoints.UserService.Group.Enums;
+using Gateway.Endpoints.UserService.Group.Requests;
 using Gateway.Endpoints.UserService.Group.Responses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +58,19 @@ public static class GroupEndpoints
                 operation.Summary = "Get group by id";
                 operation.Description =
                     "Get group by id" + "\n\n**Request example:** `/api/group?id=10`";
+
+                return operation;
+            });
+
+        builder
+            .MapPost("api/group", ([FromBody] CreateGroupRequest request) => { })
+            .Produces<GroupShortInfo>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Create group";
+                operation.Description = "Create group";
 
                 return operation;
             });

@@ -47,6 +47,20 @@ public static class GroupEndpoints
                 return operation;
             });
 
+        builder
+            .MapGet("api/group", ([FromQuery] int id) => { })
+            .Produces<GroupDetailInfo>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Get group by id";
+                operation.Description =
+                    "Get group by id" + "\n\n**Request example:** `/api/group?id=10`";
+
+                return operation;
+            });
+
         return builder;
     }
 }

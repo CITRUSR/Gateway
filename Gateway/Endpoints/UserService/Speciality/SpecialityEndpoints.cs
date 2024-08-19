@@ -100,6 +100,19 @@ public static class SpecialityEndpoints
                 return operation;
             });
 
+        builder
+            .MapPut("api/speciality", ([FromBody] SpecialityDetailInfo request) => { })
+            .Produces<SpecialityShortInfo>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(specialityTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Edit speciality";
+                operation.Description = "Edit speciality";
+
+                return operation;
+            });
+
         return builder;
     }
 }

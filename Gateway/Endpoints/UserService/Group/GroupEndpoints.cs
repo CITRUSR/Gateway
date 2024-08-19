@@ -88,6 +88,19 @@ public static class GroupEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete("api/groups/soft", ([FromBody] DeleteGroupsRequest request) => { })
+            .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
+            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Soft delete groups";
+                operation.Description = "Soft delete groups";
+
+                return operation;
+            });
+
         return builder;
     }
 }

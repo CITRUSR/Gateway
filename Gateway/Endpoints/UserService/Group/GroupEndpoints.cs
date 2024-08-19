@@ -127,6 +127,31 @@ public static class GroupEndpoints
                 return operation;
             });
 
+        builder
+            .MapPatch(
+                "api/groups/course",
+                ([FromBody] TransferGroupsToNextCourseRequest request) => { }
+            )
+            .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
+            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Transfer groups to next course";
+                operation.Description = "Transfer groups to next course";
+
+                operation.Responses.Add(
+                    StatusCodes.Status422UnprocessableEntity.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description =
+                            "Unprocessable Entity\n\nCannot promote groups to next course",
+                    }
+                );
+
+                return operation;
+            });
+
         return builder;
     }
 }

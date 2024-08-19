@@ -3,6 +3,7 @@ using Gateway.Endpoints.UserService.Group.Enums;
 using Gateway.Endpoints.UserService.Group.Requests;
 using Gateway.Endpoints.UserService.Group.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 namespace Gateway.Endpoints.UserService.Group;
 
@@ -97,6 +98,31 @@ public static class GroupEndpoints
             {
                 operation.Summary = "Soft delete groups";
                 operation.Description = "Soft delete groups";
+
+                return operation;
+            });
+
+        builder
+            .MapPatch(
+                "api/groups/semester",
+                ([FromBody] TransferGroupsToNextSemesterRequest request) => { }
+            )
+            .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
+            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Transfer groups to next semester";
+                operation.Description = "Transfer groups to next semester";
+
+                operation.Responses.Add(
+                    StatusCodes.Status422UnprocessableEntity.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description =
+                            "Unprocessable Entity\n\nCannot promote groups to next semester",
+                    }
+                );
 
                 return operation;
             });

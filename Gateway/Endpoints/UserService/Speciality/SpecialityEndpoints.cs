@@ -1,5 +1,7 @@
 using Gateway.Data.Enums;
+using Gateway.Data.Errors;
 using Gateway.Endpoints.UserService.Speciality.Enums;
+using Gateway.Endpoints.UserService.Speciality.Requests;
 using Gateway.Endpoints.UserService.Speciality.Responses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,6 +54,19 @@ public static class SpecialityEndpoints
                 operation.Summary = "Get speciality by id";
                 operation.Description =
                     "Get speciality by id" + "\n\n**Request example:** `/api/speciality?id=10`";
+
+                return operation;
+            });
+
+        builder
+            .MapPost("api/speciality", ([FromBody] CreateSpecialityRequest request) => { })
+            .Produces<SpecialityShortInfo>(StatusCodes.Status201Created)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
+            .WithTags(specialityTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Create speciality";
+                operation.Description = "Create speciality";
 
                 return operation;
             });

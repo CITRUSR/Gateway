@@ -200,6 +200,7 @@ public static class GroupEndpoints
         builder
             .MapPut("api/group", ([FromBody] EditGroupRequest request) => { })
             .Produces<GroupShortInfo>(StatusCodes.Status200OK)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(groupTag)
             .WithOpenApi(operation =>
             {

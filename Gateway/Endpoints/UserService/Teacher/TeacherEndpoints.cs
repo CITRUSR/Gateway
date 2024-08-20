@@ -161,6 +161,37 @@ public static class TeacherEndpoints
                 return operation;
             });
 
+        builder
+            .MapPut("api/teacher", ([FromBody] EditTeacherRequest request) => { })
+            .Produces<TeacherShortInfo>(StatusCodes.Status200OK)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
+            .WithTags(teacherTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Edit teacher";
+                operation.Description = "Edit teacher";
+
+                operation.RequestBody.Description =
+                    "If you set the FiredAt to null, then you can cancel the fired";
+
+                operation.Responses.Add(
+                    StatusCodes.Status404NotFound.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description = "Not Found\n\nTeacher or room not found",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
+                    }
+                );
+
+                return operation;
+            });
+
         return builder;
     }
 }

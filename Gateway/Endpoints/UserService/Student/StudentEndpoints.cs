@@ -120,6 +120,19 @@ public static class StudentEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete("api/students/soft", ([FromBody] DeleteStudentsRequest request) => { })
+            .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Soft delete students";
+                operation.Description = "Soft delete students";
+
+                return operation;
+            });
+
         return builder;
     }
 }

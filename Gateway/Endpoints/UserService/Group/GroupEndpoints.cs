@@ -79,7 +79,7 @@ public static class GroupEndpoints
         builder
             .MapDelete("api/groups", ([FromBody] DeleteGroupsRequest request) => { })
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
-            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
             .WithOpenApi(operation =>
             {
@@ -92,7 +92,7 @@ public static class GroupEndpoints
         builder
             .MapDelete("api/groups/soft", ([FromBody] DeleteGroupsRequest request) => { })
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
-            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
             .WithOpenApi(operation =>
             {
@@ -108,7 +108,7 @@ public static class GroupEndpoints
                 ([FromBody] TransferGroupsToNextSemesterRequest request) => { }
             )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
-            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
             .WithOpenApi(operation =>
             {
@@ -133,7 +133,7 @@ public static class GroupEndpoints
                 ([FromBody] TransferGroupsToNextCourseRequest request) => { }
             )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
-            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
             .WithOpenApi(operation =>
             {
@@ -146,6 +146,34 @@ public static class GroupEndpoints
                     {
                         Description =
                             "Unprocessable Entity\n\nCannot promote groups to next course",
+                    }
+                );
+
+                return operation;
+            });
+
+        builder
+            .MapPatch("api/groups/graduate", ([FromBody] GraduateGroupsRequest request) => { })
+            .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "graduate groups";
+                operation.Description = "graduate groups";
+
+                operation.Responses.Add(
+                    StatusCodes.Status422UnprocessableEntity.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description = "Unprocessable Entity\n\nCannot graduate groups",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
                     }
                 );
 

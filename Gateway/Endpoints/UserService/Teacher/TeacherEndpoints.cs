@@ -1,8 +1,11 @@
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
+using Gateway.Data.Errors;
 using Gateway.Endpoints.UserService.Teacher.Enums;
+using Gateway.Endpoints.UserService.Teacher.Requests;
 using Gateway.Endpoints.UserService.Teacher.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 namespace Gateway.Endpoints.UserService.Teacher;
 
@@ -72,6 +75,34 @@ public static class TeacherEndpoints
                 operation.Summary = "Get teacher by ssoId";
                 operation.Description =
                     "Get teacher by ssoId" + "\n\n**Request example:** `/api/teacher/sso?ssoId=10`";
+
+                return operation;
+            });
+
+        builder
+            .MapPost("api/teacher", ([FromBody] CreateTeacherRequest request) => { })
+            .Produces<TeacherShortInfo>(StatusCodes.Status201Created)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
+            .WithTags(teacherTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Create teacher";
+                operation.Description = "Create teacher";
+
+                operation.Responses.Add(
+                    StatusCodes.Status404NotFound.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description = "Not Found\n\nRoom not found",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
+                    }
+                );
 
                 return operation;
             });

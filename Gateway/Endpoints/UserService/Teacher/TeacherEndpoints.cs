@@ -107,6 +107,19 @@ public static class TeacherEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete("api/teachers", ([FromBody] DeleteTeachersRequest request) => { })
+            .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(teacherTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Delete teachers";
+                operation.Description = "Delete teachers";
+
+                return operation;
+            });
+
         return builder;
     }
 }

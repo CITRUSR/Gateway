@@ -1,3 +1,4 @@
+using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Endpoints.UserService.Student.Enums;
 using Gateway.Endpoints.UserService.Student.Responses;
@@ -43,6 +44,20 @@ public static class StudentEndpoints
                 operation.Description =
                     "Get students with pagination, filtering, sorting, and deleted status."
                     + "\n\n**Request example:** `/api/groups?page=5&pageSize=10&droppedOutStatus=OnlyActive&sortState=LastNameAsc&deletedStatus=OnlyActive`";
+
+                return operation;
+            });
+
+        builder
+            .MapGet("api/student", ([FromQuery] int id) => { })
+            .Produces<StudentDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Get student by id";
+                operation.Description =
+                    "Get student by id" + "\n\n**Request example:** `/api/group?id=10`";
 
                 return operation;
             });

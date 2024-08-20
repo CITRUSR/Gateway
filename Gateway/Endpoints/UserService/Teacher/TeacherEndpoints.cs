@@ -1,3 +1,4 @@
+using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Endpoints.UserService.Teacher.Enums;
 using Gateway.Endpoints.UserService.Teacher.Responses;
@@ -43,6 +44,20 @@ public static class TeacherEndpoints
                 operation.Description =
                     "Get teachers with pagination, filtering, sorting, and deleted status."
                     + "\n\n**Request example:** `/api/teachers?page=5&pageSize=10&firedStatus=OnlyActive&sortState=LastNameAsc&deletedStatus=OnlyActive`";
+
+                return operation;
+            });
+
+        builder
+            .MapGet("api/teaher", ([FromQuery] int id) => { })
+            .Produces<TeacherDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(teacherTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Get teacher by id";
+                operation.Description =
+                    "Get teacher by id" + "\n\n**Request example:** `/api/teacher?id=10`";
 
                 return operation;
             });

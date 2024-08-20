@@ -62,6 +62,20 @@ public static class TeacherEndpoints
                 return operation;
             });
 
+        builder
+            .MapGet("api/teaher/sso", ([FromQuery] int ssoId) => { })
+            .Produces<TeacherDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(teacherTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Get teacher by ssoId";
+                operation.Description =
+                    "Get teacher by ssoId" + "\n\n**Request example:** `/api/teacher/sso?ssoId=10`";
+
+                return operation;
+            });
+
         return builder;
     }
 }

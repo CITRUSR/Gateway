@@ -1,3 +1,4 @@
+using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
 using Gateway.Endpoints.UserService.Speciality.Enums;
@@ -46,7 +47,7 @@ public static class SpecialityEndpoints
 
         builder
             .MapGet("api/speciality", ([FromQuery] int id) => { })
-            .Produces<SpecialityDetailInfo>(StatusCodes.Status200OK)
+            .Produces<SpecialityDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(specialityTag)
             .WithOpenApi(operation =>
@@ -101,8 +102,9 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapPut("api/speciality", ([FromBody] SpecialityDetailInfo request) => { })
+            .MapPut("api/speciality", ([FromBody] EditSpecialityRequest request) => { })
             .Produces<SpecialityShortInfo>(StatusCodes.Status200OK)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(specialityTag)
             .WithOpenApi(operation =>

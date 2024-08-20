@@ -190,6 +190,37 @@ public static class StudentEndpoints
                 return operation;
             });
 
+        builder
+            .MapPut("api/student", ([FromBody] EditStudentRequest request) => { })
+            .Produces<StudentShortInfo>(StatusCodes.Status200OK)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Edit student";
+                operation.Description = "Edit student";
+
+                operation.RequestBody.Description =
+                    "If you set the droppedOutAt to null, then you can cancel the deduction";
+
+                operation.Responses.Add(
+                    StatusCodes.Status404NotFound.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description = "Not Found\n\nStudent or group not found",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
+                    }
+                );
+
+                return operation;
+            });
+
         return builder;
     }
 }

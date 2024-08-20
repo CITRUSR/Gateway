@@ -46,7 +46,7 @@ public static class StudentEndpoints
                 operation.Summary = "Get students";
                 operation.Description =
                     "Get students with pagination, filtering, sorting, and deleted status."
-                    + "\n\n**Request example:** `/api/groups?page=5&pageSize=10&droppedOutStatus=OnlyActive&sortState=LastNameAsc&deletedStatus=OnlyActive`";
+                    + "\n\n**Request example:** `/api/students?page=5&pageSize=10&droppedOutStatus=OnlyActive&sortState=LastNameAsc&deletedStatus=OnlyActive`";
 
                 return operation;
             });
@@ -60,7 +60,7 @@ public static class StudentEndpoints
             {
                 operation.Summary = "Get student by id";
                 operation.Description =
-                    "Get student by id" + "\n\n**Request example:** `/api/group?id=10`";
+                    "Get student by id" + "\n\n**Request example:** `/api/student?id=10`";
 
                 return operation;
             });
@@ -74,7 +74,36 @@ public static class StudentEndpoints
             {
                 operation.Summary = "Get student by ssoId";
                 operation.Description =
-                    "Get student by ssoId" + "\n\n**Request example:** `/api/group/sso?ssoId=10`";
+                    "Get student by ssoId" + "\n\n**Request example:** `/api/student/sso?ssoId=10`";
+
+                return operation;
+            });
+
+        builder
+            .MapGet("api/students/group", ([FromQuery] int groupId) => { })
+            .Produces<List<StudentViewModel>>(StatusCodes.Status200OK)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Get students by groupId";
+                operation.Description =
+                    "Get students by groupId"
+                    + "\n\n**Request example:** `/api/students/group?groupId=10`";
+
+                operation.Responses.Add(
+                    StatusCodes.Status404NotFound.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description = "Not Found\n\nGroup not found",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
+                    }
+                );
 
                 return operation;
             });

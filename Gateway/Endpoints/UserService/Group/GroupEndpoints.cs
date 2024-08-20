@@ -1,3 +1,4 @@
+using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
 using Gateway.Endpoints.UserService.Group.Enums;
@@ -52,7 +53,7 @@ public static class GroupEndpoints
 
         builder
             .MapGet("api/group", ([FromQuery] int id) => { })
-            .Produces<GroupDetailInfo>(StatusCodes.Status200OK)
+            .Produces<GroupDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
             .WithOpenApi(operation =>
@@ -66,7 +67,7 @@ public static class GroupEndpoints
 
         builder
             .MapPost("api/group", ([FromBody] CreateGroupRequest request) => { })
-            .Produces<GroupShortInfo>(StatusCodes.Status200OK)
+            .Produces<GroupShortInfo>(StatusCodes.Status201Created)
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(groupTag)
@@ -199,6 +200,7 @@ public static class GroupEndpoints
         builder
             .MapPut("api/group", ([FromBody] EditGroupRequest request) => { })
             .Produces<GroupShortInfo>(StatusCodes.Status200OK)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(groupTag)
             .WithOpenApi(operation =>
             {

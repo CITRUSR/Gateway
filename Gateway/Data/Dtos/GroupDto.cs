@@ -1,6 +1,6 @@
-namespace Gateway.Endpoints.UserService.Group.Responses;
+namespace Gateway.Data.Dtos;
 
-public record GroupDetailInfo(
+public record GroupDto(
     int Id,
     int SpecialityId,
     Guid CuratorId,
@@ -8,5 +8,6 @@ public record GroupDetailInfo(
     byte CurrentSemester,
     byte SubGroup,
     DateTime StartedAt,
+    DateTime? GraduatedAt,
     bool IsDeleted
 );

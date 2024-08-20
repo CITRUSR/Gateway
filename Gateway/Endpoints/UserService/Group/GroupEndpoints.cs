@@ -152,6 +152,37 @@ public static class GroupEndpoints
                 return operation;
             });
 
+        builder
+            .MapPut("api/group", ([FromBody] EditGroupRequest request) => { })
+            .Produces<GroupShortInfo>(StatusCodes.Status200OK)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Edit group";
+                operation.Description = "Edit group";
+
+                operation.RequestBody.Description =
+                    "If the students are not changed, then the value of students must be null, otherwise add all students including the unchanged ones";
+
+                operation.Responses.Add(
+                    StatusCodes.Status404NotFound.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description =
+                            "Not Found\n\nGroup or speciality or curator or students(if them chaged) not found",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
+                    }
+                );
+
+                return operation;
+            });
+
         return builder;
     }
 }

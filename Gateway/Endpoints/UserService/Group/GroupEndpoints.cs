@@ -121,6 +121,13 @@ public static class GroupEndpoints
                     {
                         Description =
                             "Unprocessable Entity\n\nCannot promote groups to next semester",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
                     }
                 );
 
@@ -146,6 +153,13 @@ public static class GroupEndpoints
                     {
                         Description =
                             "Unprocessable Entity\n\nCannot promote groups to next course",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
                     }
                 );
 

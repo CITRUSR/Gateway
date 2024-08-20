@@ -133,6 +133,34 @@ public static class TeacherEndpoints
                 return operation;
             });
 
+        builder
+            .MapPatch("api/teachers/fire", ([FromBody] FireTeachersRequest request) => { })
+            .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(teacherTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Fire teachers";
+                operation.Description = "Fire teachers";
+
+                operation.Responses.Add(
+                    StatusCodes.Status422UnprocessableEntity.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description = "Unprocessable Entity\n\nCannot fire teachers",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
+                    }
+                );
+
+                return operation;
+            });
+
         return builder;
     }
 }

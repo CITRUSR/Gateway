@@ -67,7 +67,7 @@ public static class GroupEndpoints
 
         builder
             .MapPost("api/group", ([FromBody] CreateGroupRequest request) => { })
-            .Produces<GroupShortInfo>(StatusCodes.Status200OK)
+            .Produces<GroupShortInfo>(StatusCodes.Status201Created)
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(groupTag)

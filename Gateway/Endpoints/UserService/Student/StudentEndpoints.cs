@@ -62,6 +62,20 @@ public static class StudentEndpoints
                 return operation;
             });
 
+        builder
+            .MapGet("api/student/sso", ([FromQuery] int ssoId) => { })
+            .Produces<StudentDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Get student by ssoId";
+                operation.Description =
+                    "Get student by ssoId" + "\n\n**Request example:** `/api/group/sso?ssoId=10`";
+
+                return operation;
+            });
+
         return builder;
     }
 }

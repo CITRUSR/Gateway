@@ -1,8 +1,11 @@
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
+using Gateway.Data.Errors;
 using Gateway.Endpoints.UserService.Student.Enums;
+using Gateway.Endpoints.UserService.Student.Requests;
 using Gateway.Endpoints.UserService.Student.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 namespace Gateway.Endpoints.UserService.Student;
 
@@ -72,6 +75,34 @@ public static class StudentEndpoints
                 operation.Summary = "Get student by ssoId";
                 operation.Description =
                     "Get student by ssoId" + "\n\n**Request example:** `/api/group/sso?ssoId=10`";
+
+                return operation;
+            });
+
+        builder
+            .MapPost("api/student", ([FromBody] CreateStudentRequest request) => { })
+            .Produces<StudentShortInfo>(StatusCodes.Status201Created)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Create student";
+                operation.Description = "Create student";
+
+                operation.Responses.Add(
+                    StatusCodes.Status404NotFound.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description = "Not Found\n\nGroup not found",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
+                    }
+                );
 
                 return operation;
             });

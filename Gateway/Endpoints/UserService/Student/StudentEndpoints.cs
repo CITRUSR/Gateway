@@ -162,6 +162,34 @@ public static class StudentEndpoints
                 return operation;
             });
 
+        builder
+            .MapPatch("api/students/drop", ([FromBody] DropOutStudentsRequest request) => { })
+            .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Drop out students";
+                operation.Description = "Drop out students";
+
+                operation.Responses.Add(
+                    StatusCodes.Status422UnprocessableEntity.ToString(),
+                    new OpenApiResponse
+                    {
+                        Description = "Unprocessable Entity\n\nCannot drop out students",
+                        Content = new Dictionary<string, OpenApiMediaType>
+                        {
+                            ["application/json"] = new OpenApiMediaType
+                            {
+                                Schema = new OpenApiSchema { Type = "string" },
+                            },
+                        },
+                    }
+                );
+
+                return operation;
+            });
+
         return builder;
     }
 }

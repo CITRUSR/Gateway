@@ -107,6 +107,19 @@ public static class StudentEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete("api/students", ([FromBody] DeleteStudentsRequest request) => { })
+            .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Delete students";
+                operation.Description = "Delete students";
+
+                return operation;
+            });
+
         return builder;
     }
 }

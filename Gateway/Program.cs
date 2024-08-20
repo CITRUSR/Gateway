@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Gateway.Endpoints.UserService.Group;
 using Gateway.Endpoints.UserService.Speciality;
 using Gateway.Endpoints.UserService.Student;
+using Gateway.Endpoints.UserService.Teacher;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,5 +31,6 @@ app.UseHttpsRedirection();
 SpecialityEndpoints.Map(app);
 GroupEndpoints.Map(app);
 StudentEndpoints.Map(app);
+TeacherEndpoints.Map(app);
 
 app.Run();

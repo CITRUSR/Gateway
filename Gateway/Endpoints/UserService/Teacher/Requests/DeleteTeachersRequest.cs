@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Gateway.Endpoints.UserService.Teacher.Requests;
 
-public record DeleteTeachersRequest(List<Guid> TeachersId);
+public record DeleteTeachersRequest([property: Required] List<Guid> TeachersId);

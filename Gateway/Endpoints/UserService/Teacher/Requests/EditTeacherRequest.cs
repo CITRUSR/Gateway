@@ -3,11 +3,17 @@ using System.ComponentModel.DataAnnotations;
 namespace Gateway.Endpoints.UserService.Teacher.Requests;
 
 public record EditTeacherRequest(
-    Guid Id,
-    string FirstName,
-    string LastName,
-    string PayronymicName,
-    short RoomId,
+    [property: Required] Guid Id,
+    [property: Required]
+    [property: MaxLength(32)]
+    [property: RegularExpression(@"\A\S+\z")]
+        string FirstName,
+    [property: Required]
+    [property: MaxLength(32)]
+    [property: RegularExpression(@"\A\S+\z")]
+        string LastName,
+    [property: MaxLength(32)] [property: RegularExpression(@"\A\S+\z")] string? PayronymicName,
+    [property: Required] short RoomId,
     DateTime? FiredAt,
-    bool IsDeleted
+    [property: Required] bool IsDeleted
 );

@@ -1,13 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Gateway.Data.Dtos;
 
 public record GroupDto(
-    int Id,
-    int SpecialityId,
-    Guid CuratorId,
-    byte CurrentCourse,
-    byte CurrentSemester,
-    byte SubGroup,
-    DateTime StartedAt,
+    [property: Required] int Id,
+    [property: Required] int SpecialityId,
+    [property: Required] Guid CuratorId,
+    [property: Required] [property: Range(1, byte.MaxValue)] byte CurrentCourse,
+    [property: Required] [property: Range(1, byte.MaxValue)] byte CurrentSemester,
+    [property: Required] [property: Range(1, byte.MaxValue)] byte SubGroup,
+    [property: Required] DateTime StartedAt,
     DateTime? GraduatedAt,
-    bool IsDeleted
+    [property: Required] bool IsDeleted
 );

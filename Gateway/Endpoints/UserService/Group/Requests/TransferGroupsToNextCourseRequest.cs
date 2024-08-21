@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Gateway.Endpoints.UserService.Group.Requests;
 
-public record TransferGroupsToNextCourseRequest(List<int> GroupsId);
+public record TransferGroupsToNextCourseRequest([property: Required] List<int> GroupsId);

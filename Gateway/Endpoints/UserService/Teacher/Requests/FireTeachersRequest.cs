@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Gateway.Endpoints.UserService.Teacher.Requests;
 
-public record FireTeachersRequest(List<Guid> TeachersId);
+public record FireTeachersRequest([property: Required] List<Guid> TeachersId);

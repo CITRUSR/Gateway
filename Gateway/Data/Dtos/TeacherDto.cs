@@ -1,12 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Gateway.Data.Dtos;
 
 public record TeacherDto(
-    Guid Id,
-    Guid SsoId,
-    string FirstName,
-    string LastName,
-    string? PatronymicName,
-    short RoomId,
+    [property: Required] Guid Id,
+    [property: Required] Guid SsoId,
+    [property: Required] [property: MaxLength(32)] string FirstName,
+    [property: Required] [property: MaxLength(32)] string LastName,
+    [property: MaxLength(32)] string? PatronymicName,
+    [property: Required] short RoomId,
     DateTime? FiredAt,
-    bool IsDeleted
+    [property: Required] bool IsDeleted
 );

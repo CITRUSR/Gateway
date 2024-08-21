@@ -1,3 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Gateway.Endpoints.UserService.Student.Responses;
 
-public record GetStudentsResponse(int LastPage, List<StudentViewModel> Students);
+public record GetStudentsResponse(
+    [property: Required] int LastPage,
+    List<StudentViewModel> Students
+);

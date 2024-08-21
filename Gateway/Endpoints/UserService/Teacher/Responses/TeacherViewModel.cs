@@ -1,10 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Gateway.Endpoints.UserService.Teacher.Responses;
 
 public record TeacherViewModel(
-    Guid Id,
-    string FirstName,
-    string LastName,
-    string? PatronymicName,
+    [property: Required] Guid Id,
+    [property: Required] [property: MaxLength(32)] string FirstName,
+    [property: Required] [property: MaxLength(32)] string LastName,
+    [property: MaxLength(32)] string? PatronymicName,
     string? GroupName,
-    int RoomNumber
+    [property: Required] int RoomNumber
 );

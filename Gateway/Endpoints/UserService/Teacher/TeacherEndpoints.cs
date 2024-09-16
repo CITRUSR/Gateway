@@ -134,6 +134,19 @@ public static class TeacherEndpoints
             });
 
         builder
+            .MapDelete("api/teachers/recovery", ([FromBody] RecoveryTeachersRequest request) => { })
+            .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(teacherTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Recovery teachers";
+                operation.Description = "Recovery teachers";
+
+                return operation;
+            });
+
+        builder
             .MapPatch("api/teachers/fire", ([FromBody] FireTeachersRequest request) => { })
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)

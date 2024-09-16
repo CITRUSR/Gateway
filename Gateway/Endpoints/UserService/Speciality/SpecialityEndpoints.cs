@@ -102,6 +102,22 @@ public static class SpecialityEndpoints
             });
 
         builder
+            .MapPatch(
+                "api/specialities/recovery",
+                ([FromBody] RecoverySpecialitiesRequest request) => { }
+            )
+            .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
+            .Produces<List<string>>(StatusCodes.Status404NotFound)
+            .WithTags(specialityTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Recovery specialities";
+                operation.Description = "Recovery specialities";
+
+                return operation;
+            });
+
+        builder
             .MapPut("api/speciality", ([FromBody] EditSpecialityRequest request) => { })
             .Produces<SpecialityShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)

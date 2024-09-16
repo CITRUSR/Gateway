@@ -106,6 +106,19 @@ public static class GroupEndpoints
             });
 
         builder
+            .MapPatch("api/groups/recovery", ([FromBody] RecoveryGroupsRequest request) => { })
+            .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(groupTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Recovery groups";
+                operation.Description = "Recovery groups";
+
+                return operation;
+            });
+
+        builder
             .MapPatch(
                 "api/groups/semester",
                 ([FromBody] TransferGroupsToNextSemesterRequest request) => { }

@@ -163,6 +163,19 @@ public static class StudentEndpoints
             });
 
         builder
+            .MapDelete("api/students/recovery", ([FromBody] RecoveryStudentsRequest request) => { })
+            .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(studentTag)
+            .WithOpenApi(operation =>
+            {
+                operation.Summary = "Recovery students";
+                operation.Description = "Recovery students";
+
+                return operation;
+            });
+
+        builder
             .MapPatch("api/students/drop", ([FromBody] DropOutStudentsRequest request) => { })
             .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)

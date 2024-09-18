@@ -3,6 +3,7 @@ using Gateway.Endpoints.UserService.Group;
 using Gateway.Endpoints.UserService.Speciality;
 using Gateway.Endpoints.UserService.Student;
 using Gateway.Endpoints.UserService.Teacher;
+using Gateway.Middlewares;
 using Serilog;
 
 namespace Gateway.Extensions;
@@ -28,6 +29,8 @@ public static class StartupExtensions
 
     public static void ConfigureApplication(this WebApplication app)
     {
+        app.UseMiddleware<GlobalExceptionHandler>();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

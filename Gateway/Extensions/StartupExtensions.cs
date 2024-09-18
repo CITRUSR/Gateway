@@ -3,6 +3,7 @@ using Gateway.Endpoints.UserService.Group;
 using Gateway.Endpoints.UserService.Speciality;
 using Gateway.Endpoints.UserService.Student;
 using Gateway.Endpoints.UserService.Teacher;
+using Serilog;
 
 namespace Gateway.Extensions;
 
@@ -10,6 +11,8 @@ public static class StartupExtensions
 {
     public static void ConfigureServices(this IServiceCollection services)
     {
+        Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 

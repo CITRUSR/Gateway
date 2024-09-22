@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <Protobuf Include="Protos/UserService/shared.proto" GrpcServices="None"/>
+        <Protobuf Include="Protos/UserService/speciality.proto" GrpcServices="Client"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -6,6 +6,8 @@ using Gateway.Endpoints.UserService.Student;
 using Gateway.Endpoints.UserService.Teacher;
 using Gateway.Middlewares;
 using Gateway.Services.UserService;
+using Google.Protobuf.Collections;
+using Mapster;
 using Serilog;
 
 namespace Gateway.Extensions;
@@ -56,5 +58,12 @@ public static class StartupExtensions
         return app;
     }
 
-    public static void MapsterConfigure() { }
+    public static void MapsterConfigure()
+    {
+        TypeAdapterConfig.GlobalSettings.Default.UseDestinationValue(member =>
+            member.SetterModifier == AccessModifier.None
+            && member.Type.IsGenericType
+            && member.Type.GetGenericTypeDefinition() == typeof(RepeatedField<>)
+        );
+    }
 }

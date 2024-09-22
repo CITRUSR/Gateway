@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
+using Gateway.Contracts.UserService;
 using Gateway.Endpoints.UserService.Group;
 using Gateway.Endpoints.UserService.Speciality;
 using Gateway.Endpoints.UserService.Student;
 using Gateway.Endpoints.UserService.Teacher;
 using Gateway.Middlewares;
+using Gateway.Services.UserService;
 using Serilog;
 
 namespace Gateway.Extensions;
@@ -25,6 +27,8 @@ public static class StartupExtensions
         {
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
+
+        services.AddSingleton<ISpecialityService, SpecialityService>();
     }
 
     public static void ConfigureApplication(this WebApplication app)

@@ -28,6 +28,8 @@ public static class StartupExtensions
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
 
+        MapsterConfigure();
+
         services.AddSingleton<ISpecialityService, SpecialityService>();
     }
 
@@ -53,4 +55,6 @@ public static class StartupExtensions
 
         return app;
     }
+
+    public static void MapsterConfigure() { }
 }

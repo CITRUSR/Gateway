@@ -4,6 +4,7 @@ using Gateway.Endpoints.UserService.Group;
 using Gateway.Endpoints.UserService.Speciality;
 using Gateway.Endpoints.UserService.Student;
 using Gateway.Endpoints.UserService.Teacher;
+using Gateway.Mappings;
 using Gateway.Middlewares;
 using Gateway.Services.UserService;
 using Google.Protobuf.Collections;
@@ -65,5 +66,7 @@ public static class StartupExtensions
             && member.Type.IsGenericType
             && member.Type.GetGenericTypeDefinition() == typeof(RepeatedField<>)
         );
+
+        SpecialityConfig.Configure();
     }
 }

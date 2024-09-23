@@ -53,9 +53,13 @@ public class SpecialityService : ISpecialityService
         return result.Specialities.Adapt<List<SpecialityShortInfo>>();
     }
 
-    public Task<SpecialityShortInfo> EditSpeciality(EditSpecialityRequest request)
+    public async Task<SpecialityShortInfo> EditSpeciality(EditSpecialityRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.EditSpecialityRequest>();
+
+        var result = await _specialityService.EditSpecialityAsync(grpcRequest);
+
+        return result.Adapt<SpecialityShortInfo>();
     }
 
     public Task<GetSpecialitiesResponse> GetSpecialities(

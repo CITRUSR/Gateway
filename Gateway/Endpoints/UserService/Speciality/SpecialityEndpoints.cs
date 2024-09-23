@@ -141,7 +141,18 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapPut("api/speciality", ([FromBody] EditSpecialityRequest request) => { })
+            .MapPut(
+                "api/speciality",
+                async (
+                    [FromBody] EditSpecialityRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.EditSpeciality(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<SpecialityShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .Produces<string>(StatusCodes.Status404NotFound)

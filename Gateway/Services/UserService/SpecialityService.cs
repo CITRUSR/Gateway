@@ -62,7 +62,7 @@ public class SpecialityService : ISpecialityService
         return result.Adapt<SpecialityShortInfo>();
     }
 
-    public Task<GetSpecialitiesResponse> GetSpecialities(
+    public async Task<GetSpecialitiesResponse> GetSpecialities(
         int page,
         int pageSize,
         string? search,
@@ -70,7 +70,18 @@ public class SpecialityService : ISpecialityService
         DeletedStatus deletedStatus
     )
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetSpecialitiesRequest
+        {
+            DeletedStatus = (UserServiceClient.DeletedStatus)deletedStatus,
+            Page = page,
+            PageSize = pageSize,
+            SearchString = search,
+            SortState = (UserServiceClient.SpecialitySortState)sortState,
+        };
+
+        var result = await _specialityService.GetSpecialitiesAsync(grpcRequest);
+
+        return result.Adapt<GetSpecialitiesResponse>();
     }
 
     public Task<SpecialityDto> GetSpecialityById(int id)

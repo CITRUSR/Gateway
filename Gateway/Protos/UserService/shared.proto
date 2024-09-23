@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "UserService";
+option csharp_namespace = "UserServiceClient";
 
 enum DeletedStatus{
     All = 0;

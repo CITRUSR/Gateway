@@ -18,13 +18,25 @@ public static class SpecialityEndpoints
         builder
             .MapGet(
                 "api/specialties",
-                (
-                    [FromQuery] string page,
-                    [FromQuery] string pageSize,
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
                     [FromQuery] string? search,
                     [FromQuery] SpecialitySortState sortState,
-                    [FromQuery] DeletedStatus deletedStatus
-                ) => { }
+                    [FromQuery] DeletedStatus deletedStatus,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.GetSpecialities(
+                        page,
+                        pageSize,
+                        search,
+                        sortState,
+                        deletedStatus
+                    );
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<GetSpecialitiesResponse>(StatusCodes.Status200OK)
             .WithTags(specialityTag)

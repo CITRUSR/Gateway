@@ -59,7 +59,15 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapGet("api/speciality", ([FromQuery] int id) => { })
+            .MapGet(
+                "api/speciality",
+                async ([FromQuery] int id, ISpecialityService specialityService) =>
+                {
+                    var result = await specialityService.GetSpecialityById(id);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<SpecialityDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(specialityTag)

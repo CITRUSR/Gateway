@@ -84,9 +84,13 @@ public class SpecialityService : ISpecialityService
         return result.Adapt<GetSpecialitiesResponse>();
     }
 
-    public Task<SpecialityDto> GetSpecialityById(int id)
+    public async Task<SpecialityDto> GetSpecialityById(int id)
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetSpecialityByIdRequest { Id = id };
+
+        var result = await _specialityService.GetSpecialityByIdAsync(grpcRequest);
+
+        return result.Adapt<SpecialityDto>();
     }
 
     public Task<List<SpecialityShortInfo>> RecoverySpecialities(RecoverySpecialitiesRequest request)

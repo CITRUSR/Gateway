@@ -155,7 +155,15 @@ public static class SpecialityEndpoints
         builder
             .MapPatch(
                 "api/specialities/recovery",
-                ([FromBody] RecoverySpecialitiesRequest request) => { }
+                async (
+                    [FromBody] RecoverySpecialitiesRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.RecoverySpecialities(request);
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
             .Produces<List<string>>(StatusCodes.Status404NotFound)

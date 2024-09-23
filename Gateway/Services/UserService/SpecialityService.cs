@@ -93,9 +93,15 @@ public class SpecialityService : ISpecialityService
         return result.Adapt<SpecialityDto>();
     }
 
-    public Task<List<SpecialityShortInfo>> RecoverySpecialities(RecoverySpecialitiesRequest request)
+    public async Task<List<SpecialityShortInfo>> RecoverySpecialities(
+        RecoverySpecialitiesRequest request
+    )
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.RecoverySpecialitiesRequest>();
+
+        var result = await _specialityService.RecoverySpecialitiesAsync(grpcRequest);
+
+        return result.Specialities.Adapt<List<SpecialityShortInfo>>();
     }
 
     public async Task<List<SpecialityShortInfo>> SoftDeleteSpecialities(

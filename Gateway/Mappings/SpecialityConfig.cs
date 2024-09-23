@@ -17,5 +17,12 @@ public static class SpecialityConfig
         >
             .NewConfig()
             .Map(dest => dest.Ids, src => src.SpecialitiesId);
+
+        TypeAdapterConfig<
+            RecoverySpecialitiesRequest,
+            UserServiceClient.RecoverySpecialitiesRequest
+        >
+            .NewConfig()
+            .Map(dest => dest.Ids, src => src.SpecialitiesId);
     }
 }

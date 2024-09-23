@@ -5,6 +5,7 @@ using Gateway.Endpoints.UserService.Speciality.Enums;
 using Gateway.Endpoints.UserService.Speciality.Requests;
 using Gateway.Endpoints.UserService.Speciality.Responses;
 using Grpc.Net.Client;
+using Mapster;
 
 namespace Gateway.Services.UserService;
 
@@ -34,7 +35,11 @@ public class SpecialityService : ISpecialityService
 
     public async Task<SpecialityShortInfo> CreateSpeciality(CreateSpecialityRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.CreateSpecialityRequest>();
+
+        var result = await _specialityService.CreateSpecialityAsync(grpcRequest);
+
+        return result.Adapt<SpecialityShortInfo>();
     }
 
     public async Task<List<SpecialityShortInfo>> DeleteSpecialities(

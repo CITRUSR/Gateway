@@ -1,3 +1,4 @@
+using Gateway.Contracts.UserService;
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
@@ -60,7 +61,18 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapPost("api/speciality", ([FromBody] CreateSpecialityRequest request) => { })
+            .MapPost(
+                "api/speciality",
+                async (
+                    [FromBody] CreateSpecialityRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.CreateSpeciality(request);
+
+                    return Results.Created("", result);
+                }
+            )
             .Produces<SpecialityShortInfo>(StatusCodes.Status201Created)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(specialityTag)

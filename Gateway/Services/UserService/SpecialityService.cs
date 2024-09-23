@@ -46,7 +46,11 @@ public class SpecialityService : ISpecialityService
         DeleteSpecialitiesRequest request
     )
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.DeleteSpecialitiesRequest>();
+
+        var result = await _specialityService.DeleteSpecialitiesAsync(grpcRequest);
+
+        return result.Specialities.Adapt<List<SpecialityShortInfo>>();
     }
 
     public Task<SpecialityShortInfo> EditSpeciality(EditSpecialityRequest request)

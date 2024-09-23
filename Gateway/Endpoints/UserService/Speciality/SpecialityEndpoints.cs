@@ -85,7 +85,18 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapDelete("api/specialities", ([FromBody] DeleteSpecialitiesRequest request) => { })
+            .MapDelete(
+                "api/specialities",
+                async (
+                    [FromBody] DeleteSpecialitiesRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.DeleteSpecialities(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
             .Produces<List<string>>(StatusCodes.Status404NotFound)
             .WithTags(specialityTag)

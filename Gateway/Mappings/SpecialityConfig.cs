@@ -10,5 +10,12 @@ public static class SpecialityConfig
         TypeAdapterConfig<DeleteSpecialitiesRequest, UserServiceClient.DeleteSpecialitiesRequest>
             .NewConfig()
             .Map(dest => dest.Ids, src => src.SpecialitiesId);
+
+        TypeAdapterConfig<
+            DeleteSpecialitiesRequest,
+            UserServiceClient.SoftDeleteSpecialitiesRequest
+        >
+            .NewConfig()
+            .Map(dest => dest.Ids, src => src.SpecialitiesId);
     }
 }

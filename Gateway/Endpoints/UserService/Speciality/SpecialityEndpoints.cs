@@ -131,7 +131,15 @@ public static class SpecialityEndpoints
         builder
             .MapDelete(
                 "api/specialities/soft",
-                ([FromBody] DeleteSpecialitiesRequest request) => { }
+                async (
+                    [FromBody] DeleteSpecialitiesRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.SoftDeleteSpecialities(request);
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
             .Produces<List<string>>(StatusCodes.Status404NotFound)

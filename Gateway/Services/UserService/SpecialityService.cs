@@ -102,6 +102,10 @@ public class SpecialityService : ISpecialityService
         DeleteSpecialitiesRequest request
     )
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.SoftDeleteSpecialitiesRequest>();
+
+        var result = await _specialityService.SoftDeleteSpecialitiesAsync(grpcRequest);
+
+        return result.Specialities.Adapt<List<SpecialityShortInfo>>();
     }
 }

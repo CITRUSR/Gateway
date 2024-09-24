@@ -76,9 +76,16 @@ public class TeacherService : ITeacherService
         return result.Adapt<TeacherDto>();
     }
 
-    public Task<TeacherDto> GetTeacherBySsoId(Guid ssoId)
+    public async Task<TeacherDto> GetTeacherBySsoId(Guid ssoId)
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetTeacherBySsoIdRequest
+        {
+            SsoId = ssoId.ToString(),
+        };
+
+        var result = await _teacherService.GetTeacherBySsoIdAsync(grpcRequest);
+
+        return result.Adapt<TeacherDto>();
     }
 
     public Task<GetTeachersResponse> GetTeachers(

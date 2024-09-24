@@ -75,7 +75,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapGet("api/teaher/sso", ([FromQuery] int ssoId) => { })
+            .MapGet(
+                "api/teacher/sso",
+                async ([FromQuery] Guid ssoId, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.GetTeacherBySsoId(ssoId);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<TeacherDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)

@@ -179,7 +179,18 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapPatch("api/teachers/recovery", ([FromBody] RecoveryTeachersRequest request) => { })
+            .MapPatch(
+                "api/teachers/recovery",
+                async (
+                    [FromBody] RecoveryTeachersRequest request,
+                    ITeacherService teacherService
+                ) =>
+                {
+                    var result = await teacherService.RecoveryTeachers(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)

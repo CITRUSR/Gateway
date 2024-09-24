@@ -16,5 +16,9 @@ public static class TeacherConfig
             .NewConfig()
             .Map(dest => dest.Ids, src => src.TeachersId)
             .Map(dest => dest.FiredTime, src => src.FiredTime.ToUniversalTime().ToTimestamp());
+
+        TypeAdapterConfig<RecoveryTeachersRequest, UserServiceClient.RecoverySpecialitiesRequest>
+            .NewConfig()
+            .Map(dest => dest.Ids, src => src.TeachersId);
     }
 }

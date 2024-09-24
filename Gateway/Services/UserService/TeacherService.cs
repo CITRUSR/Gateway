@@ -110,9 +110,13 @@ public class TeacherService : ITeacherService
         return result.Adapt<GetTeachersResponse>();
     }
 
-    public Task<List<TeacherShortInfo>> RecoveryTeachers(RecoveryTeachersRequest request)
+    public async Task<List<TeacherShortInfo>> RecoveryTeachers(RecoveryTeachersRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.RecoveryTeachersRequest>();
+
+        var result = await _teacherService.RecoveryTeachersAsync(grpcRequest);
+
+        return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 
     public Task<List<TeacherShortInfo>> SoftDeleteTeachers(DeleteTeachersRequest request)

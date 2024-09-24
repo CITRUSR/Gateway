@@ -34,6 +34,7 @@ public static class StartupExtensions
         MapsterConfigure();
 
         services.AddSingleton<ISpecialityService, SpecialityService>();
+        services.AddSingleton<ITeacherService, TeacherService>();
     }
 
     public static void ConfigureApplication(this WebApplication app)

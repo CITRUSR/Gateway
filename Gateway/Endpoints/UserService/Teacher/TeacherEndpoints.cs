@@ -19,14 +19,26 @@ public static class TeacherEndpoints
         builder
             .MapGet(
                 "api/teachers",
-                (
-                    [FromQuery] string page,
-                    [FromQuery] string pageSize,
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
                     [FromQuery] string? search,
                     [FromQuery] TeacherFiredStatus firedStatus,
                     [FromQuery] TeacherSortState sortState,
-                    [FromQuery] DeletedStatus deletedStatus
-                ) => { }
+                    [FromQuery] DeletedStatus deletedStatus,
+                    ITeacherService teacherService
+                ) =>
+                {
+                    var result = await teacherService.GetTeachers(
+                        page,
+                        pageSize,
+                        search,
+                        sortState,
+                        deletedStatus
+                    );
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<GetTeachersResponse>(StatusCodes.Status200OK)
             .WithTags(teacherTag)

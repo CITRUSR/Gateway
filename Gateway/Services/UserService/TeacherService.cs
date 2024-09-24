@@ -88,7 +88,7 @@ public class TeacherService : ITeacherService
         return result.Adapt<TeacherDto>();
     }
 
-    public Task<GetTeachersResponse> GetTeachers(
+    public async Task<GetTeachersResponse> GetTeachers(
         int page,
         int pageSize,
         string? search,
@@ -96,7 +96,18 @@ public class TeacherService : ITeacherService
         DeletedStatus deletedStatus
     )
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetTeachersRequest
+        {
+            DeletedStatus = (UserServiceClient.DeletedStatus)deletedStatus,
+            Page = page,
+            PageSize = pageSize,
+            SearchString = search,
+            SortState = (UserServiceClient.TeacherSortState)sortState,
+        };
+
+        var result = await _teacherService.GetTeachersAsync(grpcRequest);
+
+        return result.Adapt<GetTeachersResponse>();
     }
 
     public Task<List<TeacherShortInfo>> RecoveryTeachers(RecoveryTeachersRequest request)

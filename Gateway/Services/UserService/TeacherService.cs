@@ -40,9 +40,13 @@ public class TeacherService : ITeacherService
         return result.Adapt<TeacherShortInfo>();
     }
 
-    public Task<List<TeacherShortInfo>> DeleteTeachers(DeleteTeachersRequest request)
+    public async Task<List<TeacherShortInfo>> DeleteTeachers(DeleteTeachersRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.DeleteTeachersRequest>();
+
+        var result = await _teacherService.DeleteTeachersAsync(grpcRequest);
+
+        return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 
     public Task<TeacherShortInfo> EditTeacher(EditTeacherRequest request)

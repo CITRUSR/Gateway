@@ -117,7 +117,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapDelete("api/teachers", ([FromBody] DeleteTeachersRequest request) => { })
+            .MapDelete(
+                "api/teachers",
+                async ([FromBody] DeleteTeachersRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.DeleteTeachers(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)

@@ -5,6 +5,7 @@ using Gateway.Endpoints.UserService.Teacher.Enums;
 using Gateway.Endpoints.UserService.Teacher.Requests;
 using Gateway.Endpoints.UserService.Teacher.Responses;
 using Grpc.Net.Client;
+using Mapster;
 
 namespace Gateway.Services.UserService;
 
@@ -30,9 +31,13 @@ public class TeacherService : ITeacherService
         _teacherService = new UserServiceClient.TeacherService.TeacherServiceClient(channel);
     }
 
-    public Task<TeacherShortInfo> CreateTeacher(CreateTeacherRequest request)
+    public async Task<TeacherShortInfo> CreateTeacher(CreateTeacherRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.CreateTeacherRequest>();
+
+        var result = await _teacherService.CreateTeacherAsync(grpcRequest);
+
+        return result.Adapt<TeacherShortInfo>();
     }
 
     public Task<List<TeacherShortInfo>> DeleteTeachers(DeleteTeachersRequest request)

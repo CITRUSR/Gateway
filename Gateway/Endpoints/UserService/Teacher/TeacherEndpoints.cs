@@ -1,3 +1,4 @@
+using Gateway.Contracts.UserService;
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
@@ -80,7 +81,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapPost("api/teacher", ([FromBody] CreateTeacherRequest request) => { })
+            .MapPost(
+                "api/teacher",
+                async ([FromBody] CreateTeacherRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.CreateTeacher(request);
+
+                    return Results.Created("", result);
+                }
+            )
             .Produces<TeacherShortInfo>(StatusCodes.Status201Created)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(teacherTag)

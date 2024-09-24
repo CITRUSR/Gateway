@@ -12,6 +12,10 @@ public static class TeacherConfig
             .NewConfig()
             .Map(dest => dest.Ids, src => src.TeachersId);
 
+        TypeAdapterConfig<DeleteTeachersRequest, UserServiceClient.SoftDeleteTeachersRequest>
+            .NewConfig()
+            .Map(dest => dest.Ids, src => src.TeachersId);
+
         TypeAdapterConfig<FireTeachersRequest, UserServiceClient.FireTeachersRequest>
             .NewConfig()
             .Map(dest => dest.Ids, src => src.TeachersId)

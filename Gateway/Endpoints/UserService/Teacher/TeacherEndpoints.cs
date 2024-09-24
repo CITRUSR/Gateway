@@ -166,7 +166,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapDelete("api/teachers/soft", ([FromBody] DeleteTeachersRequest request) => { })
+            .MapDelete(
+                "api/teachers/soft",
+                async ([FromBody] DeleteTeachersRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.SoftDeleteTeachers(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)

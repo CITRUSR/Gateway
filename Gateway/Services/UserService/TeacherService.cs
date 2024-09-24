@@ -119,8 +119,12 @@ public class TeacherService : ITeacherService
         return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 
-    public Task<List<TeacherShortInfo>> SoftDeleteTeachers(DeleteTeachersRequest request)
+    public async Task<List<TeacherShortInfo>> SoftDeleteTeachers(DeleteTeachersRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.SoftDeleteTeachersRequest>();
+
+        var result = await _teacherService.SoftDeleteTeachersAsync(grpcRequest);
+
+        return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 }

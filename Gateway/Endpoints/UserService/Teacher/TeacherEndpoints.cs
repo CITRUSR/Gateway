@@ -164,7 +164,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapPatch("api/teachers/fire", ([FromBody] FireTeachersRequest request) => { })
+            .MapPatch(
+                "api/teachers/fire",
+                async ([FromBody] FireTeachersRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.FireTeachers(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)

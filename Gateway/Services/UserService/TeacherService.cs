@@ -58,9 +58,13 @@ public class TeacherService : ITeacherService
         return result.Adapt<TeacherShortInfo>();
     }
 
-    public Task<List<TeacherShortInfo>> FireTeachers(FireTeachersRequest request)
+    public async Task<List<TeacherShortInfo>> FireTeachers(FireTeachersRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.FireTeachersRequest>();
+
+        var result = await _teacherService.FireTeachersAsync(grpcRequest);
+
+        return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 
     public Task<TeacherDto> GetTeacherById(Guid id)

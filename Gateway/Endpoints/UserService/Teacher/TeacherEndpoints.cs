@@ -192,7 +192,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapPut("api/teacher", ([FromBody] EditTeacherRequest request) => { })
+            .MapPut(
+                "api/teacher",
+                async ([FromBody] EditTeacherRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.EditTeacher(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<TeacherShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(teacherTag)

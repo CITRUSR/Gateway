@@ -49,9 +49,13 @@ public class TeacherService : ITeacherService
         return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 
-    public Task<TeacherShortInfo> EditTeacher(EditTeacherRequest request)
+    public async Task<TeacherShortInfo> EditTeacher(EditTeacherRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.EditTeacherRequest>();
+
+        var result = await _teacherService.EditTeacherAsync(grpcRequest);
+
+        return result.Adapt<TeacherShortInfo>();
     }
 
     public Task<List<TeacherShortInfo>> FireTeachers(FireTeachersRequest request)

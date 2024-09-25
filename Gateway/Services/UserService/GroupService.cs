@@ -5,6 +5,7 @@ using Gateway.Endpoints.UserService.Group.Enums;
 using Gateway.Endpoints.UserService.Group.Requests;
 using Gateway.Endpoints.UserService.Group.Responses;
 using Grpc.Net.Client;
+using Mapster;
 
 namespace Gateway.Services.UserService;
 
@@ -30,9 +31,13 @@ public class GroupService : IGroupService
         _groupService = new UserServiceClient.GroupService.GroupServiceClient(channel);
     }
 
-    public Task<GroupShortInfo> CreateGroup(CreateGroupRequest request)
+    public async Task<GroupShortInfo> CreateGroup(CreateGroupRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.CreateGroupRequest>();
+
+        var result = await _groupService.CreateGroupAsync(grpcRequest);
+
+        return result.Adapt<GroupShortInfo>();
     }
 
     public Task<List<GroupShortInfo>> DeleteGroups(DeleteGroupsRequest request)

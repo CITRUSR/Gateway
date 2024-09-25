@@ -1,3 +1,4 @@
+using Gateway.Contracts.UserService;
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
@@ -66,7 +67,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapPost("api/group", ([FromBody] CreateGroupRequest request) => { })
+            .MapPost(
+                "api/group",
+                async ([FromBody] CreateGroupRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.CreateGroup(request);
+
+                    return Results.Created("", result);
+                }
+            )
             .Produces<GroupShortInfo>(StatusCodes.Status201Created)
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)

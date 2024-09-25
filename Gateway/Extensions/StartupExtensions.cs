@@ -70,5 +70,6 @@ public static class StartupExtensions
 
         SpecialityConfig.Configure();
         TeacherConfig.Configure();
+        GroupConfig.Configure();
     }
 }

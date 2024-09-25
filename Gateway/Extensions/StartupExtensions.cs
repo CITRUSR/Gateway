@@ -35,6 +35,7 @@ public static class StartupExtensions
 
         services.AddSingleton<ISpecialityService, SpecialityService>();
         services.AddSingleton<ITeacherService, TeacherService>();
+        services.AddSingleton<IGroupService, GroupService>();
     }
 
     public static void ConfigureApplication(this WebApplication app)

@@ -5,6 +5,7 @@ using Gateway.Data.Errors;
 using Gateway.Endpoints.UserService.Group.Enums;
 using Gateway.Endpoints.UserService.Group.Requests;
 using Gateway.Endpoints.UserService.Group.Responses;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -228,7 +229,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapPut("api/group", ([FromBody] EditGroupRequest request) => { })
+            .MapPut(
+                "api/group",
+                async ([FromBody] EditGroupRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.EditGroup(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<GroupShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(groupTag)

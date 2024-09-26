@@ -76,7 +76,19 @@ public class GroupService : IGroupService
         DeletedStatus deletedStatus
     )
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetGroupsRequest
+        {
+            DeletedStatus = (UserServiceClient.DeletedStatus)deletedStatus,
+            Page = page,
+            PageSize = pageSize,
+            SearchString = search,
+            SortState = (UserServiceClient.GroupSortState)sortState,
+            GraduatedStatus = (UserServiceClient.GroupGraduatedStatus)graduatedStatus,
+        };
+
+        var result = await _groupService.GetGroupsAsync(grpcRequest);
+
+        return result.Adapt<GetGroupsResponse>();
     }
 
     public Task<List<GroupShortInfo>> GraduateGroups(GraduateGroupsRequest request)

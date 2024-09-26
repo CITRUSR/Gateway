@@ -19,14 +19,27 @@ public static class GroupEndpoints
         builder
             .MapGet(
                 "api/groups",
-                (
-                    [FromQuery] string page,
-                    [FromQuery] string pageSize,
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
                     [FromQuery] string? search,
                     [FromQuery] GroupGraduatedStatus graduatedStatus,
                     [FromQuery] GroupSortState sortState,
-                    [FromQuery] DeletedStatus deletedStatus
-                ) => { }
+                    [FromQuery] DeletedStatus deletedStatus,
+                    IGroupService groupService
+                ) =>
+                {
+                    var result = await groupService.GetGroups(
+                        page,
+                        pageSize,
+                        search,
+                        sortState,
+                        graduatedStatus,
+                        deletedStatus
+                    );
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<GetGroupsResponse>(StatusCodes.Status200OK)
             .WithTags(groupTag)

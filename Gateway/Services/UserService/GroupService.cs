@@ -58,9 +58,13 @@ public class GroupService : IGroupService
         return result.Adapt<GroupShortInfo>();
     }
 
-    public Task<GroupDto> GetGroupById(int id)
+    public async Task<GroupDto> GetGroupById(int id)
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetGroupByIdRequest { Id = id };
+
+        var result = await _groupService.GetGroupByIdAsync(grpcRequest);
+
+        return result.Adapt<GroupDto>();
     }
 
     public async Task<GetGroupsResponse> GetGroups(

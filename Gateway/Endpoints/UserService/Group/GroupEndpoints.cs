@@ -5,7 +5,6 @@ using Gateway.Data.Errors;
 using Gateway.Endpoints.UserService.Group.Enums;
 using Gateway.Endpoints.UserService.Group.Requests;
 using Gateway.Endpoints.UserService.Group.Responses;
-using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -54,7 +53,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapGet("api/group", ([FromQuery] int id) => { })
+            .MapGet(
+                "api/group",
+                async ([FromQuery] int id, IGroupService groupService) =>
+                {
+                    var result = await groupService.GetGroupById(id);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<GroupDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)

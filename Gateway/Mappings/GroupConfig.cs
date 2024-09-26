@@ -1,3 +1,4 @@
+using Gateway.Data.Dtos;
 using Gateway.Endpoints.UserService.Group.Requests;
 using Google.Protobuf.WellKnownTypes;
 using Mapster;
@@ -15,5 +16,22 @@ public static class GroupConfig
         TypeAdapterConfig<DeleteGroupsRequest, UserServiceClient.DeleteGroupsRequest>
             .NewConfig()
             .Map(dest => dest.Ids, src => src.GroupsId);
+
+        TypeAdapterConfig<UserServiceClient.GroupModel, GroupDto>
+            .NewConfig()
+            .Map(
+                dest => dest.GraduatedAt,
+                src =>
+                    src.IsGraduated
+                        ? DateTime.SpecifyKind(
+                            src.GraduatedAt.ToDateTime(),
+                            DateTimeKind.Unspecified
+                        )
+                        : (DateTime?)null
+            )
+            .Map(
+                dest => dest.StartedAt,
+                src => DateTime.SpecifyKind(src.StartedAt.ToDateTime(), DateTimeKind.Unspecified)
+            );
     }
 }

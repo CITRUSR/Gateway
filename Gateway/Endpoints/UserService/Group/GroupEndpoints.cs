@@ -89,7 +89,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapDelete("api/groups", ([FromBody] DeleteGroupsRequest request) => { })
+            .MapDelete(
+                "api/groups",
+                async ([FromBody] DeleteGroupsRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.DeleteGroups(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)

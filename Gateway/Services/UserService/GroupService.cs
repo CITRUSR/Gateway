@@ -40,9 +40,13 @@ public class GroupService : IGroupService
         return result.Adapt<GroupShortInfo>();
     }
 
-    public Task<List<GroupShortInfo>> DeleteGroups(DeleteGroupsRequest request)
+    public async Task<List<GroupShortInfo>> DeleteGroups(DeleteGroupsRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.DeleteGroupsRequest>();
+
+        var result = await _groupService.DeleteGroupsAsync(grpcRequest);
+
+        return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
     public Task<GroupShortInfo> EditGroup(EditGroupRequest request)

@@ -33,5 +33,9 @@ public static class GroupConfig
                 dest => dest.StartedAt,
                 src => DateTime.SpecifyKind(src.StartedAt.ToDateTime(), DateTimeKind.Unspecified)
             );
+
+        TypeAdapterConfig<GraduateGroupsRequest, UserServiceClient.GraduateGroupsRequest>
+            .NewConfig()
+            .Map(dest => dest.GraduatedTime, src => src.GraduatedTime.ToTimestamp());
     }
 }

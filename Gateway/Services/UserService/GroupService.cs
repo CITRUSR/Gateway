@@ -91,9 +91,13 @@ public class GroupService : IGroupService
         return result.Adapt<GetGroupsResponse>();
     }
 
-    public Task<List<GroupShortInfo>> GraduateGroups(GraduateGroupsRequest request)
+    public async Task<List<GroupShortInfo>> GraduateGroups(GraduateGroupsRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.GraduateGroupsRequest>();
+
+        var result = await _groupService.GraduateGroupsAsync(grpcRequest);
+
+        return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
     public Task<List<GroupShortInfo>> RecoveryGroups(RecoveryGroupsRequest request)

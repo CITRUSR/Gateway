@@ -221,7 +221,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapPatch("api/groups/graduate", ([FromBody] GraduateGroupsRequest request) => { })
+            .MapPatch(
+                "api/groups/graduate",
+                async ([FromBody] GraduateGroupsRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.GraduateGroups(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)

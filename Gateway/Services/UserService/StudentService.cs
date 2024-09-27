@@ -88,7 +88,7 @@ public class StudentService : IStudentService
         return result.Adapt<StudentDto>();
     }
 
-    public Task<GetStudentsResponse> GetStudents(
+    public async Task<GetStudentsResponse> GetStudents(
         int page,
         int pageSize,
         string? search,
@@ -97,7 +97,19 @@ public class StudentService : IStudentService
         DeletedStatus deletedStatus
     )
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetStudentsRequest
+        {
+            Page = page,
+            PageSize = pageSize,
+            SearchString = search,
+            DroppedOutStatus = (UserServiceClient.DroppedOutStatus)droppedOutStatus,
+            SortState = (UserServiceClient.SortState)sortState,
+            DeletedStatus = (UserServiceClient.DeletedStatus)deletedStatus,
+        };
+
+        var result = await _studentService.GetStudentsAsync(grpcRequest);
+
+        return result.Adapt<GetStudentsResponse>();
     }
 
     public Task<List<StudentViewModel>> GetStudentsByGroupId(int groupId)

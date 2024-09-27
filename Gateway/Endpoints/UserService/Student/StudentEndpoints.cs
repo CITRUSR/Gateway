@@ -19,14 +19,27 @@ public static class StudentEndpoints
         builder
             .MapGet(
                 "api/students",
-                (
-                    [FromQuery] string page,
-                    [FromQuery] string pageSize,
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
                     [FromQuery] string? search,
                     [FromQuery] StudentDroppedOutStatus droppedOutStatus,
                     [FromQuery] StudentSortState sortState,
-                    [FromQuery] DeletedStatus deletedStatus
-                ) => { }
+                    [FromQuery] DeletedStatus deletedStatus,
+                    IStudentService studentService
+                ) =>
+                {
+                    var result = await studentService.GetStudents(
+                        page,
+                        pageSize,
+                        search,
+                        sortState,
+                        droppedOutStatus,
+                        deletedStatus
+                    );
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<GetStudentsResponse>(StatusCodes.Status200OK)
             .WithTags(studentTag)

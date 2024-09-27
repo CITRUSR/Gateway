@@ -193,7 +193,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapPatch("api/students/drop", ([FromBody] DropOutStudentsRequest request) => { })
+            .MapPatch(
+                "api/students/drop",
+                async ([FromBody] DropOutStudentsRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.DropOutStudents(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)

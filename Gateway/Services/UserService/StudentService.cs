@@ -49,9 +49,13 @@ public class StudentService : IStudentService
         return result.Students.Adapt<List<StudentShortInfo>>();
     }
 
-    public Task<List<StudentShortInfo>> DropOutStudents(DropOutStudentsRequest request)
+    public async Task<List<StudentShortInfo>> DropOutStudents(DropOutStudentsRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.DropOutStudentsRequest>();
+
+        var result = await _studentService.DropOutStudentsAsync(grpcRequest);
+
+        return result.Students.Adapt<List<StudentShortInfo>>();
     }
 
     public Task<StudentShortInfo> EditStudent(EditStudentRequest request)

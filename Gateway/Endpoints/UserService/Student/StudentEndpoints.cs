@@ -110,7 +110,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapGet("api/students/group", ([FromQuery] int groupId) => { })
+            .MapGet(
+                "api/students/group",
+                async ([FromQuery] int groupId, IStudentService studentService) =>
+                {
+                    var result = await studentService.GetStudentsByGroupId(groupId);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentViewModel>>(StatusCodes.Status200OK)
             .WithTags(studentTag)
             .WithOpenApi(operation =>

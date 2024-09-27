@@ -112,9 +112,13 @@ public class StudentService : IStudentService
         return result.Adapt<GetStudentsResponse>();
     }
 
-    public Task<List<StudentViewModel>> GetStudentsByGroupId(int groupId)
+    public async Task<List<StudentViewModel>> GetStudentsByGroupId(int groupId)
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetStudentsByGroupIdRequest { GroupId = groupId };
+
+        var result = await _studentService.GetStudentsByGroupIdAsync(grpcRequest);
+
+        return result.Students.Adapt<List<StudentViewModel>>();
     }
 
     public Task<List<StudentShortInfo>> RecoveryStudents(RecoveryStudentsRequest request)

@@ -109,9 +109,13 @@ public class GroupService : IGroupService
         return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
-    public Task<List<GroupShortInfo>> SoftDeleteGroups(DeleteGroupsRequest request)
+    public async Task<List<GroupShortInfo>> SoftDeleteGroups(DeleteGroupsRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.SoftDeleteGroupsRequest>();
+
+        var result = await _groupService.SoftDeleteGroupsAsync(grpcRequest);
+
+        return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
     public Task<List<GroupShortInfo>> TransferGroupsToNextCourse(

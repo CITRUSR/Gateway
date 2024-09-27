@@ -131,7 +131,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapDelete("api/groups/soft", ([FromBody] DeleteGroupsRequest request) => { })
+            .MapDelete(
+                "api/groups/soft",
+                async ([FromBody] DeleteGroupsRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.SoftDeleteGroups(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)

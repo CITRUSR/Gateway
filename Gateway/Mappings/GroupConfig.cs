@@ -41,5 +41,9 @@ public static class GroupConfig
         TypeAdapterConfig<RecoveryGroupsRequest, UserServiceClient.RecoveryGroupsRequest>
             .NewConfig()
             .Map(dest => dest.Ids, src => src.GroupsId);
+
+        TypeAdapterConfig<DeleteGroupsRequest, UserServiceClient.SoftDeleteGroupsRequest>
+            .NewConfig()
+            .Map(dest => dest.Ids, src => src.GroupsId);
     }
 }

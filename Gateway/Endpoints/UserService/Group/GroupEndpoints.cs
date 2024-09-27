@@ -175,7 +175,15 @@ public static class GroupEndpoints
         builder
             .MapPatch(
                 "api/groups/semester",
-                ([FromBody] TransferGroupsToNextSemesterRequest request) => { }
+                async (
+                    [FromBody] TransferGroupsToNextSemesterRequest request,
+                    IGroupService groupService
+                ) =>
+                {
+                    var result = await groupService.TransferGroupsToNextSemester(request);
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)

@@ -52,5 +52,12 @@ public static class GroupConfig
         >
             .NewConfig()
             .Map(dest => dest.IdGroups, src => src.GroupsId);
+
+        TypeAdapterConfig<
+            TransferGroupsToNextSemesterRequest,
+            UserServiceClient.TransferGroupsToNextSemesterRequest
+        >
+            .NewConfig()
+            .Map(dest => dest.IdGroups, src => src.GroupsId);
     }
 }

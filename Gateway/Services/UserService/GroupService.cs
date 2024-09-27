@@ -129,10 +129,14 @@ public class GroupService : IGroupService
         return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
-    public Task<List<GroupShortInfo>> TransferGroupsToNextSemester(
+    public async Task<List<GroupShortInfo>> TransferGroupsToNextSemester(
         TransferGroupsToNextSemesterRequest request
     )
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.TransferGroupsToNextSemesterRequest>();
+
+        var result = await _groupService.TransferGroupsToNextSemesterAsync(grpcRequest);
+
+        return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 }

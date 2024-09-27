@@ -1,9 +1,14 @@
 using System.Text.Json.Serialization;
+using Gateway.Contracts.UserService;
 using Gateway.Endpoints.UserService.Group;
 using Gateway.Endpoints.UserService.Speciality;
 using Gateway.Endpoints.UserService.Student;
 using Gateway.Endpoints.UserService.Teacher;
+using Gateway.Mappings;
 using Gateway.Middlewares;
+using Gateway.Services.UserService;
+using Google.Protobuf.Collections;
+using Mapster;
 using Serilog;
 
 namespace Gateway.Extensions;
@@ -25,6 +30,13 @@ public static class StartupExtensions
         {
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
+
+        MapsterConfigure();
+
+        services.AddSingleton<ISpecialityService, SpecialityService>();
+        services.AddSingleton<ITeacherService, TeacherService>();
+        services.AddSingleton<IGroupService, GroupService>();
+        services.AddSingleton<IStudentService, StudentService>();
     }
 
     public static void ConfigureApplication(this WebApplication app)
@@ -48,5 +60,19 @@ public static class StartupExtensions
         TeacherEndpoints.Map(app);
 
         return app;
+    }
+
+    public static void MapsterConfigure()
+    {
+        TypeAdapterConfig.GlobalSettings.Default.UseDestinationValue(member =>
+            member.SetterModifier == AccessModifier.None
+            && member.Type.IsGenericType
+            && member.Type.GetGenericTypeDefinition() == typeof(RepeatedField<>)
+        );
+
+        SpecialityConfig.Configure();
+        TeacherConfig.Configure();
+        GroupConfig.Configure();
+        StudentConfig.Configure();
     }
 }

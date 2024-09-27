@@ -1,3 +1,4 @@
+using Gateway.Contracts.UserService;
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
@@ -17,13 +18,25 @@ public static class SpecialityEndpoints
         builder
             .MapGet(
                 "api/specialties",
-                (
-                    [FromQuery] string page,
-                    [FromQuery] string pageSize,
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
                     [FromQuery] string? search,
                     [FromQuery] SpecialitySortState sortState,
-                    [FromQuery] DeletedStatus deletedStatus
-                ) => { }
+                    [FromQuery] DeletedStatus deletedStatus,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.GetSpecialities(
+                        page,
+                        pageSize,
+                        search,
+                        sortState,
+                        deletedStatus
+                    );
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<GetSpecialitiesResponse>(StatusCodes.Status200OK)
             .WithTags(specialityTag)
@@ -46,7 +59,15 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapGet("api/speciality", ([FromQuery] int id) => { })
+            .MapGet(
+                "api/speciality",
+                async ([FromQuery] int id, ISpecialityService specialityService) =>
+                {
+                    var result = await specialityService.GetSpecialityById(id);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<SpecialityDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(specialityTag)
@@ -60,7 +81,18 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapPost("api/speciality", ([FromBody] CreateSpecialityRequest request) => { })
+            .MapPost(
+                "api/speciality",
+                async (
+                    [FromBody] CreateSpecialityRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.CreateSpeciality(request);
+
+                    return Results.Created("", result);
+                }
+            )
             .Produces<SpecialityShortInfo>(StatusCodes.Status201Created)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(specialityTag)
@@ -73,7 +105,18 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapDelete("api/specialities", ([FromBody] DeleteSpecialitiesRequest request) => { })
+            .MapDelete(
+                "api/specialities",
+                async (
+                    [FromBody] DeleteSpecialitiesRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.DeleteSpecialities(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
             .Produces<List<string>>(StatusCodes.Status404NotFound)
             .WithTags(specialityTag)
@@ -88,7 +131,15 @@ public static class SpecialityEndpoints
         builder
             .MapDelete(
                 "api/specialities/soft",
-                ([FromBody] DeleteSpecialitiesRequest request) => { }
+                async (
+                    [FromBody] DeleteSpecialitiesRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.SoftDeleteSpecialities(request);
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
             .Produces<List<string>>(StatusCodes.Status404NotFound)
@@ -104,7 +155,15 @@ public static class SpecialityEndpoints
         builder
             .MapPatch(
                 "api/specialities/recovery",
-                ([FromBody] RecoverySpecialitiesRequest request) => { }
+                async (
+                    [FromBody] RecoverySpecialitiesRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.RecoverySpecialities(request);
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<List<SpecialityShortInfo>>(StatusCodes.Status200OK)
             .Produces<List<string>>(StatusCodes.Status404NotFound)
@@ -118,7 +177,18 @@ public static class SpecialityEndpoints
             });
 
         builder
-            .MapPut("api/speciality", ([FromBody] EditSpecialityRequest request) => { })
+            .MapPut(
+                "api/speciality",
+                async (
+                    [FromBody] EditSpecialityRequest request,
+                    ISpecialityService specialityService
+                ) =>
+                {
+                    var result = await specialityService.EditSpeciality(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<SpecialityShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .Produces<string>(StatusCodes.Status404NotFound)

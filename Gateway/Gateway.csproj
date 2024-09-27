@@ -11,6 +11,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Protobuf Include="Protos/UserService/shared.proto" GrpcServices="None"/>
+        <Protobuf Include="Protos/UserService/speciality.proto" GrpcServices="Client"/>
+        <Protobuf Include="Protos/UserService/teacher.proto" GrpcServices="Client"/>
+        <Protobuf Include="Protos/UserService/group.proto" GrpcServices="Client"/>
+        <Protobuf Include="Protos/UserService/student.proto" GrpcServices="Client"/>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
         <PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
         <PackageReference Include="Grpc.Tools" Version="2.66.0-pre5">

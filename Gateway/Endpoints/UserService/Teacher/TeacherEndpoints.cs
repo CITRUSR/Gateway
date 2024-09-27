@@ -1,3 +1,4 @@
+using Gateway.Contracts.UserService;
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
@@ -18,14 +19,26 @@ public static class TeacherEndpoints
         builder
             .MapGet(
                 "api/teachers",
-                (
-                    [FromQuery] string page,
-                    [FromQuery] string pageSize,
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
                     [FromQuery] string? search,
                     [FromQuery] TeacherFiredStatus firedStatus,
                     [FromQuery] TeacherSortState sortState,
-                    [FromQuery] DeletedStatus deletedStatus
-                ) => { }
+                    [FromQuery] DeletedStatus deletedStatus,
+                    ITeacherService teacherService
+                ) =>
+                {
+                    var result = await teacherService.GetTeachers(
+                        page,
+                        pageSize,
+                        search,
+                        sortState,
+                        deletedStatus
+                    );
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<GetTeachersResponse>(StatusCodes.Status200OK)
             .WithTags(teacherTag)
@@ -52,7 +65,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapGet("api/teaher", ([FromQuery] int id) => { })
+            .MapGet(
+                "api/teacher",
+                async ([FromQuery] Guid id, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.GetTeacherById(id);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<TeacherDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)
@@ -66,7 +87,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapGet("api/teaher/sso", ([FromQuery] int ssoId) => { })
+            .MapGet(
+                "api/teacher/sso",
+                async ([FromQuery] Guid ssoId, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.GetTeacherBySsoId(ssoId);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<TeacherDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)
@@ -80,7 +109,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapPost("api/teacher", ([FromBody] CreateTeacherRequest request) => { })
+            .MapPost(
+                "api/teacher",
+                async ([FromBody] CreateTeacherRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.CreateTeacher(request);
+
+                    return Results.Created("", result);
+                }
+            )
             .Produces<TeacherShortInfo>(StatusCodes.Status201Created)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(teacherTag)
@@ -108,7 +145,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapDelete("api/teachers", ([FromBody] DeleteTeachersRequest request) => { })
+            .MapDelete(
+                "api/teachers",
+                async ([FromBody] DeleteTeachersRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.DeleteTeachers(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)
@@ -121,7 +166,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapDelete("api/teachers/soft", ([FromBody] DeleteTeachersRequest request) => { })
+            .MapDelete(
+                "api/teachers/soft",
+                async ([FromBody] DeleteTeachersRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.SoftDeleteTeachers(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)
@@ -134,7 +187,18 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapPatch("api/teachers/recovery", ([FromBody] RecoveryTeachersRequest request) => { })
+            .MapPatch(
+                "api/teachers/recovery",
+                async (
+                    [FromBody] RecoveryTeachersRequest request,
+                    ITeacherService teacherService
+                ) =>
+                {
+                    var result = await teacherService.RecoveryTeachers(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)
@@ -147,7 +211,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapPatch("api/teachers/fire", ([FromBody] FireTeachersRequest request) => { })
+            .MapPatch(
+                "api/teachers/fire",
+                async ([FromBody] FireTeachersRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.FireTeachers(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<TeacherShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(teacherTag)
@@ -175,7 +247,15 @@ public static class TeacherEndpoints
             });
 
         builder
-            .MapPut("api/teacher", ([FromBody] EditTeacherRequest request) => { })
+            .MapPut(
+                "api/teacher",
+                async ([FromBody] EditTeacherRequest request, ITeacherService teacherService) =>
+                {
+                    var result = await teacherService.EditTeacher(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<TeacherShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(teacherTag)

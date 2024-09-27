@@ -75,7 +75,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapGet("api/student/sso", ([FromQuery] int ssoId) => { })
+            .MapGet(
+                "api/student/sso",
+                async ([FromQuery] Guid ssoId, IStudentService studentService) =>
+                {
+                    var result = await studentService.GetStudentBySsoId(ssoId);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<StudentDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)

@@ -76,9 +76,16 @@ public class StudentService : IStudentService
         return result.Adapt<StudentDto>();
     }
 
-    public Task<StudentDto> GetStudentBySsoId(Guid ssoId)
+    public async Task<StudentDto> GetStudentBySsoId(Guid ssoId)
     {
-        throw new NotImplementedException();
+        var grpcRequest = new UserServiceClient.GetStudentBySsoIdRequest
+        {
+            SsoId = ssoId.ToString(),
+        };
+
+        var result = await _studentService.GetStudentBySsoIdAsync(grpcRequest);
+
+        return result.Adapt<StudentDto>();
     }
 
     public Task<GetStudentsResponse> GetStudents(

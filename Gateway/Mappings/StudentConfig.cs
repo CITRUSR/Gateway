@@ -38,5 +38,9 @@ public static class StudentConfig
         TypeAdapterConfig<RecoveryStudentsRequest, UserServiceClient.RecoveryStudentsRequest>
             .NewConfig()
             .Map(dest => dest.Ids, src => src.StudentsId);
+
+        TypeAdapterConfig<DeleteStudentsRequest, UserServiceClient.SoftDeleteStudentsRequest>
+            .NewConfig()
+            .Map(dest => dest.Ids, src => src.StudentsId);
     }
 }

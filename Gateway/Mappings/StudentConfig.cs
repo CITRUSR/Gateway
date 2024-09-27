@@ -16,5 +16,9 @@ public static class StudentConfig
             .NewConfig()
             .Map(dest => dest.Ids, src => src.StudentsId)
             .Map(dest => dest.DroppedTime, src => src.DroppedTime.ToUniversalTime().ToTimestamp());
+
+        TypeAdapterConfig<EditStudentRequest, UserServiceClient.EditStudentRequest>
+            .NewConfig()
+            .Map(dest => dest.DroppedOutAt, src => src.DroppedOutAt.ToString());
     }
 }

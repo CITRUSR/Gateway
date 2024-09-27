@@ -58,9 +58,13 @@ public class StudentService : IStudentService
         return result.Students.Adapt<List<StudentShortInfo>>();
     }
 
-    public Task<StudentShortInfo> EditStudent(EditStudentRequest request)
+    public async Task<StudentShortInfo> EditStudent(EditStudentRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.EditStudentRequest>();
+
+        var result = await _studentService.EditStudentAsync(grpcRequest);
+
+        return result.Adapt<StudentShortInfo>();
     }
 
     public Task<StudentDto> GetStudentById(Guid id)

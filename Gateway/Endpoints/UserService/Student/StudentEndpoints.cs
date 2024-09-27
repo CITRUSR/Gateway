@@ -229,7 +229,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapPut("api/student", ([FromBody] EditStudentRequest request) => { })
+            .MapPut(
+                "api/student",
+                async ([FromBody] EditStudentRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.EditStudent(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<StudentShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(studentTag)

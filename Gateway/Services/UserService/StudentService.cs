@@ -5,6 +5,7 @@ using Gateway.Endpoints.UserService.Student.Enums;
 using Gateway.Endpoints.UserService.Student.Requests;
 using Gateway.Endpoints.UserService.Student.Responses;
 using Grpc.Net.Client;
+using Mapster;
 
 namespace Gateway.Services.UserService;
 
@@ -30,9 +31,13 @@ public class StudentService : IStudentService
         _studentService = new UserServiceClient.StudentService.StudentServiceClient(channel);
     }
 
-    public Task<StudentShortInfo> CreateStudent(CreateStudentRequest request)
+    public async Task<StudentShortInfo> CreateStudent(CreateStudentRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.CreateStudentRequest>();
+
+        var result = await _studentService.CreateStudentAsync(grpcRequest);
+
+        return result.Adapt<StudentShortInfo>();
     }
 
     public Task<List<StudentShortInfo>> DeleteStudents(DeleteStudentsRequest request)

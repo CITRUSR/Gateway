@@ -1,3 +1,4 @@
+using Gateway.Contracts.UserService;
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
@@ -109,7 +110,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapPost("api/student", ([FromBody] CreateStudentRequest request) => { })
+            .MapPost(
+                "api/student",
+                async ([FromBody] CreateStudentRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.CreateStudent(request);
+
+                    return Results.Created("", result);
+                }
+            )
             .Produces<StudentShortInfo>(StatusCodes.Status201Created)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(studentTag)

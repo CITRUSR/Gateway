@@ -207,7 +207,15 @@ public static class GroupEndpoints
         builder
             .MapPatch(
                 "api/groups/course",
-                ([FromBody] TransferGroupsToNextCourseRequest request) => { }
+                async (
+                    [FromBody] TransferGroupsToNextCourseRequest request,
+                    IGroupService groupService
+                ) =>
+                {
+                    var result = await groupService.TransferGroupsToNextCourse(request);
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)

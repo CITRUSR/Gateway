@@ -45,5 +45,12 @@ public static class GroupConfig
         TypeAdapterConfig<DeleteGroupsRequest, UserServiceClient.SoftDeleteGroupsRequest>
             .NewConfig()
             .Map(dest => dest.Ids, src => src.GroupsId);
+
+        TypeAdapterConfig<
+            TransferGroupsToNextCourseRequest,
+            UserServiceClient.TransferGroupsToNextCourseRequest
+        >
+            .NewConfig()
+            .Map(dest => dest.IdGroups, src => src.GroupsId);
     }
 }

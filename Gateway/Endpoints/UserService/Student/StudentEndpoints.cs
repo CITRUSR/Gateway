@@ -217,7 +217,18 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapPatch("api/students/recovery", ([FromBody] RecoveryStudentsRequest request) => { })
+            .MapPatch(
+                "api/students/recovery",
+                async (
+                    [FromBody] RecoveryStudentsRequest request,
+                    IStudentService studentService
+                ) =>
+                {
+                    var result = await studentService.RecoveryStudents(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)

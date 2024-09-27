@@ -121,9 +121,13 @@ public class StudentService : IStudentService
         return result.Students.Adapt<List<StudentViewModel>>();
     }
 
-    public Task<List<StudentShortInfo>> RecoveryStudents(RecoveryStudentsRequest request)
+    public async Task<List<StudentShortInfo>> RecoveryStudents(RecoveryStudentsRequest request)
     {
-        throw new NotImplementedException();
+        var grpcRequest = request.Adapt<UserServiceClient.RecoveryStudentsRequest>();
+
+        var result = await _studentService.RecoveryStudentsAsync(grpcRequest);
+
+        return result.Students.Adapt<List<StudentShortInfo>>();
     }
 
     public Task<List<StudentShortInfo>> SoftDeleteStudents(DeleteStudentsRequest request)

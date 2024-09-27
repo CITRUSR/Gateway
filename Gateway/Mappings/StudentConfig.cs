@@ -34,5 +34,9 @@ public static class StudentConfig
                         )
                         : (DateTime?)null
             );
+
+        TypeAdapterConfig<RecoveryStudentsRequest, UserServiceClient.RecoveryStudentsRequest>
+            .NewConfig()
+            .Map(dest => dest.Ids, src => src.StudentsId);
     }
 }

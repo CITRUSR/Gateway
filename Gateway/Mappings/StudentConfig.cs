@@ -1,3 +1,4 @@
+using Gateway.Data.Dtos;
 using Gateway.Endpoints.UserService.Student.Requests;
 using Google.Protobuf.WellKnownTypes;
 using Mapster;
@@ -20,5 +21,18 @@ public static class StudentConfig
         TypeAdapterConfig<EditStudentRequest, UserServiceClient.EditStudentRequest>
             .NewConfig()
             .Map(dest => dest.DroppedOutAt, src => src.DroppedOutAt.ToString());
+
+        TypeAdapterConfig<UserServiceClient.StudentModel, StudentDto>
+            .NewConfig()
+            .Map(
+                dest => dest.DroppedOutAt,
+                src =>
+                    src.IsDropped
+                        ? DateTime.SpecifyKind(
+                            src.DroppedOutAt.ToDateTime(),
+                            DateTimeKind.Unspecified
+                        )
+                        : (DateTime?)null
+            );
     }
 }

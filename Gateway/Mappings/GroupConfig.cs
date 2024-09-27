@@ -37,5 +37,9 @@ public static class GroupConfig
         TypeAdapterConfig<GraduateGroupsRequest, UserServiceClient.GraduateGroupsRequest>
             .NewConfig()
             .Map(dest => dest.GraduatedTime, src => src.GraduatedTime.ToTimestamp());
+
+        TypeAdapterConfig<RecoveryGroupsRequest, UserServiceClient.RecoveryGroupsRequest>
+            .NewConfig()
+            .Map(dest => dest.Ids, src => src.GroupsId);
     }
 }

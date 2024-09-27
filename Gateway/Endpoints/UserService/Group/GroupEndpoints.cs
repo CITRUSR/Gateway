@@ -144,7 +144,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapPatch("api/groups/recovery", ([FromBody] RecoveryGroupsRequest request) => { })
+            .MapPatch(
+                "api/groups/recovery",
+                async ([FromBody] RecoveryGroupsRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.RecoveryGroups(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)

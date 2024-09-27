@@ -100,9 +100,13 @@ public class GroupService : IGroupService
         return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
-    public Task<List<GroupShortInfo>> RecoveryGroups(RecoveryGroupsRequest request)
+    public async Task<List<GroupShortInfo>> RecoveryGroups(RecoveryGroupsRequest request)
     {
-        throw new NotImplementedException();
+        var grpcReqeust = request.Adapt<UserServiceClient.RecoveryGroupsRequest>();
+
+        var result = await _groupService.RecoveryGroupsAsync(grpcReqeust);
+
+        return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
     public Task<List<GroupShortInfo>> SoftDeleteGroups(DeleteGroupsRequest request)

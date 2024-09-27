@@ -146,7 +146,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapDelete("api/students", ([FromBody] DeleteStudentsRequest request) => { })
+            .MapDelete(
+                "api/students",
+                async ([FromBody] DeleteStudentsRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.DeleteStudents(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)

@@ -5,7 +5,6 @@ option csharp_namespace = "UserServiceClient";
 package Teacher;
 
 import "google/protobuf/wrappers.proto";
-import "google/protobuf/timestamp.proto";
 import "Protos/UserService/shared.proto";
 
 service TeacherService {
@@ -112,13 +111,13 @@ message EditTeacherRequest{
   string LastName = 4;
   google.protobuf.StringValue PatronymicName = 5;
   int32 RoomId = 6;
-  google.protobuf.Timestamp FiredAt = 7;
+  string FiredAt = 7;
   bool IsDeleted = 8;
 }
 
 message FireTeachersRequest{
   repeated string Ids = 1;
-  google.protobuf.Timestamp FiredTime = 2;
+  string FiredTime = 2;
 }
 
 message FireTeachersResponse{

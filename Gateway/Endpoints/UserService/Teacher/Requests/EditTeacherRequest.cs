@@ -12,7 +12,7 @@ public record EditTeacherRequest(
     [property: MaxLength(32)]
     [property: RegularExpression(@"\A\S+\z")]
         string LastName,
-    [property: MaxLength(32)] [property: RegularExpression(@"\A\S+\z")] string? PayronymicName,
+    [property: MaxLength(32)] [property: RegularExpression(@"\A\S+\z")] string? PatronymicNames,
     [property: Required] short RoomId,
     DateTime? FiredAt,
     [property: Required] bool IsDeleted

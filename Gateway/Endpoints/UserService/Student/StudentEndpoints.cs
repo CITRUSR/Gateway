@@ -1,3 +1,4 @@
+using Gateway.Contracts.UserService;
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
@@ -18,14 +19,27 @@ public static class StudentEndpoints
         builder
             .MapGet(
                 "api/students",
-                (
-                    [FromQuery] string page,
-                    [FromQuery] string pageSize,
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
                     [FromQuery] string? search,
                     [FromQuery] StudentDroppedOutStatus droppedOutStatus,
                     [FromQuery] StudentSortState sortState,
-                    [FromQuery] DeletedStatus deletedStatus
-                ) => { }
+                    [FromQuery] DeletedStatus deletedStatus,
+                    IStudentService studentService
+                ) =>
+                {
+                    var result = await studentService.GetStudents(
+                        page,
+                        pageSize,
+                        search,
+                        sortState,
+                        droppedOutStatus,
+                        deletedStatus
+                    );
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<GetStudentsResponse>(StatusCodes.Status200OK)
             .WithTags(studentTag)
@@ -52,7 +66,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapGet("api/student", ([FromQuery] int id) => { })
+            .MapGet(
+                "api/student",
+                async ([FromQuery] Guid id, IStudentService studentService) =>
+                {
+                    var result = await studentService.GetStudentById(id);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<StudentDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)
@@ -66,7 +88,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapGet("api/student/sso", ([FromQuery] int ssoId) => { })
+            .MapGet(
+                "api/student/sso",
+                async ([FromQuery] Guid ssoId, IStudentService studentService) =>
+                {
+                    var result = await studentService.GetStudentBySsoId(ssoId);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<StudentDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)
@@ -80,7 +110,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapGet("api/students/group", ([FromQuery] int groupId) => { })
+            .MapGet(
+                "api/students/group",
+                async ([FromQuery] int groupId, IStudentService studentService) =>
+                {
+                    var result = await studentService.GetStudentsByGroupId(groupId);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentViewModel>>(StatusCodes.Status200OK)
             .WithTags(studentTag)
             .WithOpenApi(operation =>
@@ -109,7 +147,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapPost("api/student", ([FromBody] CreateStudentRequest request) => { })
+            .MapPost(
+                "api/student",
+                async ([FromBody] CreateStudentRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.CreateStudent(request);
+
+                    return Results.Created("", result);
+                }
+            )
             .Produces<StudentShortInfo>(StatusCodes.Status201Created)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(studentTag)
@@ -137,7 +183,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapDelete("api/students", ([FromBody] DeleteStudentsRequest request) => { })
+            .MapDelete(
+                "api/students",
+                async ([FromBody] DeleteStudentsRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.DeleteStudents(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)
@@ -150,7 +204,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapDelete("api/students/soft", ([FromBody] DeleteStudentsRequest request) => { })
+            .MapDelete(
+                "api/students/soft",
+                async ([FromBody] DeleteStudentsRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.SoftDeleteStudents(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)
@@ -163,7 +225,18 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapPatch("api/students/recovery", ([FromBody] RecoveryStudentsRequest request) => { })
+            .MapPatch(
+                "api/students/recovery",
+                async (
+                    [FromBody] RecoveryStudentsRequest request,
+                    IStudentService studentService
+                ) =>
+                {
+                    var result = await studentService.RecoveryStudents(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)
@@ -176,7 +249,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapPatch("api/students/drop", ([FromBody] DropOutStudentsRequest request) => { })
+            .MapPatch(
+                "api/students/drop",
+                async ([FromBody] DropOutStudentsRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.DropOutStudents(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<StudentShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(studentTag)
@@ -204,7 +285,15 @@ public static class StudentEndpoints
             });
 
         builder
-            .MapPut("api/student", ([FromBody] EditStudentRequest request) => { })
+            .MapPut(
+                "api/student",
+                async ([FromBody] EditStudentRequest request, IStudentService studentService) =>
+                {
+                    var result = await studentService.EditStudent(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<StudentShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(studentTag)

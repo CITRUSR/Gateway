@@ -1,3 +1,4 @@
+using Gateway.Contracts.UserService;
 using Gateway.Data.Dtos;
 using Gateway.Data.Enums;
 using Gateway.Data.Errors;
@@ -18,14 +19,27 @@ public static class GroupEndpoints
         builder
             .MapGet(
                 "api/groups",
-                (
-                    [FromQuery] string page,
-                    [FromQuery] string pageSize,
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
                     [FromQuery] string? search,
                     [FromQuery] GroupGraduatedStatus graduatedStatus,
                     [FromQuery] GroupSortState sortState,
-                    [FromQuery] DeletedStatus deletedStatus
-                ) => { }
+                    [FromQuery] DeletedStatus deletedStatus,
+                    IGroupService groupService
+                ) =>
+                {
+                    var result = await groupService.GetGroups(
+                        page,
+                        pageSize,
+                        search,
+                        sortState,
+                        graduatedStatus,
+                        deletedStatus
+                    );
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<GetGroupsResponse>(StatusCodes.Status200OK)
             .WithTags(groupTag)
@@ -52,7 +66,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapGet("api/group", ([FromQuery] int id) => { })
+            .MapGet(
+                "api/group",
+                async ([FromQuery] int id, IGroupService groupService) =>
+                {
+                    var result = await groupService.GetGroupById(id);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<GroupDto>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
@@ -66,7 +88,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapPost("api/group", ([FromBody] CreateGroupRequest request) => { })
+            .MapPost(
+                "api/group",
+                async ([FromBody] CreateGroupRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.CreateGroup(request);
+
+                    return Results.Created("", result);
+                }
+            )
             .Produces<GroupShortInfo>(StatusCodes.Status201Created)
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
@@ -80,7 +110,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapDelete("api/groups", ([FromBody] DeleteGroupsRequest request) => { })
+            .MapDelete(
+                "api/groups",
+                async ([FromBody] DeleteGroupsRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.DeleteGroups(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
@@ -93,7 +131,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapDelete("api/groups/soft", ([FromBody] DeleteGroupsRequest request) => { })
+            .MapDelete(
+                "api/groups/soft",
+                async ([FromBody] DeleteGroupsRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.SoftDeleteGroups(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
@@ -106,7 +152,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapPatch("api/groups/recovery", ([FromBody] RecoveryGroupsRequest request) => { })
+            .MapPatch(
+                "api/groups/recovery",
+                async ([FromBody] RecoveryGroupsRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.RecoveryGroups(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
@@ -121,7 +175,15 @@ public static class GroupEndpoints
         builder
             .MapPatch(
                 "api/groups/semester",
-                ([FromBody] TransferGroupsToNextSemesterRequest request) => { }
+                async (
+                    [FromBody] TransferGroupsToNextSemesterRequest request,
+                    IGroupService groupService
+                ) =>
+                {
+                    var result = await groupService.TransferGroupsToNextSemester(request);
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
@@ -153,7 +215,15 @@ public static class GroupEndpoints
         builder
             .MapPatch(
                 "api/groups/course",
-                ([FromBody] TransferGroupsToNextCourseRequest request) => { }
+                async (
+                    [FromBody] TransferGroupsToNextCourseRequest request,
+                    IGroupService groupService
+                ) =>
+                {
+                    var result = await groupService.TransferGroupsToNextCourse(request);
+
+                    return Results.Ok(result);
+                }
             )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
@@ -183,7 +253,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapPatch("api/groups/graduate", ([FromBody] GraduateGroupsRequest request) => { })
+            .MapPatch(
+                "api/groups/graduate",
+                async ([FromBody] GraduateGroupsRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.GraduateGroups(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<List<GroupShortInfo>>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status404NotFound)
             .WithTags(groupTag)
@@ -211,7 +289,15 @@ public static class GroupEndpoints
             });
 
         builder
-            .MapPut("api/group", ([FromBody] EditGroupRequest request) => { })
+            .MapPut(
+                "api/group",
+                async ([FromBody] EditGroupRequest request, IGroupService groupService) =>
+                {
+                    var result = await groupService.EditGroup(request);
+
+                    return Results.Ok(result);
+                }
+            )
             .Produces<GroupShortInfo>(StatusCodes.Status200OK)
             .Produces<ValidationError>(StatusCodes.Status400BadRequest)
             .WithTags(groupTag)

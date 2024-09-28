@@ -1,3 +1,3 @@
 namespace Gateway.Data.Errors;
 
-public record ValidationError(List<string> Messages);
+public record ValidationError(List<string> Errors);

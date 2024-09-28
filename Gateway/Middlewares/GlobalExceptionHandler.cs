@@ -1,4 +1,6 @@
+using Gateway.Data.Errors;
 using Grpc.Core;
+using Newtonsoft.Json;
 using Serilog;
 
 namespace Gateway.Middlewares;
@@ -29,14 +31,29 @@ public class GlobalExceptionHandler
         switch (exception)
         {
             case RpcException ex:
-                context.Response.StatusCode = ex.Status.StatusCode switch
+                switch (ex.Status.StatusCode)
                 {
-                    StatusCode.NotFound => StatusCodes.Status404NotFound,
-                    StatusCode.OutOfRange => StatusCodes.Status422UnprocessableEntity,
-                    StatusCode.InvalidArgument => StatusCodes.Status400BadRequest,
-                };
-                await context.Response.WriteAsJsonAsync(ex.Status.Detail);
+                    case StatusCode.NotFound:
+                        context.Response.StatusCode = StatusCodes.Status404NotFound;
+                        await context.Response.WriteAsJsonAsync(ex.Status.Detail);
+                        break;
+                    case StatusCode.OutOfRange:
+                        context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+                        await context.Response.WriteAsJsonAsync(ex.Status.Detail);
+                        break;
+                    case StatusCode.Aborted:
+                        context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+                        await context.Response.WriteAsJsonAsync(ex.Status.Detail);
+                        break;
+                    case StatusCode.InvalidArgument:
+                        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                        await context.Response.WriteAsJsonAsync(
+                            JsonConvert.DeserializeObject<ValidationError>(ex.Status.Detail)
+                        );
+                        break;
+                }
                 break;
+
             default:
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 break;

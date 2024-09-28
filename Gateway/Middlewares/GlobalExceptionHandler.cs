@@ -41,6 +41,10 @@ public class GlobalExceptionHandler
                         context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
                         await context.Response.WriteAsJsonAsync(ex.Status.Detail);
                         break;
+                    case StatusCode.Aborted:
+                        context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+                        await context.Response.WriteAsJsonAsync(ex.Status.Detail);
+                        break;
                     case StatusCode.InvalidArgument:
                         context.Response.StatusCode = StatusCodes.Status400BadRequest;
                         await context.Response.WriteAsJsonAsync(

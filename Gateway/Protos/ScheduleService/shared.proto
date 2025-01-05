@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "ScheduleService";
+option csharp_namespace = "ScheduleServiceClient";
 
 enum OrderState {
   Asc = 0;

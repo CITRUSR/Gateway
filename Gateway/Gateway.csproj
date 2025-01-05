@@ -11,7 +11,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos/UserService/*.proto" GrpcServices="None" />
+        <Protobuf Include="Protos/UserService/*.proto" GrpcServices="Client" />
+        <Protobuf Include="Protos/ScheduleService/*.proto" GrpcServices="Client"/>
     </ItemGroup>
 
     <ItemGroup>

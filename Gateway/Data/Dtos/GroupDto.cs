@@ -11,5 +11,6 @@ public record GroupDto(
     [property: Required] [property: Range(1, byte.MaxValue)] byte SubGroup,
     [property: Required] DateTime StartedAt,
     DateTime? GraduatedAt,
-    [property: Required] bool IsDeleted
+    [property: Required] bool IsDeleted,
+    [property: Required] string FullName
 );

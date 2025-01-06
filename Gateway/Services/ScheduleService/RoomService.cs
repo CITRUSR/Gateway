@@ -17,4 +17,13 @@ public class RoomService(ScheduleServiceClient.RoomService.RoomServiceClient cli
 
         return response.Room.Adapt<RoomDto>();
     }
+
+    public async Task<RoomDto> GetRoomById(int id)
+    {
+        var grpcRequest = new ScheduleServiceClient.GetRoomByIdRequest() { Id = id };
+
+        var response = await _client.GetRoomByIdAsync(grpcRequest);
+
+        return response.Room.Adapt<RoomDto>();
+    }
 }

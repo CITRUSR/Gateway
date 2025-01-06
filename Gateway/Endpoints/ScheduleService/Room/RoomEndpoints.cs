@@ -39,6 +39,22 @@ public static class RoomEndpoints
                 return operation;
             });
 
+        builder
+            .MapGet(
+                "api/room",
+                async ([FromQuery] int id, [FromServices] IRoomService roomService) =>
+                {
+                    var result = await roomService.GetRoomById(id);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<RoomDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(roomTag)
+            .WithSummary("Get room by id")
+            .WithDescription("Get room by id");
+
         return builder;
     }
 }

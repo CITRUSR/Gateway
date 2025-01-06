@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Gateway.Contracts.ScheduleService;
 using Gateway.Contracts.UserService;
 using Gateway.Endpoints.ScheduleService.Color;
+using Gateway.Endpoints.ScheduleService.Room;
 using Gateway.Endpoints.UserService.Group;
 using Gateway.Endpoints.UserService.Speciality;
 using Gateway.Endpoints.UserService.Student;
@@ -47,6 +48,7 @@ public static class StartupExtensions
         services.AddSingleton<IStudentService, StudentService>();
 
         services.AddSingleton<IColorService, ColorService>();
+        services.AddSingleton<IRoomService, RoomService>();
     }
 
     public static void ConfigureApplication(this WebApplication app)
@@ -70,6 +72,7 @@ public static class StartupExtensions
         TeacherEndpoints.Map(app);
 
         ColorEndpoints.Map(app);
+        RoomEndpoints.Map(app);
 
         return app;
     }
@@ -103,6 +106,13 @@ public static class StartupExtensions
 
         services
             .AddGrpcClient<ScheduleServiceClient.ColorService.ColorServiceClient>(options =>
+            {
+                options.Address = new Uri(serviceUrl);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => handler);
+
+        services
+            .AddGrpcClient<ScheduleServiceClient.RoomService.RoomServiceClient>(options =>
             {
                 options.Address = new Uri(serviceUrl);
             })

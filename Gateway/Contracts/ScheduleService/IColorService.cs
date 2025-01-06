@@ -8,4 +8,5 @@ public interface IColorService
     Task<ColorDto> CreateColor(CreateColorRequest request);
     Task<ColorDto> GetColorById(int id);
     Task<ColorDto> UpdateColor(UpdateColorRequest request);
+    Task<ColorDto> DeleteColor(int id);
 }

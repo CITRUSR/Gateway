@@ -82,6 +82,22 @@ public static class ColorEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete(
+                "/color",
+                async ([FromQuery] int id, [FromServices] IColorService colorService) =>
+                {
+                    var result = await colorService.DeleteColor(id);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<ColorDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(colorTag)
+            .WithSummary("Delete color")
+            .WithDescription("Delete color \n\n**Request example:** `/api/color?id=10`");
+
         return builder;
     }
 }

@@ -19,6 +19,15 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
         return response.Color.Adapt<ColorDto>();
     }
 
+    public async Task<ColorDto> DeleteColor(int id)
+    {
+        var grpcRequest = new ScheduleServiceClient.DeleteColorRequest() { Id = id };
+
+        var result = await _client.DeleteColorAsync(grpcRequest);
+
+        return result.Color.Adapt<ColorDto>();
+    }
+
     public async Task<ColorDto> GetColorById(int id)
     {
         var grpcRequest = new ScheduleServiceClient.GetColorByIdRequest() { Id = id };

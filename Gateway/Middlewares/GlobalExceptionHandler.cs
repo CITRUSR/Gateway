@@ -51,6 +51,10 @@ public class GlobalExceptionHandler
                             JsonConvert.DeserializeObject<ValidationError>(ex.Status.Detail)
                         );
                         break;
+                    case StatusCode.AlreadyExists:
+                        context.Response.StatusCode = StatusCodes.Status409Conflict;
+                        await context.Response.WriteAsJsonAsync(ex.Status.Detail);
+                        break;
                 }
                 break;
 

@@ -26,4 +26,13 @@ public class RoomService(ScheduleServiceClient.RoomService.RoomServiceClient cli
 
         return response.Room.Adapt<RoomDto>();
     }
+
+    public async Task<RoomDto> UpdateRoom(UpdateRoomRequest request)
+    {
+        var grcpRequest = request.Adapt<ScheduleServiceClient.UpdateRoomRequest>();
+
+        var response = await _client.UpdateRoomAsync(grcpRequest);
+
+        return response.Room.Adapt<RoomDto>();
+    }
 }

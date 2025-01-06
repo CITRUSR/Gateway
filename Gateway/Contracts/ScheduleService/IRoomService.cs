@@ -7,4 +7,5 @@ public interface IRoomService
 {
     Task<RoomDto> CreateRoom(CreateRoomRequest request);
     Task<RoomDto> GetRoomById(int id);
+    Task<RoomDto> UpdateRoom(UpdateRoomRequest request);
 }

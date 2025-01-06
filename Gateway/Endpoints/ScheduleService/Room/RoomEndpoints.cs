@@ -55,6 +55,33 @@ public static class RoomEndpoints
             .WithSummary("Get room by id")
             .WithDescription("Get room by id");
 
+        builder
+            .MapPut(
+                "api/room",
+                async (
+                    [FromBody] UpdateRoomRequest request,
+                    [FromServices] IRoomService roomService
+                ) =>
+                {
+                    var result = await roomService.UpdateRoom(request);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<RoomDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status409Conflict)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(roomTag)
+            .WithSummary("Update room")
+            .WithDescription("Update room")
+            .WithOpenApi(operation =>
+            {
+                operation.Responses[StatusCodes.Status409Conflict.ToString()].Description =
+                    "if room name already exists";
+
+                return operation;
+            });
+
         return builder;
     }
 }

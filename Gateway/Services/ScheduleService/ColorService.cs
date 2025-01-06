@@ -18,4 +18,13 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
 
         return response.Color.Adapt<ColorDto>();
     }
+
+    public async Task<ColorDto> GetColorById(int id)
+    {
+        var grpcRequest = new ScheduleServiceClient.GetColorByIdRequest() { Id = id };
+
+        var response = await _client.GetColorByIdAsync(grpcRequest);
+
+        return response.Color.Adapt<ColorDto>();
+    }
 }

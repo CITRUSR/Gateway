@@ -6,4 +6,5 @@ namespace Gateway.Contracts.ScheduleService;
 public interface IColorService
 {
     Task<ColorDto> CreateColor(CreateColorRequest request);
+    Task<ColorDto> GetColorById(int id);
 }

@@ -39,6 +39,22 @@ public static class ColorEndpoints
                 return operation;
             });
 
+        builder
+            .MapGet(
+                "api/color",
+                async ([FromQuery] int id, [FromServices] IColorService colorSercice) =>
+                {
+                    var result = await colorSercice.GetColorById(id);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<ColorDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(colorTag)
+            .WithSummary("Get color by id")
+            .WithDescription("Get color by id \n\n**Request example:** `/api/color?id=10`");
+
         return builder;
     }
 }

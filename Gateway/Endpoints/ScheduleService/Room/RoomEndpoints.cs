@@ -82,6 +82,22 @@ public static class RoomEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete(
+                "api/room",
+                async ([FromQuery] int id, [FromServices] IRoomService roomService) =>
+                {
+                    var result = await roomService.DeleteRoom(id);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<RoomDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(roomTag)
+            .WithSummary("Delete room")
+            .WithDescription("Delete room");
+
         return builder;
     }
 }

@@ -55,6 +55,33 @@ public static class ColorEndpoints
             .WithSummary("Get color by id")
             .WithDescription("Get color by id \n\n**Request example:** `/api/color?id=10`");
 
+        builder
+            .MapPut(
+                "api/color",
+                async (
+                    [FromBody] UpdateColorRequest request,
+                    [FromServices] IColorService colorSercice
+                ) =>
+                {
+                    var result = await colorSercice.UpdateColor(request);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<ColorDto>(StatusCodes.Status200OK)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status409Conflict)
+            .WithTags(colorTag)
+            .WithSummary("Update color")
+            .WithDescription("Update color")
+            .WithOpenApi(operation =>
+            {
+                operation.Responses[StatusCodes.Status409Conflict.ToString()].Description =
+                    "if color with this name already exists";
+
+                return operation;
+            });
+
         return builder;
     }
 }

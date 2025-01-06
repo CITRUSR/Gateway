@@ -27,4 +27,13 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
 
         return response.Color.Adapt<ColorDto>();
     }
+
+    public async Task<ColorDto> UpdateColor(UpdateColorRequest request)
+    {
+        var grpcRequest = request.Adapt<ScheduleServiceClient.UpdateColorRequest>();
+
+        var response = await _client.UpdateColorAsync(grpcRequest);
+
+        return response.Color.Adapt<ColorDto>();
+    }
 }

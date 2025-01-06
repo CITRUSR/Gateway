@@ -7,4 +7,5 @@ public interface IColorService
 {
     Task<ColorDto> CreateColor(CreateColorRequest request);
     Task<ColorDto> GetColorById(int id);
+    Task<ColorDto> UpdateColor(UpdateColorRequest request);
 }

@@ -1,6 +1,7 @@
 using Gateway.Contracts.ScheduleService;
 using Gateway.Data.Dtos.ScheduleService;
 using Gateway.Endpoints.ScheduleService.Color.Requests;
+using Gateway.Endpoints.ScheduleService.Color.Responses;
 using Mapster;
 
 namespace Gateway.Services.ScheduleService;
@@ -35,6 +36,15 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
         var response = await _client.GetColorByIdAsync(grpcRequest);
 
         return response.Color.Adapt<ColorDto>();
+    }
+
+    public async Task<List<ColorViewModel>> GetColors()
+    {
+        var grpcRequest = new ScheduleServiceClient.GetColorsRequest();
+
+        var response = await _client.GetColorsAsync(grpcRequest);
+
+        return response.Colors.Adapt<List<ColorViewModel>>();
     }
 
     public async Task<ColorDto> UpdateColor(UpdateColorRequest request)

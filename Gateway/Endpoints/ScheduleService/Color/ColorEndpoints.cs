@@ -2,6 +2,7 @@ using Gateway.Contracts.ScheduleService;
 using Gateway.Data.Dtos.ScheduleService;
 using Gateway.Data.Errors;
 using Gateway.Endpoints.ScheduleService.Color.Requests;
+using Gateway.Endpoints.ScheduleService.Color.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gateway.Endpoints.ScheduleService.Color;
@@ -54,6 +55,21 @@ public static class ColorEndpoints
             .WithTags(colorTag)
             .WithSummary("Get color by id")
             .WithDescription("Get color by id \n\n**Request example:** `/api/color?id=10`");
+
+        builder
+            .MapGet(
+                "api/colors",
+                async ([FromServices] IColorService colorSercice) =>
+                {
+                    var result = await colorSercice.GetColors();
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<List<ColorViewModel>>(StatusCodes.Status200OK)
+            .WithTags(colorTag)
+            .WithSummary("Get colors")
+            .WithDescription("Get colors");
 
         builder
             .MapPut(

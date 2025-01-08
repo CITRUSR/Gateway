@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Gateway.Contracts.ScheduleService;
 using Gateway.Contracts.UserService;
+using Gateway.Data.Dtos.ScheduleService;
 using Gateway.Endpoints.ScheduleService.Color;
 using Gateway.Endpoints.ScheduleService.CurrentWeekday;
 using Gateway.Endpoints.ScheduleService.Room;
@@ -95,6 +96,7 @@ public static class StartupExtensions
         TeacherConfig.Configure();
         GroupConfig.Configure();
         StudentConfig.Configure();
+        CurrentWeekdayConfig.Configure();
     }
 
     private static void AddScheduleServiceGrpcClients(

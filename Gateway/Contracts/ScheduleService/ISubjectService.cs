@@ -7,4 +7,5 @@ public interface ISubjectService
 {
     Task<SubjectDto> CreateSubject(CreateSubjectRequest request);
     Task<SubjectDto> GetSubjectById(int id);
+    Task<SubjectDto> UpdateSubject(UpdateSubjectRequest request);
 }

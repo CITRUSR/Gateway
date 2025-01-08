@@ -55,6 +55,34 @@ public static class SubjectEndpoints
             .WithSummary("Get subject by id")
             .WithDescription("Get subject by id \n\n**Request example:** `/api/subject?id=10`");
 
+        builder
+            .MapPut(
+                "api/subject",
+                async (
+                    [FromBody] UpdateSubjectRequest request,
+                    [FromServices] ISubjectService subjectService
+                ) =>
+                {
+                    var result = await subjectService.UpdateSubject(request);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<SubjectDto>(StatusCodes.Status200OK)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status409Conflict)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(subjectTag)
+            .WithSummary("Update subject")
+            .WithDescription("Update subject")
+            .WithOpenApi(operation =>
+            {
+                operation.Responses[StatusCodes.Status409Conflict.ToString()].Description =
+                    "if subject with this name already exists";
+
+                return operation;
+            });
+
         return builder;
     }
 }

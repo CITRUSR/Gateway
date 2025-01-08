@@ -27,4 +27,13 @@ public class SubjectService(ScheduleServiceClient.SubjectService.SubjectServiceC
 
         return result.Subject.Adapt<SubjectDto>();
     }
+
+    public async Task<SubjectDto> UpdateSubject(UpdateSubjectRequest request)
+    {
+        var grpcRequest = request.Adapt<ScheduleServiceClient.UpdateSubjectRequest>();
+
+        var result = await _client.UpdateSubjectAsync(grpcRequest);
+
+        return result.Subject.Adapt<SubjectDto>();
+    }
 }

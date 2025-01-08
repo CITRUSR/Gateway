@@ -83,6 +83,22 @@ public static class SubjectEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete(
+                "api/subject",
+                async ([FromQuery] int id, [FromServices] ISubjectService subjectService) =>
+                {
+                    var result = await subjectService.DeleteSubject(id);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<SubjectDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(subjectTag)
+            .WithSummary("Delete subject")
+            .WithDescription("Delete subject");
+
         return builder;
     }
 }

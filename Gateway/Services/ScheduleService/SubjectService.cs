@@ -19,6 +19,15 @@ public class SubjectService(ScheduleServiceClient.SubjectService.SubjectServiceC
         return result.Subject.Adapt<SubjectDto>();
     }
 
+    public async Task<SubjectDto> DeleteSubject(int id)
+    {
+        var grpcRequest = new ScheduleServiceClient.DeleteSubjectRequest() { Id = id };
+
+        var result = await _client.DeleteSubjectAsync(grpcRequest);
+
+        return result.Subject.Adapt<SubjectDto>();
+    }
+
     public async Task<SubjectDto> GetSubjectById(int id)
     {
         var grpcRequest = new ScheduleServiceClient.GetSubjectByIdRequest { Id = id };

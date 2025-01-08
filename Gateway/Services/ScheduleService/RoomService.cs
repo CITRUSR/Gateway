@@ -1,6 +1,7 @@
 using Gateway.Contracts.ScheduleService;
 using Gateway.Data.Dtos.ScheduleService;
 using Gateway.Endpoints.ScheduleService.Room.Requests;
+using Gateway.Endpoints.ScheduleService.Room.Responses;
 using Mapster;
 
 namespace Gateway.Services.ScheduleService;
@@ -34,6 +35,15 @@ public class RoomService(ScheduleServiceClient.RoomService.RoomServiceClient cli
         var response = await _client.GetRoomByIdAsync(grpcRequest);
 
         return response.Room.Adapt<RoomDto>();
+    }
+
+    public async Task<GetRoomsResponse> GetRooms(GetRoomsRequest request)
+    {
+        var grpcRequest = request.Adapt<ScheduleServiceClient.GetRoomsRequest>();
+
+        var response = await _client.GetRoomsAsync(grpcRequest);
+
+        return response.Adapt<GetRoomsResponse>();
     }
 
     public async Task<RoomDto> UpdateRoom(UpdateRoomRequest request)

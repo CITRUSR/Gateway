@@ -1,7 +1,11 @@
 using Gateway.Contracts.ScheduleService;
+using Gateway.Data.Common;
 using Gateway.Data.Dtos.ScheduleService;
+using Gateway.Data.Enums;
 using Gateway.Data.Errors;
+using Gateway.Endpoints.ScheduleService.Room.Enums;
 using Gateway.Endpoints.ScheduleService.Room.Requests;
+using Gateway.Endpoints.ScheduleService.Room.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gateway.Endpoints.ScheduleService.Room;
@@ -54,6 +58,41 @@ public static class RoomEndpoints
             .WithTags(roomTag)
             .WithSummary("Get room by id")
             .WithDescription("Get room by id");
+
+        builder
+            .MapGet(
+                "api/rooms",
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
+                    [FromQuery] string? searchString,
+                    [FromQuery] RoomFilterState filterBy,
+                    [FromQuery] OrderState orderBy,
+                    [FromServices] IRoomService roomService
+                ) =>
+                {
+                    var roomFilter = new RoomFilter(searchString, filterBy, orderBy);
+
+                    var pagParameters = new PaginationParameters()
+                    {
+                        Page = page,
+                        PageSize = pageSize,
+                    };
+
+                    var request = new GetRoomsRequest(roomFilter, pagParameters);
+
+                    var result = await roomService.GetRooms(request);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<GetRoomsResponse>(StatusCodes.Status200OK)
+            .WithTags(roomTag)
+            .WithSummary("Get rooms")
+            .WithDescription(
+                "Get rooms with filtering and pagination"
+                    + "\n\n**Request example:** `/api/rooms?page=5&pageSize=10&searchString=40&filterBy=Name&orderBy=Asc`"
+            );
 
         builder
             .MapPut(

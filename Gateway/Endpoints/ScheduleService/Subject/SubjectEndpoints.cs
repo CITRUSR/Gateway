@@ -39,6 +39,22 @@ public static class SubjectEndpoints
                 return operation;
             });
 
+        builder
+            .MapGet(
+                "api/subject",
+                async ([FromQuery] int id, [FromServices] ISubjectService subjectService) =>
+                {
+                    var result = await subjectService.GetSubjectById(id);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<SubjectDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(subjectTag)
+            .WithSummary("Get subject by id")
+            .WithDescription("Get subject by id \n\n**Request example:** `/api/subject?id=10`");
+
         return builder;
     }
 }

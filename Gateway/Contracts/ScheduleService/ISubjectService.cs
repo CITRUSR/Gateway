@@ -6,4 +6,5 @@ namespace Gateway.Contracts.ScheduleService;
 public interface ISubjectService
 {
     Task<SubjectDto> CreateSubject(CreateSubjectRequest request);
+    Task<SubjectDto> GetSubjectById(int id);
 }

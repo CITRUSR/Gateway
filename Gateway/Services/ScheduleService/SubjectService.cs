@@ -1,6 +1,7 @@
 using Gateway.Contracts.ScheduleService;
 using Gateway.Data.Dtos.ScheduleService;
 using Gateway.Endpoints.ScheduleService.Subject.Requests;
+using Gateway.Endpoints.ScheduleService.Subject.Responses;
 using Mapster;
 
 namespace Gateway.Services.ScheduleService;
@@ -35,6 +36,15 @@ public class SubjectService(ScheduleServiceClient.SubjectService.SubjectServiceC
         var result = await _client.GetSubjectByIdAsync(grpcRequest);
 
         return result.Subject.Adapt<SubjectDto>();
+    }
+
+    public async Task<GetSubjectsResponse> GetSubjects(GetSubjectsRequest request)
+    {
+        var grpcRequest = request.Adapt<ScheduleServiceClient.GetSubjctsRequest>();
+
+        var result = await _client.GetSubjctsAsync(grpcRequest);
+
+        return result.Adapt<GetSubjectsResponse>();
     }
 
     public async Task<SubjectDto> UpdateSubject(UpdateSubjectRequest request)

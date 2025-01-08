@@ -1,7 +1,11 @@
 using Gateway.Contracts.ScheduleService;
+using Gateway.Data.Common;
 using Gateway.Data.Dtos.ScheduleService;
+using Gateway.Data.Enums;
 using Gateway.Data.Errors;
+using Gateway.Endpoints.ScheduleService.Subject.Enums;
 using Gateway.Endpoints.ScheduleService.Subject.Requests;
+using Gateway.Endpoints.ScheduleService.Subject.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gateway.Endpoints.ScheduleService.Subject;
@@ -54,6 +58,41 @@ public static class SubjectEndpoints
             .WithTags(subjectTag)
             .WithSummary("Get subject by id")
             .WithDescription("Get subject by id \n\n**Request example:** `/api/subject?id=10`");
+
+        builder
+            .MapGet(
+                "api/subjects",
+                async (
+                    [FromQuery] int page,
+                    [FromQuery] int pageSize,
+                    [FromQuery] string? searchString,
+                    [FromQuery] SubjectFilterState filterBy,
+                    [FromQuery] OrderState orderBy,
+                    [FromServices] ISubjectService subjectService
+                ) =>
+                {
+                    var pagParameters = new PaginationParameters()
+                    {
+                        Page = page,
+                        PageSize = pageSize,
+                    };
+
+                    var filter = new SubjectFilter(searchString, filterBy, orderBy);
+
+                    var request = new GetSubjectsRequest(filter, pagParameters);
+
+                    var result = await subjectService.GetSubjects(request);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<GetSubjectsResponse>(StatusCodes.Status200OK)
+            .WithTags(subjectTag)
+            .WithSummary("Get subjects")
+            .WithDescription(
+                "Get subject with pagination and filtration"
+                    + "\n\n**Request example:** `/api/subjects?page=5&pageSize=10&searchString=Ma&filterBy=Name&orderBy=Asc`"
+            );
 
         builder
             .MapPut(

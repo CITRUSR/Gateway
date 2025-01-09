@@ -50,6 +50,20 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Adapt<GetClassesForWeekForStudentResponse>();
     }
 
+    public async Task<GetClassesForWeekForTeacherResponse> GetClassesForWeekForTeacher(
+        Guid teacherId
+    )
+    {
+        var grpcRequest = new ScheduleServiceClient.GetClassesForWeekForTeacherRequest()
+        {
+            TeacherId = teacherId.ToString(),
+        };
+
+        var result = await _client.GetClassesForWeekForTeacherAsync(grpcRequest);
+
+        return result.Adapt<GetClassesForWeekForTeacherResponse>();
+    }
+
     public async Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudent(
         int GroupId
     )

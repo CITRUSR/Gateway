@@ -107,5 +107,16 @@ public static class ClassConfig
             .NewConfig()
             .Map(dest => dest.StartsAt, src => src.StartsAt.ToTimeSpan())
             .Map(dest => dest.EndsAt, src => src.EndsAt.ToTimeSpan());
+
+        TypeAdapterConfig<
+            ScheduleServiceClient.GetClassesForWeekForTeacherResponse,
+            GetClassesForWeekForTeacherResponse
+        >
+            .NewConfig()
+            .Map(dest => dest.Teacher, src => src.Teacher.Adapt<ScheduleTeacherViewModel>())
+            .Map(
+                dest => dest.Classes,
+                src => src.Classes.Adapt<List<TeacherWeekdayColorClasses>>()
+            );
     }
 }

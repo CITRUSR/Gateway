@@ -15,4 +15,5 @@ public interface IClassService
     Task<GetClassesOnCurrentDateForTeacherResponse> GetClassesOnCurrentDateForTeacher(
         Guid TeacherId
     );
+    Task<GetClassesForWeekForTeacherResponse> GetClassesForWeekForTeacher(Guid teacherId);
 }

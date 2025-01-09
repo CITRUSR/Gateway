@@ -12,6 +12,15 @@ public class CurrentWeekdayService(
     private readonly ScheduleServiceClient.CurrentWeekdayService.CurrentWeekdayServiceClient _client =
         client;
 
+    public async Task<CurrentWeekdayDto> CreateCurrentWeekday(CreateCurrentWeekdayRequest request)
+    {
+        var grpcRequest = request.Adapt<ScheduleServiceClient.CreateCurrentWeekdayRequest>();
+
+        var result = await _client.CreateCurrentWeekdayAsync(grpcRequest);
+
+        return result.CurrentWeekday.Adapt<CurrentWeekdayDto>();
+    }
+
     public async Task<CurrentWeekdayDto> GetCurrentWeekday()
     {
         var grpcRequest = new ScheduleServiceClient.GetCurrentWeekdayRequest();

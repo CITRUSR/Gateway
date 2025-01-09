@@ -7,4 +7,5 @@ public interface ICurrentWeekdayService
 {
     Task<CurrentWeekdayDto> GetCurrentWeekday();
     Task<CurrentWeekdayDto> UpdateCurrentWeekday(UpdateCurrentWeekdayRequest request);
+    Task<CurrentWeekdayDto> CreateCurrentWeekday(CreateCurrentWeekdayRequest request);
 }

@@ -24,5 +24,13 @@ public static class CurrentWeekdayConfig
             .NewConfig()
             .Map(dest => dest.Interval, src => src.Interval.ToDuration())
             .Map(dest => dest.UpdateTime, src => src.UpdateTime.ToTimestamp());
+
+        TypeAdapterConfig<
+            CreateCurrentWeekdayRequest,
+            ScheduleServiceClient.CreateCurrentWeekdayRequest
+        >
+            .NewConfig()
+            .Map(dest => dest.Interval, src => src.Interval.ToDuration())
+            .Map(dest => dest.UpdateTime, src => src.UpdateTime.ToTimestamp());
     }
 }

@@ -31,7 +31,7 @@ public class GroupService : IGroupService
         _groupService = new UserServiceClient.GroupService.GroupServiceClient(channel);
     }
 
-    public async Task<GroupShortInfo> CreateGroup(CreateGroupRequest request)
+    public async Task<GroupShortInfo> CreateGroupAsync(CreateGroupRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.CreateGroupRequest>();
 
@@ -40,7 +40,7 @@ public class GroupService : IGroupService
         return result.Adapt<GroupShortInfo>();
     }
 
-    public async Task<List<GroupShortInfo>> DeleteGroups(DeleteGroupsRequest request)
+    public async Task<List<GroupShortInfo>> DeleteGroupsAsync(DeleteGroupsRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.DeleteGroupsRequest>();
 
@@ -49,7 +49,7 @@ public class GroupService : IGroupService
         return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
-    public async Task<GroupShortInfo> EditGroup(EditGroupRequest request)
+    public async Task<GroupShortInfo> EditGroupAsync(EditGroupRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.EditGroupRequest>();
 
@@ -58,7 +58,7 @@ public class GroupService : IGroupService
         return result.Adapt<GroupShortInfo>();
     }
 
-    public async Task<GroupDto> GetGroupById(int id)
+    public async Task<GroupDto> GetGroupByIdAsync(int id)
     {
         var grpcRequest = new UserServiceClient.GetGroupByIdRequest { Id = id };
 
@@ -67,7 +67,7 @@ public class GroupService : IGroupService
         return result.Adapt<GroupDto>();
     }
 
-    public async Task<GetGroupsResponse> GetGroups(
+    public async Task<GetGroupsResponse> GetGroupsAsync(
         int page,
         int pageSize,
         string? search,
@@ -91,7 +91,7 @@ public class GroupService : IGroupService
         return result.Adapt<GetGroupsResponse>();
     }
 
-    public async Task<List<GroupShortInfo>> GraduateGroups(GraduateGroupsRequest request)
+    public async Task<List<GroupShortInfo>> GraduateGroupsAsync(GraduateGroupsRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.GraduateGroupsRequest>();
 
@@ -100,7 +100,7 @@ public class GroupService : IGroupService
         return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
-    public async Task<List<GroupShortInfo>> RecoveryGroups(RecoveryGroupsRequest request)
+    public async Task<List<GroupShortInfo>> RecoveryGroupsAsync(RecoveryGroupsRequest request)
     {
         var grpcReqeust = request.Adapt<UserServiceClient.RecoveryGroupsRequest>();
 
@@ -109,7 +109,7 @@ public class GroupService : IGroupService
         return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
-    public async Task<List<GroupShortInfo>> SoftDeleteGroups(DeleteGroupsRequest request)
+    public async Task<List<GroupShortInfo>> SoftDeleteGroupsAsync(DeleteGroupsRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.SoftDeleteGroupsRequest>();
 
@@ -118,7 +118,7 @@ public class GroupService : IGroupService
         return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
-    public async Task<List<GroupShortInfo>> TransferGroupsToNextCourse(
+    public async Task<List<GroupShortInfo>> TransferGroupsToNextCourseAsync(
         TransferGroupsToNextCourseRequest request
     )
     {
@@ -129,7 +129,7 @@ public class GroupService : IGroupService
         return result.Groups.Adapt<List<GroupShortInfo>>();
     }
 
-    public async Task<List<GroupShortInfo>> TransferGroupsToNextSemester(
+    public async Task<List<GroupShortInfo>> TransferGroupsToNextSemesterAsync(
         TransferGroupsToNextSemesterRequest request
     )
     {

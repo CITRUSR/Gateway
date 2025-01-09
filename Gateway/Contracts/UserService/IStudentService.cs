@@ -8,16 +8,16 @@ namespace Gateway.Contracts.UserService;
 
 public interface IStudentService
 {
-    public Task<StudentShortInfo> CreateStudent(CreateStudentRequest request);
-    public Task<List<StudentShortInfo>> DeleteStudents(DeleteStudentsRequest request);
-    public Task<List<StudentShortInfo>> SoftDeleteStudents(DeleteStudentsRequest request);
-    public Task<List<StudentShortInfo>> RecoveryStudents(RecoveryStudentsRequest request);
-    public Task<List<StudentShortInfo>> DropOutStudents(DropOutStudentsRequest request);
-    public Task<StudentShortInfo> EditStudent(EditStudentRequest request);
-    public Task<StudentDto> GetStudentById(Guid id);
-    public Task<StudentDto> GetStudentBySsoId(Guid ssoId);
-    public Task<List<StudentViewModel>> GetStudentsByGroupId(int groupId);
-    public Task<GetStudentsResponse> GetStudents(
+    public Task<StudentShortInfo> CreateStudentAsync(CreateStudentRequest request);
+    public Task<List<StudentShortInfo>> DeleteStudentsAsync(DeleteStudentsRequest request);
+    public Task<List<StudentShortInfo>> SoftDeleteStudentsAsync(DeleteStudentsRequest request);
+    public Task<List<StudentShortInfo>> RecoveryStudentsAsync(RecoveryStudentsRequest request);
+    public Task<List<StudentShortInfo>> DropOutStudentsAsync(DropOutStudentsRequest request);
+    public Task<StudentShortInfo> EditStudentAsync(EditStudentRequest request);
+    public Task<StudentDto> GetStudentByIdAsync(Guid id);
+    public Task<StudentDto> GetStudentBySsoIdAsync(Guid ssoId);
+    public Task<List<StudentViewModel>> GetStudentsByGroupIdAsync(int groupId);
+    public Task<GetStudentsResponse> GetStudentsAsync(
         int page,
         int pageSize,
         string? search,

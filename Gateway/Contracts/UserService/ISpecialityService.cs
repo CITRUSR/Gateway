@@ -8,17 +8,19 @@ namespace Gateway.Contracts.UserService;
 
 public interface ISpecialityService
 {
-    public Task<SpecialityShortInfo> CreateSpeciality(CreateSpecialityRequest request);
-    public Task<List<SpecialityShortInfo>> DeleteSpecialities(DeleteSpecialitiesRequest request);
-    public Task<List<SpecialityShortInfo>> SoftDeleteSpecialities(
+    public Task<SpecialityShortInfo> CreateSpecialityAsync(CreateSpecialityRequest request);
+    public Task<List<SpecialityShortInfo>> DeleteSpecialitiesAsync(
         DeleteSpecialitiesRequest request
     );
-    public Task<List<SpecialityShortInfo>> RecoverySpecialities(
+    public Task<List<SpecialityShortInfo>> SoftDeleteSpecialitiesAsync(
+        DeleteSpecialitiesRequest request
+    );
+    public Task<List<SpecialityShortInfo>> RecoverySpecialitiesAsync(
         RecoverySpecialitiesRequest request
     );
-    public Task<SpecialityShortInfo> EditSpeciality(EditSpecialityRequest request);
-    public Task<SpecialityDto> GetSpecialityById(int id);
-    public Task<GetSpecialitiesResponse> GetSpecialities(
+    public Task<SpecialityShortInfo> EditSpecialityAsync(EditSpecialityRequest request);
+    public Task<SpecialityDto> GetSpecialityByIdAsync(int id);
+    public Task<GetSpecialitiesResponse> GetSpecialitiesAsync(
         int page,
         int pageSize,
         string? search,

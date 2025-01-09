@@ -27,7 +27,7 @@ public static class SpecialityEndpoints
                     ISpecialityService specialityService
                 ) =>
                 {
-                    var result = await specialityService.GetSpecialities(
+                    var result = await specialityService.GetSpecialitiesAsync(
                         page,
                         pageSize,
                         search,
@@ -63,7 +63,7 @@ public static class SpecialityEndpoints
                 "api/speciality",
                 async ([FromQuery] int id, ISpecialityService specialityService) =>
                 {
-                    var result = await specialityService.GetSpecialityById(id);
+                    var result = await specialityService.GetSpecialityByIdAsync(id);
 
                     return Results.Ok(result);
                 }
@@ -88,7 +88,7 @@ public static class SpecialityEndpoints
                     ISpecialityService specialityService
                 ) =>
                 {
-                    var result = await specialityService.CreateSpeciality(request);
+                    var result = await specialityService.CreateSpecialityAsync(request);
 
                     return Results.Created("", result);
                 }
@@ -112,7 +112,7 @@ public static class SpecialityEndpoints
                     ISpecialityService specialityService
                 ) =>
                 {
-                    var result = await specialityService.DeleteSpecialities(request);
+                    var result = await specialityService.DeleteSpecialitiesAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -136,7 +136,7 @@ public static class SpecialityEndpoints
                     ISpecialityService specialityService
                 ) =>
                 {
-                    var result = await specialityService.SoftDeleteSpecialities(request);
+                    var result = await specialityService.SoftDeleteSpecialitiesAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -160,7 +160,7 @@ public static class SpecialityEndpoints
                     ISpecialityService specialityService
                 ) =>
                 {
-                    var result = await specialityService.RecoverySpecialities(request);
+                    var result = await specialityService.RecoverySpecialitiesAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -184,7 +184,7 @@ public static class SpecialityEndpoints
                     ISpecialityService specialityService
                 ) =>
                 {
-                    var result = await specialityService.EditSpeciality(request);
+                    var result = await specialityService.EditSpecialityAsync(request);
 
                     return Results.Ok(result);
                 }

@@ -29,7 +29,7 @@ public static class TeacherEndpoints
                     ITeacherService teacherService
                 ) =>
                 {
-                    var result = await teacherService.GetTeachers(
+                    var result = await teacherService.GetTeachersAsync(
                         page,
                         pageSize,
                         search,
@@ -69,7 +69,7 @@ public static class TeacherEndpoints
                 "api/teacher",
                 async ([FromQuery] Guid id, ITeacherService teacherService) =>
                 {
-                    var result = await teacherService.GetTeacherById(id);
+                    var result = await teacherService.GetTeacherByIdAsync(id);
 
                     return Results.Ok(result);
                 }
@@ -91,7 +91,7 @@ public static class TeacherEndpoints
                 "api/teacher/sso",
                 async ([FromQuery] Guid ssoId, ITeacherService teacherService) =>
                 {
-                    var result = await teacherService.GetTeacherBySsoId(ssoId);
+                    var result = await teacherService.GetTeacherBySsoIdAsync(ssoId);
 
                     return Results.Ok(result);
                 }
@@ -113,7 +113,7 @@ public static class TeacherEndpoints
                 "api/teacher",
                 async ([FromBody] CreateTeacherRequest request, ITeacherService teacherService) =>
                 {
-                    var result = await teacherService.CreateTeacher(request);
+                    var result = await teacherService.CreateTeacherAsync(request);
 
                     return Results.Created("", result);
                 }
@@ -149,7 +149,7 @@ public static class TeacherEndpoints
                 "api/teachers",
                 async ([FromBody] DeleteTeachersRequest request, ITeacherService teacherService) =>
                 {
-                    var result = await teacherService.DeleteTeachers(request);
+                    var result = await teacherService.DeleteTeachersAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -170,7 +170,7 @@ public static class TeacherEndpoints
                 "api/teachers/soft",
                 async ([FromBody] DeleteTeachersRequest request, ITeacherService teacherService) =>
                 {
-                    var result = await teacherService.SoftDeleteTeachers(request);
+                    var result = await teacherService.SoftDeleteTeachersAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -194,7 +194,7 @@ public static class TeacherEndpoints
                     ITeacherService teacherService
                 ) =>
                 {
-                    var result = await teacherService.RecoveryTeachers(request);
+                    var result = await teacherService.RecoveryTeachersAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -215,7 +215,7 @@ public static class TeacherEndpoints
                 "api/teachers/fire",
                 async ([FromBody] FireTeachersRequest request, ITeacherService teacherService) =>
                 {
-                    var result = await teacherService.FireTeachers(request);
+                    var result = await teacherService.FireTeachersAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -251,7 +251,7 @@ public static class TeacherEndpoints
                 "api/teacher",
                 async ([FromBody] EditTeacherRequest request, ITeacherService teacherService) =>
                 {
-                    var result = await teacherService.EditTeacher(request);
+                    var result = await teacherService.EditTeacherAsync(request);
 
                     return Results.Ok(result);
                 }

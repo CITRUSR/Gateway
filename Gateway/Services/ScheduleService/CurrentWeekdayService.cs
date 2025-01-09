@@ -12,7 +12,9 @@ public class CurrentWeekdayService(
     private readonly ScheduleServiceClient.CurrentWeekdayService.CurrentWeekdayServiceClient _client =
         client;
 
-    public async Task<CurrentWeekdayDto> CreateCurrentWeekday(CreateCurrentWeekdayRequest request)
+    public async Task<CurrentWeekdayDto> CreateCurrentWeekdayAsync(
+        CreateCurrentWeekdayRequest request
+    )
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.CreateCurrentWeekdayRequest>();
 
@@ -21,7 +23,7 @@ public class CurrentWeekdayService(
         return result.CurrentWeekday.Adapt<CurrentWeekdayDto>();
     }
 
-    public async Task<CurrentWeekdayDto> GetCurrentWeekday()
+    public async Task<CurrentWeekdayDto> GetCurrentWeekdayAsync()
     {
         var grpcRequest = new ScheduleServiceClient.GetCurrentWeekdayRequest();
 
@@ -30,7 +32,9 @@ public class CurrentWeekdayService(
         return result.CurrentWeekday.Adapt<CurrentWeekdayDto>();
     }
 
-    public async Task<CurrentWeekdayDto> UpdateCurrentWeekday(UpdateCurrentWeekdayRequest request)
+    public async Task<CurrentWeekdayDto> UpdateCurrentWeekdayAsync(
+        UpdateCurrentWeekdayRequest request
+    )
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.UpdateCurrentWeekdayRequest>();
 

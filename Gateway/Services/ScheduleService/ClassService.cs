@@ -11,7 +11,7 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
 {
     private readonly ScheduleServiceClient.ClassService.ClassServiceClient _client = client;
 
-    public async Task<ClassDto> CreateClass(CreateClassRequest request)
+    public async Task<ClassDto> CreateClassAsync(CreateClassRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.CreateClassRequest>();
 
@@ -20,7 +20,7 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Class.Adapt<ClassDto>();
     }
 
-    public async Task<ClassDto> DeleteClass(int id)
+    public async Task<ClassDto> DeleteClassAsync(int id)
     {
         var grpcRequest = new ScheduleServiceClient.DeleteClassRequest { Id = id };
 
@@ -29,7 +29,7 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Class.Adapt<ClassDto>();
     }
 
-    public async Task<ClassDto> GetClassById(int id)
+    public async Task<ClassDto> GetClassByIdAsync(int id)
     {
         var grpcRequest = new ScheduleServiceClient.GetClassByIdRequest { Id = id };
 
@@ -38,7 +38,9 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Class.Adapt<ClassDto>();
     }
 
-    public async Task<GetClassesForWeekForStudentResponse> GetClassesForWeekForStudent(int GroupId)
+    public async Task<GetClassesForWeekForStudentResponse> GetClassesForWeekForStudentAsync(
+        int GroupId
+    )
     {
         var grpcRequest = new ScheduleServiceClient.GetClassesForWeekForStudentRequest()
         {
@@ -50,7 +52,7 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Adapt<GetClassesForWeekForStudentResponse>();
     }
 
-    public async Task<GetClassesForWeekForTeacherResponse> GetClassesForWeekForTeacher(
+    public async Task<GetClassesForWeekForTeacherResponse> GetClassesForWeekForTeacherAsync(
         Guid teacherId
     )
     {
@@ -64,7 +66,7 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Adapt<GetClassesForWeekForTeacherResponse>();
     }
 
-    public async Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudent(
+    public async Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudentAsync(
         int GroupId
     )
     {
@@ -78,7 +80,7 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Adapt<GetClassesOnCurrentDateForStudentResponse>();
     }
 
-    public async Task<GetClassesOnCurrentDateForTeacherResponse> GetClassesOnCurrentDateForTeacher(
+    public async Task<GetClassesOnCurrentDateForTeacherResponse> GetClassesOnCurrentDateForTeacherAsync(
         Guid TeacherId
     )
     {
@@ -92,7 +94,7 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Adapt<GetClassesOnCurrentDateForTeacherResponse>();
     }
 
-    public async Task<ClassDto> UpdateClass(UpdateClassRequest request)
+    public async Task<ClassDto> UpdateClassAsync(UpdateClassRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.UpdateClassRequest>();
 

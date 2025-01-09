@@ -24,7 +24,7 @@ public static class RoomEndpoints
                     [FromServices] IRoomService roomService
                 ) =>
                 {
-                    var result = await roomService.CreateRoom(request);
+                    var result = await roomService.CreateRoomAsync(request);
 
                     return Results.Created("", result);
                 }
@@ -48,7 +48,7 @@ public static class RoomEndpoints
                 "api/room",
                 async ([FromQuery] int id, [FromServices] IRoomService roomService) =>
                 {
-                    var result = await roomService.GetRoomById(id);
+                    var result = await roomService.GetRoomByIdAsync(id);
 
                     return Results.Ok(result);
                 }
@@ -81,7 +81,7 @@ public static class RoomEndpoints
 
                     var request = new GetRoomsRequest(roomFilter, pagParameters);
 
-                    var result = await roomService.GetRooms(request);
+                    var result = await roomService.GetRoomsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -102,7 +102,7 @@ public static class RoomEndpoints
                     [FromServices] IRoomService roomService
                 ) =>
                 {
-                    var result = await roomService.UpdateRoom(request);
+                    var result = await roomService.UpdateRoomAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -126,7 +126,7 @@ public static class RoomEndpoints
                 "api/room",
                 async ([FromQuery] int id, [FromServices] IRoomService roomService) =>
                 {
-                    var result = await roomService.DeleteRoom(id);
+                    var result = await roomService.DeleteRoomAsync(id);
 
                     return Results.Ok(result);
                 }

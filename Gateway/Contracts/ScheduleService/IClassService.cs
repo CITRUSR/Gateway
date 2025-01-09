@@ -6,14 +6,16 @@ namespace Gateway.Contracts.ScheduleService;
 
 public interface IClassService
 {
-    Task<ClassDto> CreateClass(CreateClassRequest request);
-    Task<ClassDto> UpdateClass(UpdateClassRequest request);
-    Task<ClassDto> GetClassById(int id);
-    Task<ClassDto> DeleteClass(int id);
-    Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudent(int GroupId);
-    Task<GetClassesForWeekForStudentResponse> GetClassesForWeekForStudent(int GroupId);
-    Task<GetClassesOnCurrentDateForTeacherResponse> GetClassesOnCurrentDateForTeacher(
+    Task<ClassDto> CreateClassAsync(CreateClassRequest request);
+    Task<ClassDto> UpdateClassAsync(UpdateClassRequest request);
+    Task<ClassDto> GetClassByIdAsync(int id);
+    Task<ClassDto> DeleteClassAsync(int id);
+    Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudentAsync(
+        int GroupId
+    );
+    Task<GetClassesForWeekForStudentResponse> GetClassesForWeekForStudentAsync(int GroupId);
+    Task<GetClassesOnCurrentDateForTeacherResponse> GetClassesOnCurrentDateForTeacherAsync(
         Guid TeacherId
     );
-    Task<GetClassesForWeekForTeacherResponse> GetClassesForWeekForTeacher(Guid teacherId);
+    Task<GetClassesForWeekForTeacherResponse> GetClassesForWeekForTeacherAsync(Guid teacherId);
 }

@@ -6,9 +6,9 @@ namespace Gateway.Contracts.ScheduleService;
 
 public interface ISubjectService
 {
-    Task<SubjectDto> CreateSubject(CreateSubjectRequest request);
+    Task<SubjectDto> CreateSubjectAsync(CreateSubjectRequest request);
     Task<SubjectDto> GetSubjectById(int id);
-    Task<SubjectDto> UpdateSubject(UpdateSubjectRequest request);
-    Task<SubjectDto> DeleteSubject(int id);
-    Task<GetSubjectsResponse> GetSubjects(GetSubjectsRequest request);
+    Task<SubjectDto> UpdateSubjectAsync(UpdateSubjectRequest request);
+    Task<SubjectDto> DeleteSubjectAsync(int id);
+    Task<GetSubjectsResponse> GetSubjectsAsync(GetSubjectsRequest request);
 }

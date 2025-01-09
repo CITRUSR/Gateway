@@ -6,9 +6,9 @@ namespace Gateway.Contracts.ScheduleService;
 
 public interface IColorService
 {
-    Task<ColorDto> CreateColor(CreateColorRequest request);
-    Task<ColorDto> GetColorById(int id);
-    Task<ColorDto> UpdateColor(UpdateColorRequest request);
-    Task<ColorDto> DeleteColor(int id);
-    Task<List<ColorViewModel>> GetColors();
+    Task<ColorDto> CreateColorAsync(CreateColorRequest request);
+    Task<ColorDto> GetColorByIdAsync(int id);
+    Task<ColorDto> UpdateColorAsync(UpdateColorRequest request);
+    Task<ColorDto> DeleteColorAsync(int id);
+    Task<List<ColorViewModel>> GetColorsAsync();
 }

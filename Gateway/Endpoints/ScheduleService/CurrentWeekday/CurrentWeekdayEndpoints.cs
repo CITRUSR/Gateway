@@ -16,7 +16,7 @@ public static class CurrentWeekdayEndpoints
                 "api/currentWeekday",
                 async ([FromServices] ICurrentWeekdayService currentWeekdayService) =>
                 {
-                    var result = await currentWeekdayService.GetCurrentWeekday();
+                    var result = await currentWeekdayService.GetCurrentWeekdayAsync();
 
                     return Results.Ok(result);
                 }
@@ -35,7 +35,7 @@ public static class CurrentWeekdayEndpoints
                     [FromServices] ICurrentWeekdayService currentWeekdayService
                 ) =>
                 {
-                    var result = await currentWeekdayService.UpdateCurrentWeekday(request);
+                    var result = await currentWeekdayService.UpdateCurrentWeekdayAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -54,7 +54,7 @@ public static class CurrentWeekdayEndpoints
                     [FromServices] ICurrentWeekdayService currentWeekdayService
                 ) =>
                 {
-                    var result = await currentWeekdayService.CreateCurrentWeekday(request);
+                    var result = await currentWeekdayService.CreateCurrentWeekdayAsync(request);
 
                     return Results.Ok(result);
                 }

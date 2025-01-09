@@ -24,7 +24,7 @@ public static class SubjectEndpoints
                     [FromServices] ISubjectService subjectService
                 ) =>
                 {
-                    var result = await subjectService.CreateSubject(request);
+                    var result = await subjectService.CreateSubjectAsync(request);
 
                     return Results.Created("", result);
                 }
@@ -81,7 +81,7 @@ public static class SubjectEndpoints
 
                     var request = new GetSubjectsRequest(filter, pagParameters);
 
-                    var result = await subjectService.GetSubjects(request);
+                    var result = await subjectService.GetSubjectsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -102,7 +102,7 @@ public static class SubjectEndpoints
                     [FromServices] ISubjectService subjectService
                 ) =>
                 {
-                    var result = await subjectService.UpdateSubject(request);
+                    var result = await subjectService.UpdateSubjectAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -127,7 +127,7 @@ public static class SubjectEndpoints
                 "api/subject",
                 async ([FromQuery] int id, [FromServices] ISubjectService subjectService) =>
                 {
-                    var result = await subjectService.DeleteSubject(id);
+                    var result = await subjectService.DeleteSubjectAsync(id);
 
                     return Results.Ok(result);
                 }

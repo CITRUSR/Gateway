@@ -11,7 +11,7 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
 {
     private readonly ScheduleServiceClient.ColorService.ColorServiceClient _client = client;
 
-    public async Task<ColorDto> CreateColor(CreateColorRequest request)
+    public async Task<ColorDto> CreateColorAsync(CreateColorRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.CreateColorRequest>();
 
@@ -20,7 +20,7 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
         return response.Color.Adapt<ColorDto>();
     }
 
-    public async Task<ColorDto> DeleteColor(int id)
+    public async Task<ColorDto> DeleteColorAsync(int id)
     {
         var grpcRequest = new ScheduleServiceClient.DeleteColorRequest() { Id = id };
 
@@ -29,7 +29,7 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
         return result.Color.Adapt<ColorDto>();
     }
 
-    public async Task<ColorDto> GetColorById(int id)
+    public async Task<ColorDto> GetColorByIdAsync(int id)
     {
         var grpcRequest = new ScheduleServiceClient.GetColorByIdRequest() { Id = id };
 
@@ -38,7 +38,7 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
         return response.Color.Adapt<ColorDto>();
     }
 
-    public async Task<List<ColorViewModel>> GetColors()
+    public async Task<List<ColorViewModel>> GetColorsAsync()
     {
         var grpcRequest = new ScheduleServiceClient.GetColorsRequest();
 
@@ -47,7 +47,7 @@ public class ColorService(ScheduleServiceClient.ColorService.ColorServiceClient 
         return response.Colors.Adapt<List<ColorViewModel>>();
     }
 
-    public async Task<ColorDto> UpdateColor(UpdateColorRequest request)
+    public async Task<ColorDto> UpdateColorAsync(UpdateColorRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.UpdateColorRequest>();
 

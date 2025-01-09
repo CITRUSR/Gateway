@@ -5,7 +5,7 @@ namespace Gateway.Contracts.ScheduleService;
 
 public interface ICurrentWeekdayService
 {
-    Task<CurrentWeekdayDto> GetCurrentWeekday();
-    Task<CurrentWeekdayDto> UpdateCurrentWeekday(UpdateCurrentWeekdayRequest request);
-    Task<CurrentWeekdayDto> CreateCurrentWeekday(CreateCurrentWeekdayRequest request);
+    Task<CurrentWeekdayDto> GetCurrentWeekdayAsync();
+    Task<CurrentWeekdayDto> UpdateCurrentWeekdayAsync(UpdateCurrentWeekdayRequest request);
+    Task<CurrentWeekdayDto> CreateCurrentWeekdayAsync(CreateCurrentWeekdayRequest request);
 }

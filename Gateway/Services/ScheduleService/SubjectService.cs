@@ -11,7 +11,7 @@ public class SubjectService(ScheduleServiceClient.SubjectService.SubjectServiceC
 {
     private readonly ScheduleServiceClient.SubjectService.SubjectServiceClient _client = client;
 
-    public async Task<SubjectDto> CreateSubject(CreateSubjectRequest request)
+    public async Task<SubjectDto> CreateSubjectAsync(CreateSubjectRequest request)
     {
         var grpcRequet = request.Adapt<ScheduleServiceClient.CreateSubjectRequest>();
 
@@ -20,7 +20,7 @@ public class SubjectService(ScheduleServiceClient.SubjectService.SubjectServiceC
         return result.Subject.Adapt<SubjectDto>();
     }
 
-    public async Task<SubjectDto> DeleteSubject(int id)
+    public async Task<SubjectDto> DeleteSubjectAsync(int id)
     {
         var grpcRequest = new ScheduleServiceClient.DeleteSubjectRequest() { Id = id };
 
@@ -38,7 +38,7 @@ public class SubjectService(ScheduleServiceClient.SubjectService.SubjectServiceC
         return result.Subject.Adapt<SubjectDto>();
     }
 
-    public async Task<GetSubjectsResponse> GetSubjects(GetSubjectsRequest request)
+    public async Task<GetSubjectsResponse> GetSubjectsAsync(GetSubjectsRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.GetSubjctsRequest>();
 
@@ -47,7 +47,7 @@ public class SubjectService(ScheduleServiceClient.SubjectService.SubjectServiceC
         return result.Adapt<GetSubjectsResponse>();
     }
 
-    public async Task<SubjectDto> UpdateSubject(UpdateSubjectRequest request)
+    public async Task<SubjectDto> UpdateSubjectAsync(UpdateSubjectRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.UpdateSubjectRequest>();
 

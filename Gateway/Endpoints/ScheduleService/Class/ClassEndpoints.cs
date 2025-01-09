@@ -18,7 +18,7 @@ public static class ClassEndpoints
                 "api/classes/day/student",
                 async ([FromQuery] int Groupid, [FromServices] IClassService classService) =>
                 {
-                    var result = await classService.GetClassesOnCurrentDateForStudent(Groupid);
+                    var result = await classService.GetClassesOnCurrentDateForStudentAsync(Groupid);
 
                     return Results.Ok(result);
                 }
@@ -34,7 +34,9 @@ public static class ClassEndpoints
                 "api/classes/day/teacher",
                 async ([FromQuery] Guid teacherId, [FromServices] IClassService classService) =>
                 {
-                    var result = await classService.GetClassesOnCurrentDateForTeacher(teacherId);
+                    var result = await classService.GetClassesOnCurrentDateForTeacherAsync(
+                        teacherId
+                    );
 
                     return Results.Ok(result);
                 }
@@ -50,7 +52,7 @@ public static class ClassEndpoints
                 "api/classes/week/student",
                 async ([FromQuery] int groupId, [FromServices] IClassService classService) =>
                 {
-                    var result = await classService.GetClassesForWeekForStudent(groupId);
+                    var result = await classService.GetClassesForWeekForStudentAsync(groupId);
 
                     return Results.Ok(result);
                 }
@@ -66,7 +68,7 @@ public static class ClassEndpoints
                 "api/classes/week/teacher",
                 async ([FromQuery] Guid teacherId, [FromServices] IClassService classService) =>
                 {
-                    var result = await classService.GetClassesForWeekForTeacher(teacherId);
+                    var result = await classService.GetClassesForWeekForTeacherAsync(teacherId);
 
                     return Results.Ok(result);
                 }
@@ -82,7 +84,7 @@ public static class ClassEndpoints
                 "api/class",
                 async ([FromQuery] int id, [FromServices] IClassService classService) =>
                 {
-                    var result = await classService.GetClassById(id);
+                    var result = await classService.GetClassByIdAsync(id);
 
                     return Results.Ok(result);
                 }
@@ -101,7 +103,7 @@ public static class ClassEndpoints
                     [FromServices] IClassService classService
                 ) =>
                 {
-                    var result = await classService.CreateClass(request);
+                    var result = await classService.CreateClassAsync(request);
 
                     return Results.Created("", result);
                 }
@@ -127,7 +129,7 @@ public static class ClassEndpoints
                     [FromServices] IClassService classService
                 ) =>
                 {
-                    var result = await classService.UpdateClass(request);
+                    var result = await classService.UpdateClassAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -150,7 +152,7 @@ public static class ClassEndpoints
                 "api/class",
                 async ([FromQuery] int id, [FromServices] IClassService classService) =>
                 {
-                    var result = await classService.DeleteClass(id);
+                    var result = await classService.DeleteClassAsync(id);
 
                     return Results.Ok(result);
                 }

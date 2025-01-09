@@ -10,7 +10,7 @@ public class RoomService(ScheduleServiceClient.RoomService.RoomServiceClient cli
 {
     private readonly ScheduleServiceClient.RoomService.RoomServiceClient _client = client;
 
-    public async Task<RoomDto> CreateRoom(CreateRoomRequest request)
+    public async Task<RoomDto> CreateRoomAsync(CreateRoomRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.CreateRoomRequest>();
 
@@ -19,7 +19,7 @@ public class RoomService(ScheduleServiceClient.RoomService.RoomServiceClient cli
         return response.Room.Adapt<RoomDto>();
     }
 
-    public async Task<RoomDto> DeleteRoom(int id)
+    public async Task<RoomDto> DeleteRoomAsync(int id)
     {
         var grpcRequest = new ScheduleServiceClient.DeleteRoomRequest() { Id = id };
 
@@ -28,7 +28,7 @@ public class RoomService(ScheduleServiceClient.RoomService.RoomServiceClient cli
         return response.Room.Adapt<RoomDto>();
     }
 
-    public async Task<RoomDto> GetRoomById(int id)
+    public async Task<RoomDto> GetRoomByIdAsync(int id)
     {
         var grpcRequest = new ScheduleServiceClient.GetRoomByIdRequest() { Id = id };
 
@@ -37,7 +37,7 @@ public class RoomService(ScheduleServiceClient.RoomService.RoomServiceClient cli
         return response.Room.Adapt<RoomDto>();
     }
 
-    public async Task<GetRoomsResponse> GetRooms(GetRoomsRequest request)
+    public async Task<GetRoomsResponse> GetRoomsAsync(GetRoomsRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.GetRoomsRequest>();
 
@@ -46,7 +46,7 @@ public class RoomService(ScheduleServiceClient.RoomService.RoomServiceClient cli
         return response.Adapt<GetRoomsResponse>();
     }
 
-    public async Task<RoomDto> UpdateRoom(UpdateRoomRequest request)
+    public async Task<RoomDto> UpdateRoomAsync(UpdateRoomRequest request)
     {
         var grcpRequest = request.Adapt<ScheduleServiceClient.UpdateRoomRequest>();
 

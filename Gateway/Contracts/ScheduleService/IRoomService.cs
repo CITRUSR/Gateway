@@ -6,9 +6,9 @@ namespace Gateway.Contracts.ScheduleService;
 
 public interface IRoomService
 {
-    Task<RoomDto> CreateRoom(CreateRoomRequest request);
-    Task<RoomDto> GetRoomById(int id);
-    Task<RoomDto> UpdateRoom(UpdateRoomRequest request);
-    Task<RoomDto> DeleteRoom(int id);
-    Task<GetRoomsResponse> GetRooms(GetRoomsRequest request);
+    Task<RoomDto> CreateRoomAsync(CreateRoomRequest request);
+    Task<RoomDto> GetRoomByIdAsync(int id);
+    Task<RoomDto> UpdateRoomAsync(UpdateRoomRequest request);
+    Task<RoomDto> DeleteRoomAsync(int id);
+    Task<GetRoomsResponse> GetRoomsAsync(GetRoomsRequest request);
 }

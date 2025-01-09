@@ -21,7 +21,7 @@ public static class ColorEndpoints
                     [FromServices] IColorService colorSerice
                 ) =>
                 {
-                    var result = await colorSerice.CreateColor(request);
+                    var result = await colorSerice.CreateColorAsync(request);
 
                     return Results.Created("", result);
                 }
@@ -45,7 +45,7 @@ public static class ColorEndpoints
                 "api/color",
                 async ([FromQuery] int id, [FromServices] IColorService colorSercice) =>
                 {
-                    var result = await colorSercice.GetColorById(id);
+                    var result = await colorSercice.GetColorByIdAsync(id);
 
                     return Results.Ok(result);
                 }
@@ -61,7 +61,7 @@ public static class ColorEndpoints
                 "api/colors",
                 async ([FromServices] IColorService colorSercice) =>
                 {
-                    var result = await colorSercice.GetColors();
+                    var result = await colorSercice.GetColorsAsync();
 
                     return Results.Ok(result);
                 }
@@ -79,7 +79,7 @@ public static class ColorEndpoints
                     [FromServices] IColorService colorSercice
                 ) =>
                 {
-                    var result = await colorSercice.UpdateColor(request);
+                    var result = await colorSercice.UpdateColorAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -103,7 +103,7 @@ public static class ColorEndpoints
                 "/color",
                 async ([FromQuery] int id, [FromServices] IColorService colorService) =>
                 {
-                    var result = await colorService.DeleteColor(id);
+                    var result = await colorService.DeleteColorAsync(id);
 
                     return Results.Ok(result);
                 }

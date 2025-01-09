@@ -80,6 +80,22 @@ public static class ClassEndpoints
                 return operation;
             });
 
+        builder
+            .MapDelete(
+                "api/class",
+                async ([FromQuery] int id, [FromServices] IClassService classService) =>
+                {
+                    var result = await classService.DeleteClass(id);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<ClassDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(classTag)
+            .WithSummary("Delete class")
+            .WithDescription("Delete class \n\n**Request example:** `/api/class?id=10`");
+
         return builder;
     }
 }

@@ -19,6 +19,15 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Class.Adapt<ClassDto>();
     }
 
+    public async Task<ClassDto> DeleteClass(int id)
+    {
+        var grpcRequest = new ScheduleServiceClient.DeleteClassRequest { Id = id };
+
+        var result = await _client.DeleteClassAsync(grpcRequest);
+
+        return result.Class.Adapt<ClassDto>();
+    }
+
     public async Task<ClassDto> GetClassById(int id)
     {
         var grpcRequest = new ScheduleServiceClient.GetClassByIdRequest { Id = id };

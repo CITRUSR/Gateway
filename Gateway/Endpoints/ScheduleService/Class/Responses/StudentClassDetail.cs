@@ -10,5 +10,5 @@ public record StudentClassDetail(
     TimeSpan EndsAt,
     DateTime? ChangeOn,
     List<RoomDto> Rooms,
-    List<TeacherViewModel> Teachers
+    List<ScheduleTeacherViewModel> Teachers
 ) : ClassDetailBase(Id, Order, Subject, StartsAt, EndsAt, ChangeOn, Rooms);

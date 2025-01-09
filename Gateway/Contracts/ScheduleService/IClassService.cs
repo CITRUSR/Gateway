@@ -11,4 +11,5 @@ public interface IClassService
     Task<ClassDto> GetClassById(int id);
     Task<ClassDto> DeleteClass(int id);
     Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudent(int GroupId);
+    Task<GetClassesForWeekForStudentResponse> GetClassesForWeekForStudent(int GroupId);
 }

@@ -31,6 +31,22 @@ public static class ClassEndpoints
 
         builder
             .MapGet(
+                "api/classes/week/student",
+                async ([FromQuery] int groupId, [FromServices] IClassService classService) =>
+                {
+                    var result = await classService.GetClassesForWeekForStudent(groupId);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<GetClassesOnCurrentDateForStudentResponse>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(classTag)
+            .WithSummary("Get classes for week for student")
+            .WithDescription("Get classes for week for student");
+
+        builder
+            .MapGet(
                 "api/class",
                 async ([FromQuery] int id, [FromServices] IClassService classService) =>
                 {

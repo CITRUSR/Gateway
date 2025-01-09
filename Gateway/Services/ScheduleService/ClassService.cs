@@ -38,6 +38,18 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Class.Adapt<ClassDto>();
     }
 
+    public async Task<GetClassesForWeekForStudentResponse> GetClassesForWeekForStudent(int GroupId)
+    {
+        var grpcRequest = new ScheduleServiceClient.GetClassesForWeekForStudentRequest()
+        {
+            GroupId = GroupId,
+        };
+
+        var result = await _client.GetClassesForWeekForStudentAsync(grpcRequest);
+
+        return result.Adapt<GetClassesForWeekForStudentResponse>();
+    }
+
     public async Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudent(
         int GroupId
     )

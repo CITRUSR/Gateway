@@ -51,7 +51,7 @@ public static class ClassConfig
             GetClassesOnCurrentDateForStudentResponse
         >
             .NewConfig()
-            .Map(dest => dest.Group, src => src.Group.Adapt<GroupViewModel>())
+            .Map(dest => dest.Group, src => src.Group.Adapt<ScheduleGroupViewModel>())
             .Map(dest => dest.Weekday, src => src.Weekday.Adapt<WeekdayDto>())
             .Map(dest => dest.Classes, src => src.Classes.Adapt<List<StudentColorClasses>>());
 
@@ -66,6 +66,27 @@ public static class ClassConfig
             .Map(dest => dest.StartsAt, src => src.StartsAt.ToTimeSpan())
             .Map(dest => dest.EndsAt, src => src.EndsAt.ToTimeSpan())
             .Map(dest => dest.Rooms, src => src.Rooms.Adapt<List<RoomDto>>())
-            .Map(dest => dest.Teachers, src => src.Teachers.Adapt<List<TeacherViewModel>>());
+            .Map(
+                dest => dest.Teachers,
+                src => src.Teachers.Adapt<List<ScheduleTeacherViewModel>>()
+            );
+
+        TypeAdapterConfig<
+            ScheduleServiceClient.StudentWeekdayColorClassesDto,
+            StudentWeekdayColorClasses
+        >
+            .NewConfig()
+            .Map(dest => dest.Weekday, src => src.Weekday.Adapt<WeekdayDto>())
+            .Map(dest => dest.Classes, src => src.Classes.Adapt<List<StudentColorClasses>>());
+
+        TypeAdapterConfig<
+            ScheduleServiceClient.GetClassesForWeekForStudentResponse,
+            GetClassesForWeekForStudentResponse
+        >
+            .NewConfig()
+            .Map(
+                dest => dest.Classes,
+                src => src.Classes.Adapt<List<StudentWeekdayColorClasses>>()
+            );
     }
 }

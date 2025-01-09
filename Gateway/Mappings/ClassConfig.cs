@@ -1,6 +1,7 @@
 using Gateway.Data.Dtos.ScheduleService;
 using Gateway.Endpoints.ScheduleService.Class.Requests;
 using Gateway.Endpoints.ScheduleService.Class.Responses;
+using Gateway.Extensions;
 using Google.Protobuf.WellKnownTypes;
 using Mapster;
 
@@ -10,42 +11,37 @@ public static class ClassConfig
 {
     public static void Configure()
     {
+        ConfigureClassMappings();
+        ConfigureStudentMappings();
+        ConfigureTeacherMappings();
+    }
+
+    private static void ConfigureClassMappings()
+    {
         TypeAdapterConfig<ScheduleServiceClient.Class, ClassDto>
             .NewConfig()
             .Map(dest => dest.StartsAt, src => src.StartsAt.ToTimeSpan())
             .Map(dest => dest.EndsAt, src => src.EndsAt.ToTimeSpan())
-            .Map(
-                dest => dest.ChangeOn,
-                src => src.ChangeOn == null ? (DateTime?)null : DateTime.Parse(src.ChangeOn)
-            )
-            .Map(
-                dest => dest.IrrelevantSince,
-                src =>
-                    src.IrrelevantSince == null
-                        ? (DateTime?)null
-                        : DateTime.Parse(src.IrrelevantSince)
-            );
+            .Map(dest => dest.ChangeOn, src => src.ChangeOn.ParseNullableDateTime())
+            .Map(dest => dest.IrrelevantSince, src => src.IrrelevantSince.ParseNullableDateTime());
 
         TypeAdapterConfig<CreateClassRequest, ScheduleServiceClient.CreateClassRequest>
             .NewConfig()
             .Map(dest => dest.StartsAt, src => src.StartsAt.ToDuration())
             .Map(dest => dest.EndsAt, src => src.EndsAt.ToDuration())
-            .Map(
-                dest => dest.ChangeOn,
-                src => src.ChangeOn == null ? null : src.ChangeOn.ToString()
-            )
+            .Map(dest => dest.ChangeOn, src => src.ChangeOn.ToNullableString())
             .Map(dest => dest.TeacherIds, src => src.TeachersIds);
 
         TypeAdapterConfig<UpdateClassRequest, ScheduleServiceClient.UpdateClassRequest>
             .NewConfig()
             .Map(dest => dest.StartsAt, src => src.StartsAt.ToDuration())
             .Map(dest => dest.EndsAt, src => src.EndsAt.ToDuration())
-            .Map(
-                dest => dest.ChangeOn,
-                src => src.ChangeOn == null ? null : src.ChangeOn.ToString()
-            )
+            .Map(dest => dest.ChangeOn, src => src.ChangeOn.ToNullableString())
             .Map(dest => dest.TeacherIds, src => src.TeacherIds);
+    }
 
+    private static void ConfigureStudentMappings()
+    {
         TypeAdapterConfig<
             ScheduleServiceClient.GetClassesOnCurrentDateForStudentResponse,
             GetClassesOnCurrentDateForStudentResponse
@@ -88,7 +84,10 @@ public static class ClassConfig
                 dest => dest.Classes,
                 src => src.Classes.Adapt<List<StudentWeekdayColorClasses>>()
             );
+    }
 
+    private static void ConfigureTeacherMappings()
+    {
         TypeAdapterConfig<
             ScheduleServiceClient.GetClassesOnCurrentDateForTeacherResponse,
             GetClassesOnCurrentDateForTeacherResponse

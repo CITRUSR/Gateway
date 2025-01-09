@@ -13,6 +13,22 @@ public static class ClassEndpoints
         string classTag = "Class";
 
         builder
+            .MapGet(
+                "api/class",
+                async ([FromQuery] int id, [FromServices] IClassService classService) =>
+                {
+                    var result = await classService.GetClassById(id);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<ClassDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(classTag)
+            .WithSummary("Get class by id")
+            .WithDescription("Get class by id \n\n**Request example:** `/api/class?id=10`");
+
+        builder
             .MapPost(
                 "api/class",
                 async (

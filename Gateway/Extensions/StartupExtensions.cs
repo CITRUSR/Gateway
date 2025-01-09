@@ -1,11 +1,18 @@
 using System.Text.Json.Serialization;
+using Gateway.Contracts.ScheduleService;
 using Gateway.Contracts.UserService;
+using Gateway.Endpoints.ScheduleService.Class;
+using Gateway.Endpoints.ScheduleService.Color;
+using Gateway.Endpoints.ScheduleService.CurrentWeekday;
+using Gateway.Endpoints.ScheduleService.Room;
+using Gateway.Endpoints.ScheduleService.Subject;
 using Gateway.Endpoints.UserService.Group;
 using Gateway.Endpoints.UserService.Speciality;
 using Gateway.Endpoints.UserService.Student;
 using Gateway.Endpoints.UserService.Teacher;
 using Gateway.Mappings;
 using Gateway.Middlewares;
+using Gateway.Services.ScheduleService;
 using Gateway.Services.UserService;
 using Google.Protobuf.Collections;
 using Mapster;
@@ -15,7 +22,10 @@ namespace Gateway.Extensions;
 
 public static class StartupExtensions
 {
-    public static void ConfigureServices(this IServiceCollection services)
+    public static void ConfigureServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 
@@ -33,10 +43,18 @@ public static class StartupExtensions
 
         MapsterConfigure();
 
+        AddScheduleServiceGrpcClients(services, configuration);
+
         services.AddSingleton<ISpecialityService, SpecialityService>();
         services.AddSingleton<ITeacherService, TeacherService>();
         services.AddSingleton<IGroupService, GroupService>();
         services.AddSingleton<IStudentService, StudentService>();
+
+        services.AddSingleton<IColorService, ColorService>();
+        services.AddSingleton<IRoomService, RoomService>();
+        services.AddSingleton<ISubjectService, SubjectService>();
+        services.AddSingleton<ICurrentWeekdayService, CurrentWeekdayService>();
+        services.AddSingleton<IClassService, ClassService>();
     }
 
     public static void ConfigureApplication(this WebApplication app)
@@ -59,6 +77,12 @@ public static class StartupExtensions
         StudentEndpoints.Map(app);
         TeacherEndpoints.Map(app);
 
+        ColorEndpoints.Map(app);
+        RoomEndpoints.Map(app);
+        SubjectEndpoints.Map(app);
+        CurrentWeekdayEndpoints.Map(app);
+        ClassEndpoints.Map(app);
+
         return app;
     }
 
@@ -74,5 +98,58 @@ public static class StartupExtensions
         TeacherConfig.Configure();
         GroupConfig.Configure();
         StudentConfig.Configure();
+        CurrentWeekdayConfig.Configure();
+        ClassConfig.Configure();
+    }
+
+    private static void AddScheduleServiceGrpcClients(
+        IServiceCollection services,
+        IConfiguration configuration
+    )
+    {
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
+        };
+
+        var serviceUrl = configuration.GetValue<string>("ServiceUrls:ScheduleService");
+
+        services
+            .AddGrpcClient<ScheduleServiceClient.ColorService.ColorServiceClient>(options =>
+            {
+                options.Address = new Uri(serviceUrl);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => handler);
+
+        services
+            .AddGrpcClient<ScheduleServiceClient.RoomService.RoomServiceClient>(options =>
+            {
+                options.Address = new Uri(serviceUrl);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => handler);
+
+        services
+            .AddGrpcClient<ScheduleServiceClient.SubjectService.SubjectServiceClient>(options =>
+            {
+                options.Address = new Uri(serviceUrl);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => handler);
+
+        services
+            .AddGrpcClient<ScheduleServiceClient.CurrentWeekdayService.CurrentWeekdayServiceClient>(
+                options =>
+                {
+                    options.Address = new Uri(serviceUrl);
+                }
+            )
+            .ConfigurePrimaryHttpMessageHandler(() => handler);
+
+        services
+            .AddGrpcClient<ScheduleServiceClient.ClassService.ClassServiceClient>(options =>
+            {
+                options.Address = new Uri(serviceUrl);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => handler);
     }
 }

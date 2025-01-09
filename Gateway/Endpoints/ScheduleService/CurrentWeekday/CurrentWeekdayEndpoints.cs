@@ -27,6 +27,25 @@ public static class CurrentWeekdayEndpoints
             .WithSummary("Get current weekday")
             .WithDescription("Get current weekday");
 
+        builder
+            .MapPut(
+                "api/currentWeekday",
+                async (
+                    [FromBody] UpdateCurrentWeekdayRequest request,
+                    [FromServices] ICurrentWeekdayService currentWeekdayService
+                ) =>
+                {
+                    var result = await currentWeekdayService.UpdateCurrentWeekday(request);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<CurrentWeekdayDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(currentWeekdayTag)
+            .WithSummary("Update current weekday")
+            .WithDescription("Update current weekday");
+
         return builder;
     }
 }

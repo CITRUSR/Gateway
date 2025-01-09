@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Gateway.Contracts.ScheduleService;
 using Gateway.Contracts.UserService;
-using Gateway.Data.Dtos.ScheduleService;
+using Gateway.Endpoints.ScheduleService.Class;
 using Gateway.Endpoints.ScheduleService.Color;
 using Gateway.Endpoints.ScheduleService.CurrentWeekday;
 using Gateway.Endpoints.ScheduleService.Room;
@@ -54,6 +54,7 @@ public static class StartupExtensions
         services.AddSingleton<IRoomService, RoomService>();
         services.AddSingleton<ISubjectService, SubjectService>();
         services.AddSingleton<ICurrentWeekdayService, CurrentWeekdayService>();
+        services.AddSingleton<IClassService, ClassService>();
     }
 
     public static void ConfigureApplication(this WebApplication app)
@@ -80,6 +81,7 @@ public static class StartupExtensions
         RoomEndpoints.Map(app);
         SubjectEndpoints.Map(app);
         CurrentWeekdayEndpoints.Map(app);
+        ClassEndpoints.Map(app);
 
         return app;
     }
@@ -140,6 +142,13 @@ public static class StartupExtensions
                     options.Address = new Uri(serviceUrl);
                 }
             )
+            .ConfigurePrimaryHttpMessageHandler(() => handler);
+
+        services
+            .AddGrpcClient<ScheduleServiceClient.ClassService.ClassServiceClient>(options =>
+            {
+                options.Address = new Uri(serviceUrl);
+            })
             .ConfigurePrimaryHttpMessageHandler(() => handler);
     }
 }

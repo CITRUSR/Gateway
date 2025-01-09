@@ -2,6 +2,7 @@ using Gateway.Contracts.ScheduleService;
 using Gateway.Data.Dtos.ScheduleService;
 using Gateway.Data.Errors;
 using Gateway.Endpoints.ScheduleService.Class.Requests;
+using Gateway.Endpoints.ScheduleService.Class.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gateway.Endpoints.ScheduleService.Class;
@@ -11,6 +12,22 @@ public static class ClassEndpoints
     public static IEndpointRouteBuilder Map(this IEndpointRouteBuilder builder)
     {
         string classTag = "Class";
+
+        builder
+            .MapGet(
+                "api/classes/day/student",
+                async ([FromQuery] int Groupid, [FromServices] IClassService classService) =>
+                {
+                    var result = await classService.GetClassesOnCurrentDateForStudent(Groupid);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<GetClassesOnCurrentDateForStudentResponse>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .WithTags(classTag)
+            .WithSummary("Get classes for day for student")
+            .WithDescription("Get classes for day for student");
 
         builder
             .MapGet(

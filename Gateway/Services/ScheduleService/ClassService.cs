@@ -1,6 +1,7 @@
 using Gateway.Contracts.ScheduleService;
 using Gateway.Data.Dtos.ScheduleService;
 using Gateway.Endpoints.ScheduleService.Class.Requests;
+using Gateway.Endpoints.ScheduleService.Class.Responses;
 using Mapster;
 
 namespace Gateway.Services.ScheduleService;
@@ -35,6 +36,20 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         var result = await _client.GetClassByIdAsync(grpcRequest);
 
         return result.Class.Adapt<ClassDto>();
+    }
+
+    public async Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudent(
+        int GroupId
+    )
+    {
+        var grpcRequest = new ScheduleServiceClient.GetClassesOnCurrentDateForStudentRequest()
+        {
+            GroupId = GroupId,
+        };
+
+        var result = await _client.GetClassesOnCurrentDateForStudentAsync(grpcRequest);
+
+        return result.Adapt<GetClassesOnCurrentDateForStudentResponse>();
     }
 
     public async Task<ClassDto> UpdateClass(UpdateClassRequest request)

@@ -1,3 +1,9 @@
+using Gateway.Data.Dtos.ScheduleService;
+using Gateway.Endpoints.ScheduleService.Class.Requests;
+
 namespace Gateway.Contracts.ScheduleService;
 
-public interface IClassService { }
+public interface IClassService
+{
+    Task<ClassDto> CreateClass(CreateClassRequest request);
+}

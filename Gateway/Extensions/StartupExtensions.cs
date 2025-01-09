@@ -99,6 +99,7 @@ public static class StartupExtensions
         GroupConfig.Configure();
         StudentConfig.Configure();
         CurrentWeekdayConfig.Configure();
+        ClassConfig.Configure();
     }
 
     private static void AddScheduleServiceGrpcClients(

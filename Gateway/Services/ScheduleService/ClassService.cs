@@ -64,6 +64,20 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
         return result.Adapt<GetClassesOnCurrentDateForStudentResponse>();
     }
 
+    public async Task<GetClassesOnCurrentDateForTeacherResponse> GetClassesOnCurrentDateForTeacher(
+        Guid TeacherId
+    )
+    {
+        var grpcRequest = new ScheduleServiceClient.GetClassesOnCurrentDateForTeacherRequest()
+        {
+            TeacherId = TeacherId.ToString(),
+        };
+
+        var result = await _client.GetClassesOnCurrentDateForTeacherAsync(grpcRequest);
+
+        return result.Adapt<GetClassesOnCurrentDateForTeacherResponse>();
+    }
+
     public async Task<ClassDto> UpdateClass(UpdateClassRequest request)
     {
         var grpcRequest = request.Adapt<ScheduleServiceClient.UpdateClassRequest>();

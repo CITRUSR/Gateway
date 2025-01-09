@@ -88,5 +88,24 @@ public static class ClassConfig
                 dest => dest.Classes,
                 src => src.Classes.Adapt<List<StudentWeekdayColorClasses>>()
             );
+
+        TypeAdapterConfig<
+            ScheduleServiceClient.GetClassesOnCurrentDateForTeacherResponse,
+            GetClassesOnCurrentDateForTeacherResponse
+        >
+            .NewConfig()
+            .Map(dest => dest.Teacher, src => src.Teacher.Adapt<ScheduleTeacherViewModel>())
+            .Map(dest => dest.Weekday, src => src.Weekday.Adapt<WeekdayDto>())
+            .Map(dest => dest.Classes, src => src.Classes.Adapt<List<TeacherColorClasses>>());
+
+        TypeAdapterConfig<ScheduleServiceClient.TeacherColorClasses, TeacherColorClasses>
+            .NewConfig()
+            .Map(dest => dest.Color, src => src.Color.Adapt<ColorDto>())
+            .Map(dest => dest.Classes, src => src.Classes.Adapt<List<TeacherClassDetail>>());
+
+        TypeAdapterConfig<ScheduleServiceClient.TeacherClassDetail, TeacherClassDetail>
+            .NewConfig()
+            .Map(dest => dest.StartsAt, src => src.StartsAt.ToTimeSpan())
+            .Map(dest => dest.EndsAt, src => src.EndsAt.ToTimeSpan());
     }
 }

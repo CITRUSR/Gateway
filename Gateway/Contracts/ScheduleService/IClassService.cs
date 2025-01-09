@@ -12,4 +12,7 @@ public interface IClassService
     Task<ClassDto> DeleteClass(int id);
     Task<GetClassesOnCurrentDateForStudentResponse> GetClassesOnCurrentDateForStudent(int GroupId);
     Task<GetClassesForWeekForStudentResponse> GetClassesForWeekForStudent(int GroupId);
+    Task<GetClassesOnCurrentDateForTeacherResponse> GetClassesOnCurrentDateForTeacher(
+        Guid TeacherId
+    );
 }

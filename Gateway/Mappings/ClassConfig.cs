@@ -34,5 +34,15 @@ public static class ClassConfig
                 src => src.ChangeOn == null ? null : src.ChangeOn.ToString()
             )
             .Map(dest => dest.TeacherIds, src => src.TeachersIds);
+
+        TypeAdapterConfig<UpdateClassRequest, ScheduleServiceClient.UpdateClassRequest>
+            .NewConfig()
+            .Map(dest => dest.StartsAt, src => src.StartsAt.ToDuration())
+            .Map(dest => dest.EndsAt, src => src.EndsAt.ToDuration())
+            .Map(
+                dest => dest.ChangeOn,
+                src => src.ChangeOn == null ? null : src.ChangeOn.ToString()
+            )
+            .Map(dest => dest.TeacherIds, src => src.TeacherIds);
     }
 }

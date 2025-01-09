@@ -18,4 +18,13 @@ public class ClassService(ScheduleServiceClient.ClassService.ClassServiceClient 
 
         return result.Class.Adapt<ClassDto>();
     }
+
+    public async Task<ClassDto> UpdateClass(UpdateClassRequest request)
+    {
+        var grpcRequest = request.Adapt<ScheduleServiceClient.UpdateClassRequest>();
+
+        var result = await _client.UpdateClassAsync(grpcRequest);
+
+        return result.Class.Adapt<ClassDto>();
+    }
 }

@@ -38,6 +38,32 @@ public static class ClassEndpoints
                 return operation;
             });
 
+        builder
+            .MapPut(
+                "api/class",
+                async (
+                    [FromBody] UpdateClassRequest request,
+                    [FromServices] IClassService classService
+                ) =>
+                {
+                    var result = await classService.UpdateClass(request);
+
+                    return Results.Ok(result);
+                }
+            )
+            .Produces<ClassDto>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .Produces<ValidationError>(StatusCodes.Status400BadRequest)
+            .WithTags(classTag)
+            .WithSummary("Update class")
+            .WithDescription("Update class")
+            .WithOpenApi(operation =>
+            {
+                operation.Responses[StatusCodes.Status404NotFound.ToString()].Description =
+                    "if 1 of the related entities not found";
+                return operation;
+            });
+
         return builder;
     }
 }

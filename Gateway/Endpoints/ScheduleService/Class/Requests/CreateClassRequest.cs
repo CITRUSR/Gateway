@@ -1,13 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Gateway.Endpoints.ScheduleService.Class.Requests;
 
 public record CreateClassRequest(
-    int GroupId,
-    int SubjectId,
-    int WeekdayId,
+    [property: Required()] int GroupId,
+    [property: Required()] int SubjectId,
+    [property: Required()] int WeekdayId,
     int? ColorId,
-    TimeSpan StartsAt,
-    TimeSpan EndsAt,
+    [property: Required()] TimeSpan StartsAt,
+    [property: Required()] TimeSpan EndsAt,
     DateTime? ChangeOn,
-    List<Guid> TeachersIds,
-    List<int> RoomIds
+    [property: Required()] List<Guid> TeachersIds,
+    [property: Required()] List<int> RoomIds
 );

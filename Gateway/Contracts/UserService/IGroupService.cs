@@ -8,20 +8,20 @@ namespace Gateway.Contracts.UserService;
 
 public interface IGroupService
 {
-    public Task<GroupShortInfo> CreateGroup(CreateGroupRequest request);
-    public Task<List<GroupShortInfo>> DeleteGroups(DeleteGroupsRequest request);
-    public Task<List<GroupShortInfo>> SoftDeleteGroups(DeleteGroupsRequest request);
-    public Task<List<GroupShortInfo>> RecoveryGroups(RecoveryGroupsRequest request);
-    public Task<GroupShortInfo> EditGroup(EditGroupRequest request);
-    public Task<List<GroupShortInfo>> GraduateGroups(GraduateGroupsRequest request);
-    public Task<List<GroupShortInfo>> TransferGroupsToNextSemester(
+    public Task<GroupShortInfo> CreateGroupAsync(CreateGroupRequest request);
+    public Task<List<GroupShortInfo>> DeleteGroupsAsync(DeleteGroupsRequest request);
+    public Task<List<GroupShortInfo>> SoftDeleteGroupsAsync(DeleteGroupsRequest request);
+    public Task<List<GroupShortInfo>> RecoveryGroupsAsync(RecoveryGroupsRequest request);
+    public Task<GroupShortInfo> EditGroupAsync(EditGroupRequest request);
+    public Task<List<GroupShortInfo>> GraduateGroupsAsync(GraduateGroupsRequest request);
+    public Task<List<GroupShortInfo>> TransferGroupsToNextSemesterAsync(
         TransferGroupsToNextSemesterRequest request
     );
-    public Task<List<GroupShortInfo>> TransferGroupsToNextCourse(
+    public Task<List<GroupShortInfo>> TransferGroupsToNextCourseAsync(
         TransferGroupsToNextCourseRequest request
     );
-    public Task<GroupDto> GetGroupById(int id);
-    public Task<GetGroupsResponse> GetGroups(
+    public Task<GroupDto> GetGroupByIdAsync(int id);
+    public Task<GetGroupsResponse> GetGroupsAsync(
         int page,
         int pageSize,
         string? search,

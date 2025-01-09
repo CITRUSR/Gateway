@@ -33,7 +33,7 @@ public class SpecialityService : ISpecialityService
         );
     }
 
-    public async Task<SpecialityShortInfo> CreateSpeciality(CreateSpecialityRequest request)
+    public async Task<SpecialityShortInfo> CreateSpecialityAsync(CreateSpecialityRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.CreateSpecialityRequest>();
 
@@ -42,7 +42,7 @@ public class SpecialityService : ISpecialityService
         return result.Adapt<SpecialityShortInfo>();
     }
 
-    public async Task<List<SpecialityShortInfo>> DeleteSpecialities(
+    public async Task<List<SpecialityShortInfo>> DeleteSpecialitiesAsync(
         DeleteSpecialitiesRequest request
     )
     {
@@ -53,7 +53,7 @@ public class SpecialityService : ISpecialityService
         return result.Specialities.Adapt<List<SpecialityShortInfo>>();
     }
 
-    public async Task<SpecialityShortInfo> EditSpeciality(EditSpecialityRequest request)
+    public async Task<SpecialityShortInfo> EditSpecialityAsync(EditSpecialityRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.EditSpecialityRequest>();
 
@@ -62,7 +62,7 @@ public class SpecialityService : ISpecialityService
         return result.Adapt<SpecialityShortInfo>();
     }
 
-    public async Task<GetSpecialitiesResponse> GetSpecialities(
+    public async Task<GetSpecialitiesResponse> GetSpecialitiesAsync(
         int page,
         int pageSize,
         string? search,
@@ -84,7 +84,7 @@ public class SpecialityService : ISpecialityService
         return result.Adapt<GetSpecialitiesResponse>();
     }
 
-    public async Task<SpecialityDto> GetSpecialityById(int id)
+    public async Task<SpecialityDto> GetSpecialityByIdAsync(int id)
     {
         var grpcRequest = new UserServiceClient.GetSpecialityByIdRequest { Id = id };
 
@@ -93,7 +93,7 @@ public class SpecialityService : ISpecialityService
         return result.Adapt<SpecialityDto>();
     }
 
-    public async Task<List<SpecialityShortInfo>> RecoverySpecialities(
+    public async Task<List<SpecialityShortInfo>> RecoverySpecialitiesAsync(
         RecoverySpecialitiesRequest request
     )
     {
@@ -104,7 +104,7 @@ public class SpecialityService : ISpecialityService
         return result.Specialities.Adapt<List<SpecialityShortInfo>>();
     }
 
-    public async Task<List<SpecialityShortInfo>> SoftDeleteSpecialities(
+    public async Task<List<SpecialityShortInfo>> SoftDeleteSpecialitiesAsync(
         DeleteSpecialitiesRequest request
     )
     {

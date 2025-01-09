@@ -8,15 +8,15 @@ namespace Gateway.Contracts.UserService;
 
 public interface ITeacherService
 {
-    public Task<TeacherShortInfo> CreateTeacher(CreateTeacherRequest request);
-    public Task<List<TeacherShortInfo>> DeleteTeachers(DeleteTeachersRequest request);
-    public Task<List<TeacherShortInfo>> SoftDeleteTeachers(DeleteTeachersRequest request);
-    public Task<List<TeacherShortInfo>> RecoveryTeachers(RecoveryTeachersRequest request);
-    public Task<List<TeacherShortInfo>> FireTeachers(FireTeachersRequest request);
-    public Task<TeacherShortInfo> EditTeacher(EditTeacherRequest request);
-    public Task<TeacherDto> GetTeacherById(Guid id);
-    public Task<TeacherDto> GetTeacherBySsoId(Guid ssoId);
-    public Task<GetTeachersResponse> GetTeachers(
+    public Task<TeacherShortInfo> CreateTeacherAsync(CreateTeacherRequest request);
+    public Task<List<TeacherShortInfo>> DeleteTeachersAsync(DeleteTeachersRequest request);
+    public Task<List<TeacherShortInfo>> SoftDeleteTeachersAsync(DeleteTeachersRequest request);
+    public Task<List<TeacherShortInfo>> RecoveryTeachersAsync(RecoveryTeachersRequest request);
+    public Task<List<TeacherShortInfo>> FireTeachersAsync(FireTeachersRequest request);
+    public Task<TeacherShortInfo> EditTeacherAsync(EditTeacherRequest request);
+    public Task<TeacherDto> GetTeacherByIdAsync(Guid id);
+    public Task<TeacherDto> GetTeacherBySsoIdAsync(Guid ssoId);
+    public Task<GetTeachersResponse> GetTeachersAsync(
         int page,
         int pageSize,
         string? search,

@@ -31,7 +31,7 @@ public class StudentService : IStudentService
         _studentService = new UserServiceClient.StudentService.StudentServiceClient(channel);
     }
 
-    public async Task<StudentShortInfo> CreateStudent(CreateStudentRequest request)
+    public async Task<StudentShortInfo> CreateStudentAsync(CreateStudentRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.CreateStudentRequest>();
 
@@ -40,7 +40,7 @@ public class StudentService : IStudentService
         return result.Adapt<StudentShortInfo>();
     }
 
-    public async Task<List<StudentShortInfo>> DeleteStudents(DeleteStudentsRequest request)
+    public async Task<List<StudentShortInfo>> DeleteStudentsAsync(DeleteStudentsRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.DeleteStudentsRequest>();
 
@@ -49,7 +49,7 @@ public class StudentService : IStudentService
         return result.Students.Adapt<List<StudentShortInfo>>();
     }
 
-    public async Task<List<StudentShortInfo>> DropOutStudents(DropOutStudentsRequest request)
+    public async Task<List<StudentShortInfo>> DropOutStudentsAsync(DropOutStudentsRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.DropOutStudentsRequest>();
 
@@ -58,7 +58,7 @@ public class StudentService : IStudentService
         return result.Students.Adapt<List<StudentShortInfo>>();
     }
 
-    public async Task<StudentShortInfo> EditStudent(EditStudentRequest request)
+    public async Task<StudentShortInfo> EditStudentAsync(EditStudentRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.EditStudentRequest>();
 
@@ -67,7 +67,7 @@ public class StudentService : IStudentService
         return result.Adapt<StudentShortInfo>();
     }
 
-    public async Task<StudentDto> GetStudentById(Guid id)
+    public async Task<StudentDto> GetStudentByIdAsync(Guid id)
     {
         var grpcRequest = new UserServiceClient.GetStudentByIdRequest { Id = id.ToString() };
 
@@ -76,7 +76,7 @@ public class StudentService : IStudentService
         return result.Adapt<StudentDto>();
     }
 
-    public async Task<StudentDto> GetStudentBySsoId(Guid ssoId)
+    public async Task<StudentDto> GetStudentBySsoIdAsync(Guid ssoId)
     {
         var grpcRequest = new UserServiceClient.GetStudentBySsoIdRequest
         {
@@ -88,7 +88,7 @@ public class StudentService : IStudentService
         return result.Adapt<StudentDto>();
     }
 
-    public async Task<GetStudentsResponse> GetStudents(
+    public async Task<GetStudentsResponse> GetStudentsAsync(
         int page,
         int pageSize,
         string? search,
@@ -112,7 +112,7 @@ public class StudentService : IStudentService
         return result.Adapt<GetStudentsResponse>();
     }
 
-    public async Task<List<StudentViewModel>> GetStudentsByGroupId(int groupId)
+    public async Task<List<StudentViewModel>> GetStudentsByGroupIdAsync(int groupId)
     {
         var grpcRequest = new UserServiceClient.GetStudentsByGroupIdRequest { GroupId = groupId };
 
@@ -121,7 +121,7 @@ public class StudentService : IStudentService
         return result.Students.Adapt<List<StudentViewModel>>();
     }
 
-    public async Task<List<StudentShortInfo>> RecoveryStudents(RecoveryStudentsRequest request)
+    public async Task<List<StudentShortInfo>> RecoveryStudentsAsync(RecoveryStudentsRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.RecoveryStudentsRequest>();
 
@@ -130,7 +130,7 @@ public class StudentService : IStudentService
         return result.Students.Adapt<List<StudentShortInfo>>();
     }
 
-    public async Task<List<StudentShortInfo>> SoftDeleteStudents(DeleteStudentsRequest request)
+    public async Task<List<StudentShortInfo>> SoftDeleteStudentsAsync(DeleteStudentsRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.SoftDeleteStudentsRequest>();
 

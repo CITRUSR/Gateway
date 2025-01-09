@@ -11,11 +11,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos/UserService/shared.proto" GrpcServices="None" />
-        <Protobuf Include="Protos/UserService/speciality.proto" GrpcServices="Client" />
-        <Protobuf Include="Protos/UserService/teacher.proto" GrpcServices="Client" />
-        <Protobuf Include="Protos/UserService/group.proto" GrpcServices="Client" />
-        <Protobuf Include="Protos/UserService/student.proto" GrpcServices="Client" />
+        <Protobuf Include="Protos/UserService/*.proto" GrpcServices="Client" />
+        <Protobuf Include="Protos/ScheduleService/*.proto" GrpcServices="Client"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -31,7 +31,7 @@ public class TeacherService : ITeacherService
         _teacherService = new UserServiceClient.TeacherService.TeacherServiceClient(channel);
     }
 
-    public async Task<TeacherShortInfo> CreateTeacher(CreateTeacherRequest request)
+    public async Task<TeacherShortInfo> CreateTeacherAsync(CreateTeacherRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.CreateTeacherRequest>();
 
@@ -40,7 +40,7 @@ public class TeacherService : ITeacherService
         return result.Adapt<TeacherShortInfo>();
     }
 
-    public async Task<List<TeacherShortInfo>> DeleteTeachers(DeleteTeachersRequest request)
+    public async Task<List<TeacherShortInfo>> DeleteTeachersAsync(DeleteTeachersRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.DeleteTeachersRequest>();
 
@@ -49,7 +49,7 @@ public class TeacherService : ITeacherService
         return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 
-    public async Task<TeacherShortInfo> EditTeacher(EditTeacherRequest request)
+    public async Task<TeacherShortInfo> EditTeacherAsync(EditTeacherRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.EditTeacherRequest>();
 
@@ -58,7 +58,7 @@ public class TeacherService : ITeacherService
         return result.Adapt<TeacherShortInfo>();
     }
 
-    public async Task<List<TeacherShortInfo>> FireTeachers(FireTeachersRequest request)
+    public async Task<List<TeacherShortInfo>> FireTeachersAsync(FireTeachersRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.FireTeachersRequest>();
 
@@ -67,7 +67,7 @@ public class TeacherService : ITeacherService
         return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 
-    public async Task<TeacherDto> GetTeacherById(Guid id)
+    public async Task<TeacherDto> GetTeacherByIdAsync(Guid id)
     {
         var grpcRequest = new UserServiceClient.GetTeacherByIdRequest { Id = id.ToString() };
 
@@ -76,7 +76,7 @@ public class TeacherService : ITeacherService
         return result.Adapt<TeacherDto>();
     }
 
-    public async Task<TeacherDto> GetTeacherBySsoId(Guid ssoId)
+    public async Task<TeacherDto> GetTeacherBySsoIdAsync(Guid ssoId)
     {
         var grpcRequest = new UserServiceClient.GetTeacherBySsoIdRequest
         {
@@ -88,7 +88,7 @@ public class TeacherService : ITeacherService
         return result.Adapt<TeacherDto>();
     }
 
-    public async Task<GetTeachersResponse> GetTeachers(
+    public async Task<GetTeachersResponse> GetTeachersAsync(
         int page,
         int pageSize,
         string? search,
@@ -110,7 +110,7 @@ public class TeacherService : ITeacherService
         return result.Adapt<GetTeachersResponse>();
     }
 
-    public async Task<List<TeacherShortInfo>> RecoveryTeachers(RecoveryTeachersRequest request)
+    public async Task<List<TeacherShortInfo>> RecoveryTeachersAsync(RecoveryTeachersRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.RecoveryTeachersRequest>();
 
@@ -119,7 +119,7 @@ public class TeacherService : ITeacherService
         return result.Teachers.Adapt<List<TeacherShortInfo>>();
     }
 
-    public async Task<List<TeacherShortInfo>> SoftDeleteTeachers(DeleteTeachersRequest request)
+    public async Task<List<TeacherShortInfo>> SoftDeleteTeachersAsync(DeleteTeachersRequest request)
     {
         var grpcRequest = request.Adapt<UserServiceClient.SoftDeleteTeachersRequest>();
 

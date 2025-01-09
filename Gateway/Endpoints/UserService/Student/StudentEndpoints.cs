@@ -29,7 +29,7 @@ public static class StudentEndpoints
                     IStudentService studentService
                 ) =>
                 {
-                    var result = await studentService.GetStudents(
+                    var result = await studentService.GetStudentsAsync(
                         page,
                         pageSize,
                         search,
@@ -70,7 +70,7 @@ public static class StudentEndpoints
                 "api/student",
                 async ([FromQuery] Guid id, IStudentService studentService) =>
                 {
-                    var result = await studentService.GetStudentById(id);
+                    var result = await studentService.GetStudentByIdAsync(id);
 
                     return Results.Ok(result);
                 }
@@ -92,7 +92,7 @@ public static class StudentEndpoints
                 "api/student/sso",
                 async ([FromQuery] Guid ssoId, IStudentService studentService) =>
                 {
-                    var result = await studentService.GetStudentBySsoId(ssoId);
+                    var result = await studentService.GetStudentBySsoIdAsync(ssoId);
 
                     return Results.Ok(result);
                 }
@@ -114,7 +114,7 @@ public static class StudentEndpoints
                 "api/students/group",
                 async ([FromQuery] int groupId, IStudentService studentService) =>
                 {
-                    var result = await studentService.GetStudentsByGroupId(groupId);
+                    var result = await studentService.GetStudentsByGroupIdAsync(groupId);
 
                     return Results.Ok(result);
                 }
@@ -151,7 +151,7 @@ public static class StudentEndpoints
                 "api/student",
                 async ([FromBody] CreateStudentRequest request, IStudentService studentService) =>
                 {
-                    var result = await studentService.CreateStudent(request);
+                    var result = await studentService.CreateStudentAsync(request);
 
                     return Results.Created("", result);
                 }
@@ -187,7 +187,7 @@ public static class StudentEndpoints
                 "api/students",
                 async ([FromBody] DeleteStudentsRequest request, IStudentService studentService) =>
                 {
-                    var result = await studentService.DeleteStudents(request);
+                    var result = await studentService.DeleteStudentsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -208,7 +208,7 @@ public static class StudentEndpoints
                 "api/students/soft",
                 async ([FromBody] DeleteStudentsRequest request, IStudentService studentService) =>
                 {
-                    var result = await studentService.SoftDeleteStudents(request);
+                    var result = await studentService.SoftDeleteStudentsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -232,7 +232,7 @@ public static class StudentEndpoints
                     IStudentService studentService
                 ) =>
                 {
-                    var result = await studentService.RecoveryStudents(request);
+                    var result = await studentService.RecoveryStudentsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -253,7 +253,7 @@ public static class StudentEndpoints
                 "api/students/drop",
                 async ([FromBody] DropOutStudentsRequest request, IStudentService studentService) =>
                 {
-                    var result = await studentService.DropOutStudents(request);
+                    var result = await studentService.DropOutStudentsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -289,7 +289,7 @@ public static class StudentEndpoints
                 "api/student",
                 async ([FromBody] EditStudentRequest request, IStudentService studentService) =>
                 {
-                    var result = await studentService.EditStudent(request);
+                    var result = await studentService.EditStudentAsync(request);
 
                     return Results.Ok(result);
                 }

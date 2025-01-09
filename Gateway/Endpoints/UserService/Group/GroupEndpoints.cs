@@ -29,7 +29,7 @@ public static class GroupEndpoints
                     IGroupService groupService
                 ) =>
                 {
-                    var result = await groupService.GetGroups(
+                    var result = await groupService.GetGroupsAsync(
                         page,
                         pageSize,
                         search,
@@ -70,7 +70,7 @@ public static class GroupEndpoints
                 "api/group",
                 async ([FromQuery] int id, IGroupService groupService) =>
                 {
-                    var result = await groupService.GetGroupById(id);
+                    var result = await groupService.GetGroupByIdAsync(id);
 
                     return Results.Ok(result);
                 }
@@ -92,7 +92,7 @@ public static class GroupEndpoints
                 "api/group",
                 async ([FromBody] CreateGroupRequest request, IGroupService groupService) =>
                 {
-                    var result = await groupService.CreateGroup(request);
+                    var result = await groupService.CreateGroupAsync(request);
 
                     return Results.Created("", result);
                 }
@@ -114,7 +114,7 @@ public static class GroupEndpoints
                 "api/groups",
                 async ([FromBody] DeleteGroupsRequest request, IGroupService groupService) =>
                 {
-                    var result = await groupService.DeleteGroups(request);
+                    var result = await groupService.DeleteGroupsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -135,7 +135,7 @@ public static class GroupEndpoints
                 "api/groups/soft",
                 async ([FromBody] DeleteGroupsRequest request, IGroupService groupService) =>
                 {
-                    var result = await groupService.SoftDeleteGroups(request);
+                    var result = await groupService.SoftDeleteGroupsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -156,7 +156,7 @@ public static class GroupEndpoints
                 "api/groups/recovery",
                 async ([FromBody] RecoveryGroupsRequest request, IGroupService groupService) =>
                 {
-                    var result = await groupService.RecoveryGroups(request);
+                    var result = await groupService.RecoveryGroupsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -180,7 +180,7 @@ public static class GroupEndpoints
                     IGroupService groupService
                 ) =>
                 {
-                    var result = await groupService.TransferGroupsToNextSemester(request);
+                    var result = await groupService.TransferGroupsToNextSemesterAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -220,7 +220,7 @@ public static class GroupEndpoints
                     IGroupService groupService
                 ) =>
                 {
-                    var result = await groupService.TransferGroupsToNextCourse(request);
+                    var result = await groupService.TransferGroupsToNextCourseAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -257,7 +257,7 @@ public static class GroupEndpoints
                 "api/groups/graduate",
                 async ([FromBody] GraduateGroupsRequest request, IGroupService groupService) =>
                 {
-                    var result = await groupService.GraduateGroups(request);
+                    var result = await groupService.GraduateGroupsAsync(request);
 
                     return Results.Ok(result);
                 }
@@ -293,7 +293,7 @@ public static class GroupEndpoints
                 "api/group",
                 async ([FromBody] EditGroupRequest request, IGroupService groupService) =>
                 {
-                    var result = await groupService.EditGroup(request);
+                    var result = await groupService.EditGroupAsync(request);
 
                     return Results.Ok(result);
                 }

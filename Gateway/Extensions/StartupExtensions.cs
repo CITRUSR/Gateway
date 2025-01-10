@@ -29,6 +29,7 @@ public static class StartupExtensions
     {
         ConfigureLogging();
         ConfigureSwagger(services);
+        ConfigureCors(services);
         ConfigureJsonOptions(services);
         MapsterConfigure();
         RegisterServices(services);
@@ -38,6 +39,7 @@ public static class StartupExtensions
     public static void ConfigureApplication(this WebApplication app)
     {
         app.UseMiddleware<GlobalExceptionHandler>();
+        app.UseCors("CorsPolicy");
 
         if (app.Environment.IsDevelopment())
         {
@@ -78,6 +80,20 @@ public static class StartupExtensions
         StudentConfig.Configure();
         CurrentWeekdayConfig.Configure();
         ClassConfig.Configure();
+    }
+
+    private static void ConfigureCors(IServiceCollection serices)
+    {
+        serices.AddCors(options =>
+        {
+            options.AddPolicy(
+                "CorsPolicy",
+                builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                }
+            );
+        });
     }
 
     private static void ConfigureSwagger(IServiceCollection services)
